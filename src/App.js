@@ -15,7 +15,7 @@ export default function App() {
       if (!token) return;
       setUserDetails(token);
     } catch {
-      console.log("no user");
+      console.log("no user fiou");
     }
   };
 
