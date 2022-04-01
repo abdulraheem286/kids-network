@@ -33,7 +33,7 @@ const Courses = () => {
             cardDescription={data.data.coursedescription}
             courseCategory={data.data.coursecategory}
             cardImage={data.data.courseimage}
-            action={() => navigate("/coursesDetails/" + data.id)}
+            action={() => navigate("/coursedetails/" + data.id)}
           />
         </Col>
       );
