@@ -6,15 +6,21 @@ import { useParams } from "react-router";
 
 export default function CoursesDetails() {
   const [courseVideo, setVideoData] = useState();
-  useEffect(async () => {
+  const params = useParams();
+  const docId = JSON.stringify(params.id);
+  const loaddata = async () => {
     firebase
       .firestore()
       .collection("courses")
-      .doc("lRxlabQoxMF4eIIfkEcP")
+      .doc(params.id)
       .get()
       .then((res) => {
+        console.log(res.data());
         setVideoData(res.data());
       });
+  };
+  useEffect(() => {
+    loaddata();
   }, []);
 
   return (
@@ -22,7 +28,7 @@ export default function CoursesDetails() {
       {courseVideo && (
         <>
           <Iframe
-            url={courseVideo.coursevideos}
+            url={courseVideo.coursevideos[0]}
             width="700px"
             height="450px"
             id="V1"

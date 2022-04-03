@@ -5,8 +5,10 @@ import { useParams } from "react-router";
 import AuthContext from "./../components/AuthContext";
 import Headers from "./../components/ELearning/Header";
 import { Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export default function CoursesDetails(props) {
+  const navigate = useNavigate();
   const authContext = useContext(AuthContext);
   const params = useParams();
   function EnrollUser() {
@@ -21,7 +23,7 @@ export default function CoursesDetails(props) {
       });
   }
   const [courseData, setCourseData] = useState();
-  useEffect(async () => {
+  const loaddatas = async () => {
     console.log(params.data, "data");
     firebase
       .firestore()
@@ -32,6 +34,9 @@ export default function CoursesDetails(props) {
         setCourseData(res.data());
         console.log(res.data());
       });
+  };
+  useEffect(() => {
+    loaddatas();
   }, []);
   return (
     <>
@@ -74,6 +79,13 @@ export default function CoursesDetails(props) {
                     alignItems: "center",
                   }}
                 >
+                  <button
+                    className="btn btn-success btn-lg rounded-pill"
+                    onClick={() => navigate("/courseVideos/" + params.data)}
+                  >
+                    See Videos
+                  </button>
+
                   {/* <button
                     className="btn btn-success btn-lg rounded-pill"
                     onClick={() => EnrollUser()}

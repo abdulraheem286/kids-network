@@ -18,7 +18,7 @@ export default function AppRouter() {
       <Route path="/e-learning" element={<LearningLandingPage />} />
       <Route path="/courses" element={<Courses />} />
       <Route path="/coursedetails/:data" element={<CoursesDetails />} />
-      <Route path="/coursevideos" element={<CoursesVideos />} />
+      <Route path="/coursevideos/:id" element={<CoursesVideos />} />
     </Routes>
   );
 }
