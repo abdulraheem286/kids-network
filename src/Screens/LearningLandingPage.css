@@ -1,0 +1,8 @@
+.courses_btn{
+    transition: all 0.3s ease-in;
+
+}
+.courses_btn:hover{
+background-image: linear-gradient(to right, #167bff, #00bcd4);
+border: none;
+}

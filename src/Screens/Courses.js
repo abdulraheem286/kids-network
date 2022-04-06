@@ -26,7 +26,7 @@ const Courses = () => {
     console.log(listings.data);
     const items = listings?.map((data) => {
       return (
-        <Col>
+        <Col key={data.id}>
           <Card
             key={data.id}
             title={data.data.coursetitle}
@@ -43,7 +43,12 @@ const Courses = () => {
 
   return (
     <>
-      <Header pageName="Courses" />
+      <Header
+        pageName="Courses"
+        bgImage={
+          "https://www.s7template.com/react/eduskills/assets/images/banner-image-00.jpg"
+        }
+      />
 
       <Container>
         {listings && (

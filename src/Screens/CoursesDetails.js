@@ -23,21 +23,22 @@ export default function CoursesDetails(props) {
       });
   }
   const [courseData, setCourseData] = useState();
-  const loaddatas = async () => {
-    console.log(params.data, "data");
-    firebase
-      .firestore()
-      .collection("courses")
-      .doc(params.data)
-      .get()
-      .then((res) => {
-        setCourseData(res.data());
-        console.log(res.data());
-      });
-  };
   useEffect(() => {
+    const loaddatas = async () => {
+      console.log(params.data, "data");
+      firebase
+        .firestore()
+        .collection("courses")
+        .doc(params.data)
+        .get()
+        .then((res) => {
+          setCourseData(res.data());
+          console.log(res.data());
+        });
+    };
+
     loaddatas();
-  }, []);
+  }, [params.data]);
   return (
     <>
       <Headers pageName="Course Details" />
@@ -81,7 +82,11 @@ export default function CoursesDetails(props) {
                 >
                   <button
                     className="btn btn-success btn-lg rounded-pill"
-                    onClick={() => navigate("/courseVideos/" + params.data)}
+                    onClick={() =>
+                      navigate(
+                        `/courseVideos/${params.data}?video=${"7eh4d6sabA0"}`
+                      )
+                    }
                   >
                     See Videos
                   </button>

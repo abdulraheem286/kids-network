@@ -4,6 +4,7 @@ import firebase from "firebase";
 import "firebase/firestore";
 import * as Yup from "yup";
 import AuthContext from "./../components/AuthContext";
+import { useNavigate } from "react-router";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required("*Email is Required").email().label("Email"),
@@ -14,6 +15,7 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function Login() {
+  const navigate = useNavigate();
   const authContext = useContext(AuthContext);
   const handleSubmit = async (values) => {
     console.log(values, "values");
@@ -33,6 +35,7 @@ export default function Login() {
                 localStorage.setItem("user", JSON.stringify(doc.data()));
                 authContext.setUserDetails(doc.data());
                 alert("Welcome");
+                navigate("/e-learning");
               }
             });
           });
