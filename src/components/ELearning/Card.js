@@ -16,7 +16,7 @@ export default function Card({
               className="card-img-top"
               style={{ height: 180, objectFit: "cover" }}
               src={cardImage}
-              alt="Card Image"
+              alt="Card"
             />
             <div className="card-body">
               {title && <h5 className="card-title">{title}</h5>}
@@ -46,6 +46,7 @@ const style = {
     padding: 20,
     marginTop: 30,
     cursor: "Pointer",
+    height: "451px",
 
     "&:hover": {
       background: "#efefef",
