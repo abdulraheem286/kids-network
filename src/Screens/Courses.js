@@ -19,7 +19,6 @@ const Courses = () => {
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("user"));
     if (!token) navigate("/sign-in", { replace: true });
-    console.log("Courses");
     loadData();
   }, [navigate]);
 

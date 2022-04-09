@@ -1,28 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import AppRouter from "./components/AppRouter";
 import AuthContext from "./components/AuthContext";
 import Footer from "./components/Footer";
 
 export default function App() {
-  const [userDetails, setUserDetails] = useState();
-
-  const restoreToken = () => {
-    try {
-      const token = JSON.parse(localStorage.getItem("user"));
-      if (!token) return;
-      setUserDetails(token);
-    } catch {
-      console.log("no user");
-    }
+  const [userDetails, setUserDetails] = useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
+  const navigate = useNavigate();
+  useEffect(() => {}, [userDetails]);
+  const logout = () => {
+    localStorage.removeItem("user");
+    setUserDetails(null);
+    navigate("/", { replace: true });
   };
-
-  useEffect(() => {
-    restoreToken();
-  }, []);
-
   return (
     <div className="App">
       <nav className="navbar navbar-expand-lg navbar-light ">
@@ -55,16 +49,30 @@ export default function App() {
           </div>
           <div className="collapse navbar-collapse">
             <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to={"/sign-in"}>
-                  Sign in
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={"/sign-up"}>
-                  Sign up
-                </Link>
-              </li>
+              {!userDetails?.email ? (
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link" to={"/sign-in"}>
+                      Sign in
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to={"/sign-up"}>
+                      Sign up
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <li className="nav-item">
+                  <button
+                    className="nav-link"
+                    style={{ border: "none", backgroundColor: "transparent" }}
+                    onClick={logout}
+                  >
+                    Logout
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
         </div>

@@ -17,7 +17,6 @@ export default function CoursesDetails(props) {
 
   useEffect(() => {
     const loaddatas = async () => {
-      console.log(params.data, "data");
       firebase
         .firestore()
         .collection("courses")
@@ -25,9 +24,8 @@ export default function CoursesDetails(props) {
         .get()
         .then((res) => {
           setCourseData(res.data());
-          console.log(res.data());
           setenrolledUser(
-            res.data().enrolleduser.find((element) => element === user.email)
+            res.data()?.enrolleduser?.find((element) => element === user.email)
           );
         });
     };
