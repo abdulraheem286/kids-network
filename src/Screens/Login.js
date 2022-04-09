@@ -35,7 +35,7 @@ export default function Login() {
                 localStorage.setItem("user", JSON.stringify(doc.data()));
                 authContext.setUserDetails(doc.data());
                 alert("Welcome");
-                navigate("/e-learning");
+                navigate("/");
               }
             });
           });

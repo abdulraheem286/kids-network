@@ -37,7 +37,7 @@ export default function App() {
           <div className="collapse navbar-collapse">
             <ul className="navbar-nav ml-auto font-weight-bold">
               <li className="nav-item">
-                <Link className="nav-link" to={"/e-learning"}>
+                <Link className="nav-link" to={"/"}>
                   E-Learning
                 </Link>
               </li>

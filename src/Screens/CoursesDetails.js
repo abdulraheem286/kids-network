@@ -11,18 +11,10 @@ export default function CoursesDetails(props) {
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
   const params = useParams();
-  function EnrollUser() {
-    firebase
-      .firestore()
-      .collection("courses")
-      .doc(params.data)
-      .update({
-        enrolleduser: firebase.firestore.FieldValue.arrayUnion(
-          authContext.userDetails.email
-        ),
-      });
-  }
   const [courseData, setCourseData] = useState();
+  const [user, setuser] = useState(JSON.parse(localStorage.getItem("user")));
+  const [enrolledUser, setenrolledUser] = useState(false);
+
   useEffect(() => {
     const loaddatas = async () => {
       console.log(params.data, "data");
@@ -34,11 +26,42 @@ export default function CoursesDetails(props) {
         .then((res) => {
           setCourseData(res.data());
           console.log(res.data());
+          setenrolledUser(
+            res.data().enrolleduser.find((element) => element === user.email)
+          );
         });
     };
 
     loaddatas();
-  }, [params.data]);
+  }, [params.data, enrolledUser, user.email]);
+  const UnEnrollUser = async () => {
+    try {
+      await firebase
+        .firestore()
+        .collection("courses")
+        .doc(params.data)
+        .update({
+          enrolleduser: firebase.firestore.FieldValue.arrayRemove(user.email),
+        });
+      setenrolledUser(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  async function EnrollUser() {
+    try {
+      await firebase
+        .firestore()
+        .collection("courses")
+        .doc(params.data)
+        .update({
+          enrolleduser: firebase.firestore.FieldValue.arrayUnion(user.email),
+        });
+      setenrolledUser(true);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <>
       <Headers pageName="Course Details" />
@@ -80,17 +103,35 @@ export default function CoursesDetails(props) {
                     alignItems: "center",
                   }}
                 >
-                  <button
-                    className="btn btn-success btn-lg rounded-pill"
-                    onClick={() =>
-                      navigate(
-                        `/courseVideos/${params.data}?video=${"7eh4d6sabA0"}`
-                      )
-                    }
-                  >
-                    See Videos
-                  </button>
-
+                  {enrolledUser ? (
+                    <div>
+                      <button
+                        className="btn btn-danger btn-lg rounded-pill mr-2"
+                        onClick={() => UnEnrollUser()}
+                      >
+                        UnEnroll
+                      </button>
+                      <button
+                        className="btn btn-success btn-lg rounded-pill"
+                        onClick={() =>
+                          navigate(
+                            `/courseVideos/${
+                              params.data
+                            }?video=${"7eh4d6sabA0"}`
+                          )
+                        }
+                      >
+                        See Videos
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      className="btn btn-success btn-lg rounded-pill mr-2"
+                      onClick={() => EnrollUser()}
+                    >
+                      Enroll Now
+                    </button>
+                  )}
                   {/* <button
                     className="btn btn-success btn-lg rounded-pill"
                     onClick={() => EnrollUser()}
