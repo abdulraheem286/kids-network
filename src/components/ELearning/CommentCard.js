@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-
+import randomColor from "randomcolor";
 const CommentCard = () => {
   const [state, setState] = useState([]);
   const [count, setcount] = useState(0);
+  const [bgRandomColor, setrandomColor] = useState(
+    randomColor({ luminosity: "dark" })
+  );
   useEffect(() => {
     async function getData() {
       try {
@@ -23,34 +26,38 @@ const CommentCard = () => {
   useEffect(() => {
     setTimeout(() => {
       count < 20 ? setcount(count + 1) : setcount(0);
+      setrandomColor(randomColor({ luminosity: "dark" }));
     }, 5000);
   });
 
   return (
     <div
-      className="align-self-start d-flex p-4 justify-content-between align-items-center flex-wrap w-25 mb-4"
+      className="align-self-end d-flex p-4 justify-content-evenly
+      fs-5 align-items-center flex-wrap w-25 mb-4"
       style={{
-        height: "325px",
+        height: "250px",
         borderRadius: "10px",
-        backgroundColor: "#167bff",
+        backgroundColor: bgRandomColor,
+        transition: "all 1s ease-in-out",
       }}
     >
       {
         <img
-          className="w-25 h-25 rounded-circle"
+          className=" rounded-circle"
+          style={{ width: "64px", height: "64px" }}
           src={state[count]?.picture}
           alt=""
         />
       }
       <p
         className="text-light"
-        style={{ fontSize: "24px", fontWeight: "bold", paddingLeft: "10px" }}
+        style={{ fontSize: "16px", fontWeight: "bold", paddingLeft: "10px" }}
       >
         {state[count]?.firstName} {state[count]?.lastName}
       </p>
       <p
         className="text-light"
-        style={{ fontSize: "18px", textAlign: "justify" }}
+        style={{ fontSize: "14px", textAlign: "justify" }}
       >
         Ad culpa non minim anim fugiat eiusmod tempor tempor. Est tempor amet
         reprehenderit anim minim nostrud anim nisi et amet. Magna commodo ad

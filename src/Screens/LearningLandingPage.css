@@ -1,8 +1,9 @@
+
 .courses_btn{
-    transition: all 0.3s ease-in;
+    transition: all 1s ease-in-out;
+    border: none;
 
 }
 .courses_btn:hover{
 background-image: linear-gradient(to right, #167bff, #00bcd4);
-border: none;
 }
