@@ -3,6 +3,7 @@
 * {
   box-sizing: border-box;
   scroll-behavior: smooth;
+  font-family: 'Raleway', sans-serif
 }
 
 body {
@@ -69,4 +70,12 @@ html,
 
 .forgot-password a {
   color: #167bff;
+}
+.chapter-content{
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-y: scroll;
+}
+.chapter-content::-webkit-scrollbar{
+  display: none;
 }

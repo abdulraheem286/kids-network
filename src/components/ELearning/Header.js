@@ -15,7 +15,12 @@ const Header = ({ pageName, bgImage }) => {
       >
         <Container style={{ paddingTop: 100 }}>
           <h1
-            style={{ textDecoration: "underline", textUnderlineOffset: "8px" }}
+            style={{
+              textDecoration: "underline",
+              textUnderlineOffset: "8px",
+              fontSize: "48px",
+              fontFamily: "'Raleway', sans-serif",
+            }}
           >
             {pageName}
           </h1>

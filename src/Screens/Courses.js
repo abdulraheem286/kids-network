@@ -5,6 +5,8 @@ import firebase from "firebase";
 import "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import Header from "./../components/ELearning/Header";
+import { MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer } from "mdbreact";
+import { Link } from "react-router-dom";
 
 const Courses = () => {
   const [listings, setListings] = useState([]);
@@ -50,7 +52,7 @@ const Courses = () => {
           "https://www.s7template.com/react/eduskills/assets/images/banner-image-00.jpg"
         }
       />
-
+      <BreadcrumbPage />
       <Container>
         {listings && (
           <Row xs={1} md={columnsPerRow}>
@@ -63,3 +65,25 @@ const Courses = () => {
 };
 
 export default Courses;
+
+const BreadcrumbPage = () => {
+  return (
+    <MDBContainer>
+      <MDBBreadcrumb>
+        <MDBBreadcrumbItem active>
+          <Link
+            to={"/"}
+            style={{
+              textDecoration: "none",
+              color: "black",
+              fontWeight: "600",
+              fontSize: "20px",
+            }}
+          >
+            /Home
+          </Link>
+        </MDBBreadcrumbItem>
+      </MDBBreadcrumb>
+    </MDBContainer>
+  );
+};

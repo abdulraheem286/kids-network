@@ -11,7 +11,7 @@ export default function Card({
     <div style={style.WrapperBtn} onClick={action ? () => action() : null}>
       <div style={style.Wrapper}>
         <div className="card-group" style={{ maxWidth: 400 }}>
-          <div className="card">
+          <div className="card" style={{ border: 0 }}>
             <img
               className="card-img-top"
               style={{ height: 180, objectFit: "cover" }}
@@ -43,10 +43,12 @@ const style = {
   WrapperBtn: {
     width: "100%",
     textAlign: "left",
-    padding: 20,
+    padding: "15px",
     marginTop: 30,
     cursor: "Pointer",
     height: "451px",
+    border: "1px solid rgba(0,0,0,.125)",
+    borderRadius: "0.25rem",
 
     "&:hover": {
       background: "#efefef",
