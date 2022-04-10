@@ -5,6 +5,16 @@ import "firebase/firestore";
 import { useLocation, useParams } from "react-router";
 import { Row, Col, Container } from "react-bootstrap";
 import VideoCard from "../components/ELearning/VideoCard";
+import Headers from "./../components/ELearning/Header";
+import { Link } from "react-router-dom";
+import {
+  MDBBreadcrumb,
+  MDBBreadcrumbItem,
+  MDBBtn,
+  MDBContainer,
+  MDBInput,
+} from "mdbreact";
+import ReviewCard from "../components/ELearning/ReviewCard";
 
 export default function CoursesDetails() {
   const [courseVideo, setVideoData] = useState();
@@ -12,10 +22,15 @@ export default function CoursesDetails() {
   const params = useParams();
   const docId = JSON.stringify(params.id);
   const [video, setvideo] = useState("");
+  const [review, setreview] = useState("");
+  const [rating, setrating] = useState(0);
+  const [sent, setsent] = useState(false);
+  const [user, setuser] = useState(JSON.parse(localStorage.getItem("user")));
+  const [reviews, setreviews] = useState([]);
+
   useEffect(() => {
     const urlSearch = new URLSearchParams(location.search);
     const video = urlSearch.get("video");
-    console.log("Video", video, params.id);
     setvideo(video);
     const loaddata = async () => {
       firebase
@@ -24,12 +39,48 @@ export default function CoursesDetails() {
         .doc(params.id)
         .get()
         .then((res) => {
-          console.log(res.data());
           setVideoData(res.data());
+        });
+      firebase
+        .firestore()
+        .collection("courses")
+        .doc(params.id)
+        .collection("coursevideos")
+        .doc(params.id)
+        .collection("reviews")
+        .get()
+        .then((res) => {
+          setreviews(
+            res.docs.map((doc) => {
+              return { id: doc.id, ...doc.data() };
+            })
+          );
         });
     };
     loaddata();
-  }, [params.id, location.search]);
+    setsent(false);
+  }, [params.id, location.search, sent]);
+  const submitReview = async () => {
+    try {
+      await firebase
+        .firestore()
+        .collection("courses")
+        .doc(params.id)
+        .collection("coursevideos")
+        .doc(params.id)
+        .collection("reviews")
+        .add({
+          name: `${user.fName} ${user.lName}`,
+          comment: review,
+          stars: rating,
+        });
+      setreview("");
+      setrating(0);
+      setsent(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const videos = [
     {
       videoUrl: "7eh4d6sabA0",
@@ -59,8 +110,9 @@ export default function CoursesDetails() {
   ];
   return (
     <div style={{ minHeight: "100vh", maxWidth: "100vw" }}>
+      <BreadcrumbPage params={params} />
       {courseVideo && (
-        <Container fluid className="border mx-auto">
+        <Container fluid className=" mx-auto">
           <Row>
             <Col md={8}>
               <Iframe
@@ -83,8 +135,50 @@ export default function CoursesDetails() {
                 do elit in ad culpa tempor quis officia quis anim aute. In minim
                 consequat anim sunt.
               </p>
+              <form className="mb-2">
+                <h4>Add a comment</h4>
+                <MDBInput
+                  value={review}
+                  name={"review"}
+                  onChange={(e) => setreview(e.target.value)}
+                  type="textarea"
+                  background
+                />
+                <div className="mb-2">
+                  {new Array(5).fill(0).map((_, i) => {
+                    return i < rating ? (
+                      <i
+                        key={i}
+                        onClick={() => setrating(i + 1)}
+                        className="fa fa-star text-warning"
+                      ></i>
+                    ) : (
+                      <i
+                        key={i}
+                        onClick={() => setrating(i + 1)}
+                        className="fa fa-star text-secondary"
+                      ></i>
+                    );
+                  })}
+                </div>
+
+                <MDBBtn onClick={submitReview} color="dark">
+                  Submit
+                </MDBBtn>
+              </form>
+              <div className="">
+                <h4>Comments: </h4>
+                {reviews.map((review) => (
+                  <ReviewCard
+                    key={review.id}
+                    name={review.name}
+                    comment={review.comment}
+                    stars={review.stars}
+                  />
+                ))}
+              </div>
             </Col>
-            <Col md={4} className="border" style={{ overflowY: "auto" }}>
+            <Col md={4} className="" style={{ overflowY: "auto" }}>
               {videos.map((ele, index) => (
                 <VideoCard
                   key={index}
@@ -99,3 +193,50 @@ export default function CoursesDetails() {
     </div>
   );
 }
+const BreadcrumbPage = ({ params }) => {
+  return (
+    <MDBContainer>
+      <MDBBreadcrumb>
+        <MDBBreadcrumbItem active>
+          <Link
+            to={"/"}
+            style={{
+              textDecoration: "none",
+              color: "black",
+              fontWeight: "600",
+              fontSize: "20px",
+            }}
+          >
+            /Home
+          </Link>
+        </MDBBreadcrumbItem>
+        <MDBBreadcrumbItem icon="arrow">
+          <Link
+            to={"/courses"}
+            style={{
+              textDecoration: "none",
+              color: "black",
+              fontWeight: "600",
+              fontSize: "20px",
+            }}
+          >
+            /Courses
+          </Link>
+        </MDBBreadcrumbItem>
+        <MDBBreadcrumbItem icon="arrow">
+          <Link
+            to={`/coursedetails/${params.id}`}
+            style={{
+              textDecoration: "none",
+              color: "black",
+              fontWeight: "600",
+              fontSize: "20px",
+            }}
+          >
+            /CoursesDetails
+          </Link>
+        </MDBBreadcrumbItem>
+      </MDBBreadcrumb>
+    </MDBContainer>
+  );
+};
