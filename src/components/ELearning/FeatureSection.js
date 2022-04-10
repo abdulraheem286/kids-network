@@ -38,6 +38,10 @@ const FeatureSection = () => {
           title={"Ongoing Support"}
           infoHead={"24/7 active support"}
         />
+        <FeatureSectionCard
+          title={"Quality Resources"}
+          infoHead={"Quality content for your child"}
+        />
       </section>
     </div>
   );

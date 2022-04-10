@@ -41,17 +41,29 @@ const CarouselPage = () => {
         <MDBCarouselInner>
           <MDBCarouselItem itemId="1">
             <MDBView>
-              <h1>Collaborator 3</h1>
+              <CollaboratorCard
+                name="John Doe"
+                comment="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,"
+                imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg"
+              />
             </MDBView>
           </MDBCarouselItem>
           <MDBCarouselItem itemId="2">
             <MDBView>
-              <h1>Collaborator 1</h1>
+              <CollaboratorCard
+                name="John Doe1"
+                comment="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,"
+                imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20(21).jpg"
+              />
             </MDBView>
           </MDBCarouselItem>
           <MDBCarouselItem itemId="3">
             <MDBView>
-              <h1>Collaborator 2</h1>
+              <CollaboratorCard
+                name="John Doe2"
+                comment="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,"
+                imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20(22).jpg"
+              />
             </MDBView>
           </MDBCarouselItem>
         </MDBCarouselInner>
@@ -59,3 +71,17 @@ const CarouselPage = () => {
     </MDBContainer>
   );
 };
+function CollaboratorCard({ imgSrc, name, comment }) {
+  return (
+    <div className=" d-flex flex-column justify-content-center align-items-center">
+      <img
+        src={imgSrc}
+        className="rounded-circle"
+        style={{ width: "64px", height: "64px" }}
+        alt=""
+      />
+      <h3>{name}</h3>
+      <p style={{ fontStyle: "italic" }}>~{comment}</p>
+    </div>
+  );
+}
