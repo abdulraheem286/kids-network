@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./Card.css";
 export default function Card({
   cardImage,
   title,
@@ -8,7 +8,11 @@ export default function Card({
   action,
 }) {
   return (
-    <div style={style.WrapperBtn} onClick={action ? () => action() : null}>
+    <div
+      style={style.WrapperBtn}
+      className="wrapper"
+      onClick={action ? () => action() : null}
+    >
       <div style={style.Wrapper}>
         <div className="card-group" style={{ maxWidth: 400 }}>
           <div className="card" style={{ border: 0 }}>
@@ -49,6 +53,8 @@ const style = {
     height: "451px",
     border: "1px solid rgba(0,0,0,.125)",
     borderRadius: "0.25rem",
+    overflow: "hidden",
+    transition: "transform .3s ease-in-out",
 
     "&:hover": {
       background: "#efefef",
