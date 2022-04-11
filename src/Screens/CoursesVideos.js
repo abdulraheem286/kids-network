@@ -15,18 +15,18 @@ import {
   MDBInput,
 } from "mdbreact";
 import ReviewCard from "../components/ELearning/ReviewCard";
+import { useToken } from "../hooks/useToken";
 
 export default function CoursesDetails() {
   const [courseVideo, setVideoData] = useState();
   const location = useLocation();
   const params = useParams();
-  const docId = JSON.stringify(params.id);
   const [video, setvideo] = useState("");
   const [review, setreview] = useState("");
   const [rating, setrating] = useState(0);
   const [sent, setsent] = useState(false);
-  const [user, setuser] = useState(JSON.parse(localStorage.getItem("user")));
   const [reviews, setreviews] = useState([]);
+  const token = useToken();
 
   useEffect(() => {
     const urlSearch = new URLSearchParams(location.search);
@@ -70,7 +70,7 @@ export default function CoursesDetails() {
         .doc(params.id)
         .collection("reviews")
         .add({
-          name: `${user.fName} ${user.lName}`,
+          name: `${token.fName} ${token.lName}`,
           comment: review,
           stars: rating,
         });

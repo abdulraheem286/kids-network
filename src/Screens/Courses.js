@@ -7,11 +7,12 @@ import { useNavigate } from "react-router-dom";
 import Header from "./../components/ELearning/Header";
 import { MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer } from "mdbreact";
 import { Link } from "react-router-dom";
+import { useToken } from "../hooks/useToken";
 
 const Courses = () => {
   const [listings, setListings] = useState([]);
   const navigate = useNavigate();
-
+  const token = useToken();
   const loadData = async () => {
     const courseRef = await firebase.firestore().collection("courses").get();
 
@@ -19,10 +20,9 @@ const Courses = () => {
   };
 
   useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("user"));
     if (!token) navigate("/sign-in", { replace: true });
     loadData();
-  }, [navigate]);
+  }, [navigate, token]);
 
   const columnsPerRow = 3;
 

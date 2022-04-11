@@ -15,12 +15,13 @@ import {
 import { Link } from "react-router-dom";
 import ReviewCard from "../components/ELearning/ReviewCard";
 import ChapterCards from "../components/ELearning/ChapterCards";
+import { useToken } from "../hooks/useToken";
 
 export default function CoursesDetails(props) {
   const navigate = useNavigate();
   const params = useParams();
   const [courseData, setCourseData] = useState();
-  const [user, setuser] = useState(JSON.parse(localStorage.getItem("user")));
+  const token = useToken();
   const [enrolledUser, setenrolledUser] = useState(false);
   const [review, setreview] = useState("");
   const [reviews, setreviews] = useState([]);
@@ -35,7 +36,7 @@ export default function CoursesDetails(props) {
         .doc(params.data)
         .collection("reviews")
         .add({
-          name: `${user.fName} ${user.lName}`,
+          name: `${token.fName} ${token.lName}`,
           comment: review,
           stars: rating,
         });
@@ -56,7 +57,7 @@ export default function CoursesDetails(props) {
         .then((res) => {
           setCourseData(res.data());
           setenrolledUser(
-            res.data()?.enrolleduser?.find((element) => element === user.email)
+            res.data()?.enrolleduser?.find((element) => element === token.email)
           );
         });
       firebase
@@ -72,7 +73,7 @@ export default function CoursesDetails(props) {
     };
 
     loaddatas();
-  }, [params.data, enrolledUser, user.email, sent]);
+  }, [params.data, enrolledUser, token.email, sent]);
   const UnEnrollUser = async () => {
     try {
       await firebase
@@ -80,7 +81,7 @@ export default function CoursesDetails(props) {
         .collection("courses")
         .doc(params.data)
         .update({
-          enrolleduser: firebase.firestore.FieldValue.arrayRemove(user.email),
+          enrolleduser: firebase.firestore.FieldValue.arrayRemove(token.email),
         });
       setenrolledUser(false);
     } catch (error) {
@@ -94,7 +95,7 @@ export default function CoursesDetails(props) {
         .collection("courses")
         .doc(params.data)
         .update({
-          enrolleduser: firebase.firestore.FieldValue.arrayUnion(user.email),
+          enrolleduser: firebase.firestore.FieldValue.arrayUnion(token.email),
         });
       setenrolledUser(true);
     } catch (error) {
