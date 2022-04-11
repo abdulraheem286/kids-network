@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import firebase from "firebase";
 import "firebase/firestore";
 import * as Yup from "yup";
 import AuthContext from "./../components/AuthContext";
 import { useNavigate } from "react-router";
+import { MDBContainer, MDBAlert } from "mdbreact";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required("*Email is Required").email().label("Email"),
@@ -17,6 +18,8 @@ const validationSchema = Yup.object().shape({
 export default function Login() {
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
+  const [loggedIn, setloggedIn] = useState(null);
+
   const handleSubmit = async (values) => {
     console.log(values, "values");
     firebase
@@ -34,8 +37,10 @@ export default function Login() {
               if (values.password === doc.data().password) {
                 localStorage.setItem("user", JSON.stringify(doc.data()));
                 authContext.setUserDetails(doc.data());
-                alert("Welcome");
-                navigate("/");
+                setloggedIn("loggedIn");
+                setTimeout(() => {
+                  navigate("/");
+                }, 1000);
               }
             });
           });
@@ -46,12 +51,26 @@ export default function Login() {
       .catch((error) => {
         var errorMessage = error.message;
         console.log(errorMessage);
-        alert("Wrong Password/ User Don't Exist");
+        setloggedIn("notLoggedIn");
       });
   };
 
   return (
     <>
+      {loggedIn === "loggedIn" && (
+        <AlertPage
+          color="success"
+          keyword="Welcome"
+          message="You have been logged in successfully"
+        />
+      )}
+      {loggedIn === "notLoggedIn" && (
+        <AlertPage
+          color="danger"
+          keyword="Try Again"
+          message="Invalid Credentials"
+        />
+      )}
       <Formik
         initialValues={{
           email: "",
@@ -124,3 +143,12 @@ export default function Login() {
     </>
   );
 }
+const AlertPage = ({ color, keyword, message }) => {
+  return (
+    <MDBContainer>
+      <MDBAlert color={color}>
+        <strong>{keyword}!</strong> {message}.
+      </MDBAlert>
+    </MDBContainer>
+  );
+};

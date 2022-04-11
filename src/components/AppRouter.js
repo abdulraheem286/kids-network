@@ -8,6 +8,7 @@ import LearningLandingPage from "../Screens/LearningLandingPage";
 import Courses from "../Screens/Courses";
 import CoursesDetails from "../Screens/CoursesDetails";
 import CoursesVideos from "./../Screens/CoursesVideos";
+import Community from "./Community/Community";
 
 export default function AppRouter() {
   return (
@@ -17,6 +18,7 @@ export default function AppRouter() {
       <Route exact path="/sign-up" element={<SignUp />} />
       <Route exact path="/forgot-pass" element={<ForgotPassword />} />
       <Route exact path="/courses" element={<Courses />} />
+      <Route exact path="/community" element={<Community />} />
       <Route exact path="/coursedetails/:data" element={<CoursesDetails />} />
       <Route exact path="/coursevideos/:id" element={<CoursesVideos />} />
     </Routes>
