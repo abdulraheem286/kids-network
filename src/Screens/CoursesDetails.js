@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import ReviewCard from "../components/ELearning/ReviewCard";
 import ChapterCards from "../components/ELearning/ChapterCards";
 import { useToken } from "../hooks/useToken";
+import CourseDetailsCard from "../components/ELearning/CourseDetailsCard";
 
 export default function CoursesDetails(props) {
   const navigate = useNavigate();
@@ -120,9 +121,11 @@ export default function CoursesDetails(props) {
                 className="d-flex flex-row mt-5"
                 style={{
                   justifyContent: "space-between",
+                  maxWidth: "95%",
+                  margin: "auto",
                 }}
               >
-                <div style={{ width: "65%" }}>
+                <div style={{ width: "60%" }}>
                   <h2 className="font-weight-bold text-danger">
                     {courseData.coursetitle}
                   </h2>
@@ -138,8 +141,42 @@ export default function CoursesDetails(props) {
                       objectFit: "cover",
                     }}
                   />
+                  <div
+                    style={{
+                      marginTop: 50,
+                      height: "fit-content",
+                    }}
+                  >
+                    <h3>Description</h3>
+                    <p>
+                      Veniam mollit excepteur excepteur amet aliquip quis sint
+                      esse id cillum. Duis irure laboris consectetur laboris
+                      anim. Consectetur enim ad nulla do proident occaecat est.
+                      Reprehenderit sunt occaecat adipisicing pariatur ex.
+                      Dolore exercitation laborum fugiat labore quis. Aliquip
+                      laboris amet enim proident nisi velit veniam nisi nostrud.
+                    </p>
+                    <h3>Course Contents: </h3>
+                    <div
+                      className="border rounded-3 my-5"
+                      style={{
+                        borderRadius: "5px",
+                        boxShadow: "0 25px 50px -12px rgb(0 0 0 / 0.25)",
+                        backgroundColor: "#f5f5f5",
+                      }}
+                    >
+                      {new Array(5).fill(0).map((_, index) => (
+                        <ChapterCards
+                          number={index}
+                          key={index}
+                          title={
+                            "How to do this and Eran more monryadsadsadasdsad"
+                          }
+                        />
+                      ))}
+                    </div>
+                  </div>
 
-                  <p className="mt-1">{courseData.coursedescription}</p>
                   <div>
                     <h3>
                       Reviews: <small>({reviews?.length})</small>{" "}
@@ -160,7 +197,12 @@ export default function CoursesDetails(props) {
                     display: "flex",
                     flexDirection: "column",
                     width: "35%",
+                    height: "fit-content",
+                    borderRadius: "10px",
+                    backgroundColor: "#f5f5f5",
                     alignItems: "center",
+                    padding: "20px",
+                    boxShadow: "0 25px 50px -12px rgb(0 0 0 / 0.25)",
                   }}
                   className=""
                 >
@@ -193,23 +235,7 @@ export default function CoursesDetails(props) {
                       Enroll Now
                     </button>
                   )}
-                  <div
-                    style={{
-                      marginTop: 50,
-                      height: "50%",
-                    }}
-                  >
-                    <h3>Course Contents: </h3>
-                    {new Array(5).fill(0).map((_, index) => (
-                      <ChapterCards
-                        number={index}
-                        key={index}
-                        title={
-                          "How to do this and Eran more monryadsadsadasdsad"
-                        }
-                      />
-                    ))}
-                  </div>
+                  <CourseDetailsCard />
                   <form className=" w-100 my-5">
                     <h3>Leave a review: </h3>
 

@@ -1,14 +1,19 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 const ChapterCards = ({ number, title }) => {
   return (
     <div
-      className="rounded-pill border my-2 fs-3 justify-content-center p-2 w-100 d-flex
+      className="mt-2 fs-3 justify-content-between p-3 w-100 d-flex
      align-items-center"
-      style={{ backgroundColor: "#f5f5f5" }}
+      style={{ borderBottom: "1px solid #000" }}
     >
-      <h5 style={{ marginRight: "5px" }}>#{number}</h5>
-      <h6>{title}</h6>
+      <div className="d-flex ">
+        <FontAwesomeIcon icon={faChevronRight} className="mr-2" />
+        <h6>{title}</h6>
+      </div>
+      <h6>8 Videos</h6>
     </div>
   );
 };
