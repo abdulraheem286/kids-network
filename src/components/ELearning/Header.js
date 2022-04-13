@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 
-const Header = ({ pageName, bgImage }) => {
+const Header = ({ pageName, bgImage, color }) => {
   return (
     <>
       <div
@@ -11,6 +11,7 @@ const Header = ({ pageName, bgImage }) => {
           backgroundImage: `url(${bgImage})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
+          color,
         }}
       >
         <Container style={{ paddingTop: 100 }}>
