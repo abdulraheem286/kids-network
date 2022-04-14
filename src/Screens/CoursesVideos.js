@@ -26,6 +26,7 @@ export default function CoursesDetails() {
   const [rating, setrating] = useState(0);
   const [sent, setsent] = useState(false);
   const [reviews, setreviews] = useState([]);
+  const [deleteComment, setdeleteComment] = useState(false);
   const token = useToken();
 
   useEffect(() => {
@@ -59,7 +60,8 @@ export default function CoursesDetails() {
     };
     loaddata();
     setsent(false);
-  }, [params.id, location.search, sent]);
+    setdeleteComment(false);
+  }, [params.id, location.search, sent, deleteComment]);
   const submitReview = async () => {
     try {
       await firebase
@@ -108,6 +110,18 @@ export default function CoursesDetails() {
         "https://i.ytimg.com/vi/eq7KF7JTinU/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAc27dJxOlZjF2NjYYS0I3FotyJEg",
     },
   ];
+  const deleteComments = async (pageId, itemId) => {
+    firebase
+      .firestore()
+      .collection("courses")
+      .doc(pageId)
+      .collection("coursevideos")
+      .doc(pageId)
+      .collection("reviews")
+      .doc(itemId)
+      .delete();
+    setdeleteComment(true);
+  };
   return (
     <div style={{ minHeight: "100vh", maxWidth: "100vw" }}>
       <BreadcrumbPage params={params} />
@@ -171,9 +185,12 @@ export default function CoursesDetails() {
                 {reviews.map((review) => (
                   <ReviewCard
                     key={review.id}
+                    itemId={review.id}
+                    pageId={params.id}
                     name={review.name}
                     comment={review.comment}
                     stars={review.stars}
+                    deleteComment={deleteComments}
                   />
                 ))}
               </div>
