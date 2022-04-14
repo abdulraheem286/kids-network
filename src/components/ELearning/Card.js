@@ -25,7 +25,6 @@ export default function Card({
           const openedItems = items.filter((item) => item.state === "opened");
           const openedItemsLength = openedItems.length;
           const percentage = Math.round((openedItemsLength / length) * 100);
-          console.log("Percentage", length, openedItemsLength, percentage);
           setpercentage(percentage);
         }
       });
