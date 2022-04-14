@@ -8,12 +8,14 @@ import Header from "./../components/ELearning/Header";
 import { MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer } from "mdbreact";
 import { Link } from "react-router-dom";
 import { useToken } from "../hooks/useToken";
+import "./Courses.css";
 
 const Courses = () => {
   const [listings, setListings] = useState([]);
   const [enrolledCourse, setenrolledCourse] = useState([]);
   const [unEnrolledCourse, setunEnrolledCourse] = useState([]);
   const navigate = useNavigate();
+  const [filterItem, setfilterItem] = useState("");
   const token = useToken();
   useEffect(() => {
     if (!token) navigate("/sign-in", { replace: true });
@@ -51,11 +53,9 @@ const Courses = () => {
   }, [navigate, token]);
 
   const columnsPerRow = 3;
-  console.log("EnrolledCouse", enrolledCourse);
-  console.log("unEnrolledCourse", unEnrolledCourse);
   const getColumnsForRow = (courses) => {
     const items = courses?.map((data) => {
-      return (
+      const card = (
         <Col key={data.id}>
           <Card
             key={data.id}
@@ -67,10 +67,21 @@ const Courses = () => {
           />
         </Col>
       );
+      return filterItem
+        ? data.data.coursecategory === filterItem
+          ? card
+          : null
+        : card;
     });
     return items;
   };
-
+  const courseCategory = [
+    "All",
+    "Business",
+    "Coding",
+    "Bitcoin",
+    "Development",
+  ];
   return (
     <>
       <Header
@@ -80,6 +91,17 @@ const Courses = () => {
         }
       />
       <BreadcrumbPage />
+      <div className="d-flex w-75 my-2 mx-auto justify-content-between">
+        {courseCategory.map((e, index) => (
+          <h4
+            key={index}
+            className="filterItems"
+            onClick={() => setfilterItem(e === "All" ? "" : e)}
+          >
+            {e}
+          </h4>
+        ))}
+      </div>
       <Container>
         {enrolledCourse.length > 0 && (
           <>
