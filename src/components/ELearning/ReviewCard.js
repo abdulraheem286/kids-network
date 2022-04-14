@@ -1,6 +1,17 @@
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-
-const ReviewCard = ({ photo, name, comment, stars }) => {
+import "./ReviewCard.css";
+import firebase from "firebase";
+const ReviewCard = ({
+  photo,
+  name,
+  comment,
+  stars,
+  pageId,
+  itemId,
+  deleteComment,
+}) => {
   return (
     <div className="d-flex flex-column mt-3 mb-3 align-items-start">
       <div className="d-flex align-items-center">
@@ -11,7 +22,14 @@ const ReviewCard = ({ photo, name, comment, stars }) => {
           alt=""
         />
         <div className="d-flex flex-column m-4">
-          <h6 style={{ fontWeight: "800", marginRight: "5px" }}>{name}</h6>
+          <div className="d-flex justify-content-between ">
+            <h6 style={{ fontWeight: "800", marginRight: "45px" }}>{name}</h6>
+            <FontAwesomeIcon
+              icon={faTrashCan}
+              onClick={() => deleteComment(pageId, itemId)}
+              className="icon"
+            />
+          </div>
           <div>
             {new Array(5).fill(0).map((_, i) => {
               return i < stars ? (

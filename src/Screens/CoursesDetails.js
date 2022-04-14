@@ -28,6 +28,7 @@ export default function CoursesDetails(props) {
   const [reviews, setreviews] = useState([]);
   const [rating, setrating] = useState(0);
   const [sent, setsent] = useState(false);
+  const [deleteComment, setdelete] = useState(false);
 
   async function submitReview() {
     try {
@@ -41,7 +42,7 @@ export default function CoursesDetails(props) {
           comment: review,
           stars: rating,
         });
-      setreview(0);
+      setreview("");
       setrating(0);
       setsent(true);
     } catch (error) {
@@ -71,10 +72,11 @@ export default function CoursesDetails(props) {
           setreviews(res.docs.map((e) => ({ id: e.id, ...e.data() })));
         });
       setsent(false);
+      setdelete(false);
     };
 
     loaddatas();
-  }, [params.data, enrolledUser, token.email, sent]);
+  }, [params.data, enrolledUser, token.email, sent, deleteComment]);
   const UnEnrollUser = async () => {
     try {
       await firebase
@@ -103,6 +105,16 @@ export default function CoursesDetails(props) {
       console.log(error);
     }
   }
+  const deleteComments = async (pageId, itemId) => {
+    firebase
+      .firestore()
+      .collection("courses")
+      .doc(pageId)
+      .collection("reviews")
+      .doc(itemId)
+      .delete();
+    setdelete(true);
+  };
 
   return (
     <>
@@ -185,8 +197,11 @@ export default function CoursesDetails(props) {
                       <ReviewCard
                         key={item.id}
                         name={item.name}
+                        pageId={params.data}
+                        itemId={item.id}
                         comment={item.comment}
                         stars={item.stars}
+                        deleteComment={deleteComments}
                       />
                     ))}
                   </div>
