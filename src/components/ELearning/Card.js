@@ -1,12 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import firebase from "firebase";
 import "./Card.css";
+import { ProgressBar } from "react-bootstrap";
 export default function Card({
   cardImage,
   title,
   cardDescription,
   courseCategory,
   action,
+  id,
 }) {
+  const [percentage, setpercentage] = useState(0);
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection("courses")
+      .doc(id)
+      .collection("coursevideos")
+      .get()
+      .then((res) => {
+        const items = res?.docs?.map((doc) => ({ id: doc.id, ...doc.data() }));
+        if (items) {
+          const length = items?.length;
+          const openedItems = items.filter((item) => item.state === "opened");
+          const openedItemsLength = openedItems.length;
+          const percentage = Math.round((openedItemsLength / length) * 100);
+          console.log("Percentage", length, openedItemsLength, percentage);
+          setpercentage(percentage);
+        }
+      });
+  }, [id]);
+
   return (
     <div
       style={style.WrapperBtn}
@@ -29,6 +53,7 @@ export default function Card({
                 <hr />
                 <small className="text-muted">{courseCategory}</small>
               </p>
+              <ProgressBar now={percentage} label={`${percentage}%`} />
             </div>
           </div>
         </div>

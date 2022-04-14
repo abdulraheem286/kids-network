@@ -59,6 +59,7 @@ const Courses = () => {
         <Col key={data.id}>
           <Card
             key={data.id}
+            id={data.id}
             title={data.data.coursetitle}
             cardDescription={data.data.coursedescription}
             courseCategory={data.data.coursecategory}

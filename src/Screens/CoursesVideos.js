@@ -38,6 +38,15 @@ export default function CoursesDetails() {
         .firestore()
         .collection("courses")
         .doc(params.id)
+        .collection("coursevideos")
+        .doc(video)
+        .set({
+          state: location.state,
+        });
+      firebase
+        .firestore()
+        .collection("courses")
+        .doc(params.id)
         .get()
         .then((res) => {
           setVideoData(res.data());
@@ -47,7 +56,7 @@ export default function CoursesDetails() {
         .collection("courses")
         .doc(params.id)
         .collection("coursevideos")
-        .doc(params.id)
+        .doc(video)
         .collection("reviews")
         .get()
         .then((res) => {
@@ -61,7 +70,7 @@ export default function CoursesDetails() {
     loaddata();
     setsent(false);
     setdeleteComment(false);
-  }, [params.id, location.search, sent, deleteComment]);
+  }, [params.id, location.search, sent, deleteComment, location.state]);
   const submitReview = async () => {
     try {
       await firebase
@@ -69,7 +78,7 @@ export default function CoursesDetails() {
         .collection("courses")
         .doc(params.id)
         .collection("coursevideos")
-        .doc(params.id)
+        .doc(video)
         .collection("reviews")
         .add({
           name: `${token.fName} ${token.lName}`,
@@ -82,6 +91,18 @@ export default function CoursesDetails() {
     } catch (error) {
       console.log(error);
     }
+  };
+  const deleteComments = async (pageId, itemId) => {
+    firebase
+      .firestore()
+      .collection("courses")
+      .doc(pageId)
+      .collection("coursevideos")
+      .doc(video)
+      .collection("reviews")
+      .doc(itemId)
+      .delete();
+    setdeleteComment(true);
   };
   const videos = [
     {
@@ -110,18 +131,7 @@ export default function CoursesDetails() {
         "https://i.ytimg.com/vi/eq7KF7JTinU/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAc27dJxOlZjF2NjYYS0I3FotyJEg",
     },
   ];
-  const deleteComments = async (pageId, itemId) => {
-    firebase
-      .firestore()
-      .collection("courses")
-      .doc(pageId)
-      .collection("coursevideos")
-      .doc(pageId)
-      .collection("reviews")
-      .doc(itemId)
-      .delete();
-    setdeleteComment(true);
-  };
+
   return (
     <div style={{ minHeight: "100vh", maxWidth: "100vw" }}>
       <BreadcrumbPage params={params} />
@@ -187,6 +197,7 @@ export default function CoursesDetails() {
                     key={review.id}
                     itemId={review.id}
                     pageId={params.id}
+                    videoId={video}
                     name={review.name}
                     comment={review.comment}
                     stars={review.stars}

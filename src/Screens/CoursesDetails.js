@@ -235,7 +235,8 @@ export default function CoursesDetails(props) {
                           navigate(
                             `/courseVideos/${
                               params.data
-                            }?video=${"7eh4d6sabA0"}`
+                            }?video=${"7eh4d6sabA0"}`,
+                            { state: "opened" }
                           )
                         }
                       >

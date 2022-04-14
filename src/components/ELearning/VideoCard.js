@@ -5,13 +5,15 @@ import { useNavigate, useParams } from "react-router";
 const VideoCard = ({ thumbnail, videoLink }) => {
   const navigate = useNavigate();
   const params = useParams();
-  useEffect(() => {
-    console.log("OK");
-  }, [params]);
+  useEffect(() => {}, [params]);
 
   return (
     <Row
-      onClick={() => navigate(`/courseVideos/${params.id}?video=${videoLink}`)}
+      onClick={() =>
+        navigate(`/courseVideos/${params.id}?video=${videoLink}`, {
+          state: "opened",
+        })
+      }
       className="w-100 bg-white rounded p-0"
       style={{ height: "80px", margin: "10px auto", cursor: "pointer" }}
     >
