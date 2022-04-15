@@ -9,6 +9,7 @@ import Courses from "../Screens/Courses";
 import CoursesDetails from "../Screens/CoursesDetails";
 import CoursesVideos from "./../Screens/CoursesVideos";
 import Community from "./Community/Community";
+import Admin from "./Admin/Admin";
 
 export default function AppRouter() {
   return (
@@ -21,6 +22,8 @@ export default function AppRouter() {
       <Route exact path="/community" element={<Community />} />
       <Route exact path="/coursedetails/:data" element={<CoursesDetails />} />
       <Route exact path="/coursevideos/:id" element={<CoursesVideos />} />
+      <Route exact path="/admin" element={<Admin />} />
+      <Route exact path="/admin/*" element={<Admin />} />
     </Routes>
   );
 }

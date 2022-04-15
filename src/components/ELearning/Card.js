@@ -50,11 +50,11 @@ export default function Card({
               alt="Card"
             />
             <div className="card-body">
-              {title && <h5 className="card-title">{title}</h5>}
+              {title && <h5>{title}</h5>}
               <p className="card-text">{cardDescription}</p>
               <p className="card-text">
                 <hr />
-                <small className="text-muted">{courseCategory}</small>
+                <small>{courseCategory}</small>
               </p>
               <ProgressBar now={percentage} label={`${percentage}%`} />
             </div>

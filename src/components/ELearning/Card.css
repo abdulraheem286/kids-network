@@ -3,6 +3,6 @@
 }
 .wrapper:hover,.wrapper:hover .card{
     color: white;
-    background-color: #282828;
+    background-color: #65daff;
     transform: scale(1.05);
 }
