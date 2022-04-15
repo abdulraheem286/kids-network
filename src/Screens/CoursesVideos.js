@@ -41,7 +41,9 @@ export default function CoursesDetails() {
         .collection("coursevideos")
         .doc(video)
         .set({
-          state: location.state,
+          [token.email]: {
+            state: location.state,
+          },
         });
       firebase
         .firestore()
@@ -70,7 +72,14 @@ export default function CoursesDetails() {
     loaddata();
     setsent(false);
     setdeleteComment(false);
-  }, [params.id, location.search, sent, deleteComment, location.state]);
+  }, [
+    params.id,
+    location.search,
+    sent,
+    deleteComment,
+    location.state,
+    token.email,
+  ]);
   const submitReview = async () => {
     try {
       await firebase

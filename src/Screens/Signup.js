@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import firebase from "firebase";
 import "firebase/firestore";
 import * as Yup from "yup";
+import { useNavigate } from "react-router";
+import { MDBContainer, MDBAlert } from "mdbreact";
+import AuthContext from "../components/AuthContext";
 
 const validationSchema = Yup.object().shape({
   fName: Yup.string().required("*First Name Required").label("First Name"),
@@ -15,8 +18,10 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function SignUp() {
+  const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
+  const [signedIn, setsignedIn] = useState(null);
   const handleSubmit = async (values) => {
-    console.log(values, "values");
     const userCheck = await firebase
       .firestore()
       .collection("users")
@@ -33,18 +38,38 @@ export default function SignUp() {
             .collection("users")
             .add(values)
             .then(() => {
-              console.log("done");
+              setsignedIn("signedIn");
+              localStorage.setItem("user", JSON.stringify(values));
+              authContext.setUserDetails(values);
+              setTimeout(() => {
+                navigate("/", { replace: true });
+              }, 1000);
             });
-          console.log(res, "response");
         })
         .catch((err) => {
           console.log(err, "error");
         });
+    } else {
+      setsignedIn("notSignedIn");
     }
   };
 
   return (
     <>
+      {signedIn === "signedIn" && (
+        <AlertPage
+          color="success"
+          keyword="Congratulation"
+          message="You have been signed up successfully"
+        />
+      )}
+      {signedIn === "notSignedIn" && (
+        <AlertPage
+          color="danger"
+          keyword="Sorry"
+          message="User with same email already exists"
+        />
+      )}
       <Formik
         initialValues={{
           fName: "",
@@ -137,3 +162,12 @@ export default function SignUp() {
     </>
   );
 }
+const AlertPage = ({ color, keyword, message }) => {
+  return (
+    <MDBContainer>
+      <MDBAlert color={color}>
+        <strong>{keyword}!</strong> {message}.
+      </MDBAlert>
+    </MDBContainer>
+  );
+};

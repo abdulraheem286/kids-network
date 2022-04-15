@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import firebase from "firebase";
 import "./Card.css";
 import { ProgressBar } from "react-bootstrap";
+import { useToken } from "../../hooks/useToken";
 export default function Card({
   cardImage,
   title,
@@ -11,6 +12,7 @@ export default function Card({
   id,
 }) {
   const [percentage, setpercentage] = useState(0);
+  const token = useToken();
   useEffect(() => {
     firebase
       .firestore()
@@ -22,13 +24,15 @@ export default function Card({
         const items = res?.docs?.map((doc) => ({ id: doc.id, ...doc.data() }));
         if (items) {
           const length = items?.length;
-          const openedItems = items.filter((item) => item.state === "opened");
+          const openedItems = items?.filter(
+            (item) => item[token.email]?.state === "opened"
+          );
           const openedItemsLength = openedItems.length;
           const percentage = Math.round((openedItemsLength / length) * 100);
           setpercentage(percentage);
         }
       });
-  }, [id]);
+  }, [id, token.email]);
 
   return (
     <div

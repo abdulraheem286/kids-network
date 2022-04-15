@@ -21,12 +21,10 @@ export default function Login() {
   const [loggedIn, setloggedIn] = useState(null);
 
   const handleSubmit = async (values) => {
-    console.log(values, "values");
     firebase
       .auth()
       .signInWithEmailAndPassword(values.email, values.password)
       .then(async (userCredential) => {
-        console.log(userCredential, "credentials");
         firebase
           .firestore()
           .collection("users")
@@ -46,7 +44,6 @@ export default function Login() {
           });
 
         var user = userCredential.id;
-        console.log(user);
       })
       .catch((error) => {
         var errorMessage = error.message;

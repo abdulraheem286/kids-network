@@ -15,7 +15,6 @@ const CommentCard = () => {
           },
         });
         const data = await res.json();
-        console.log(data);
         setState(data.data);
       } catch (error) {
         console.error(error);
