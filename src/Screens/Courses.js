@@ -131,6 +131,11 @@ const Courses = () => {
               className="form-control mr-sm-2"
               type="text"
               placeholder="Search"
+              onChange={(e) => {
+                if (!e.target.value) {
+                  setsearch(e.target.value);
+                }
+              }}
               aria-label="Search"
             />
             <MDBBtn
