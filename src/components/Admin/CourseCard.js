@@ -4,13 +4,36 @@ import firebase from "firebase";
 import CourseDetails from "./CourseDetails";
 import { Modal, Button } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
+import VideoDetails from "./VideoDetails";
 const { Panel } = Collapse;
 
 const CourseCard = () => {
   const [courses, setcourses] = useState([]);
-  const [courseReviews, setcourseReviews] = useState([]);
   const [courseVideos, setcourseVideos] = useState([]);
   const [refresh, setrefresh] = useState(false);
+  const getVideos = async (data) => {
+    try {
+      const videosData = data.map(async (item) => {
+        const videos = await firebase
+          .firestore()
+          .collection("courses")
+          .doc(item.id)
+          .collection("coursevideos")
+          .get();
+        return {
+          courseId: item.id,
+          coursetitle: item.coursetitle,
+          videos: videos.docs.map((video) => ({
+            id: video.id,
+            ...video.data(),
+          })),
+        };
+      });
+      setcourseVideos(await Promise.all(videosData));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     const loadData = async () => {
       firebase
@@ -20,6 +43,7 @@ const CourseCard = () => {
         .then((res) => {
           const data = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
           setcourses(data);
+          getVideos(data);
         });
     };
     loadData();
@@ -37,20 +61,19 @@ const CourseCard = () => {
         </Button>
       </Tooltip>
       <Collapse>
-        <Panel header="This is panel header 1" key="1">
-          <Collapse defaultActiveKey="1">
-            <Panel header="Course Details" key="1" extra={<AddModal />}>
-              {courses.map((course) => (
-                <CourseDetails key={course.id} course={course} />
-              ))}
-            </Panel>
-          </Collapse>
+        <Panel header="Course Details" key="1" extra={<AddModal />}>
+          {courses.map((course) => (
+            <CourseDetails key={course.id} course={course} />
+          ))}
         </Panel>
-        <Panel header="This is panel header 2" key="2">
-          <p></p>
-        </Panel>
-        <Panel header="This is panel header 3" key="3">
-          <p></p>
+        <Panel header="Course Videos" key="2">
+          {courseVideos.map((course, index) => (
+            <VideoDetails
+              key={course.courseId}
+              index={index}
+              courseVideos={course}
+            />
+          ))}
         </Panel>
       </Collapse>
     </div>
