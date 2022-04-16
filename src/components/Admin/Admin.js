@@ -6,6 +6,7 @@ import {
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 import { useLocation, Link } from "react-router-dom";
+import AdminCourses from "./AdminCourses";
 
 const { Header, Content, Sider } = Layout;
 
@@ -57,7 +58,7 @@ export default function Admin() {
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360 }}
           >
-            {location.pathname.includes("courses") && <h1>Courses</h1>}
+            {location.pathname.includes("courses") && <AdminCourses />}
             {location.pathname.includes("shop") && <h1>Shop</h1>}
             {location.pathname.includes("users") && <h1>Users</h1>}
           </div>
