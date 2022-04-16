@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Card from "../components/ELearning/Card";
 import { Row, Col, Container } from "react-bootstrap";
 import firebase from "firebase";
 import "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import Header from "./../components/ELearning/Header";
-import { MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer } from "mdbreact";
+import {
+  MDBBreadcrumb,
+  MDBBreadcrumbItem,
+  MDBBtn,
+  MDBContainer,
+} from "mdbreact";
 import { Link } from "react-router-dom";
 import { useToken } from "../hooks/useToken";
 import "./Courses.css";
+import { MDBCol, MDBFormInline, MDBIcon } from "mdbreact";
+import _ from "lodash";
 
 const Courses = () => {
   const [listings, setListings] = useState([]);
@@ -17,16 +24,29 @@ const Courses = () => {
   const navigate = useNavigate();
   const [filterItem, setfilterItem] = useState("");
   const token = useToken();
+  const [search, setsearch] = useState("");
+  const ref = useRef(null);
   useEffect(() => {
     if (!token) navigate("/sign-in", { replace: true });
     const loadData = async () => {
-      const courseRef = await firebase.firestore().collection("courses").get();
+      let courseRef = await firebase.firestore().collection("courses").get();
+      if (search) {
+        courseRef = _.filter(courseRef.docs, (doc) => {
+          if (
+            doc.data().coursetitle.toLowerCase().includes(search.toLowerCase())
+          ) {
+            return doc;
+          }
+        });
+      } else {
+        courseRef = courseRef.docs;
+      }
       setListings(
-        courseRef.docs.map((e) => {
+        courseRef?.map((e) => {
           return { id: e.id, data: e.data() };
         })
       );
-      let enrolledCourse = courseRef.docs.map((e) => {
+      let enrolledCourse = courseRef?.map((e) => {
         if (e.data().enrolleduser.includes(token.email)) {
           return {
             id: e.id,
@@ -37,7 +57,7 @@ const Courses = () => {
       enrolledCourse = enrolledCourse.filter((e) => e !== undefined);
       setenrolledCourse(enrolledCourse);
 
-      let unenrolledCourse = courseRef.docs.map((e) => {
+      let unenrolledCourse = courseRef?.map((e) => {
         if (!e.data().enrolleduser.includes(token.email)) {
           return {
             id: e.id,
@@ -50,7 +70,7 @@ const Courses = () => {
     };
 
     loadData();
-  }, [navigate, token]);
+  }, [navigate, token, search]);
 
   const columnsPerRow = 3;
   const getColumnsForRow = (courses) => {
@@ -92,16 +112,42 @@ const Courses = () => {
         }
       />
       <BreadcrumbPage />
-      <div className="d-flex w-75 my-2 mx-auto justify-content-between">
-        {courseCategory.map((e, index) => (
-          <h4
-            key={index}
-            className="filterItems"
-            onClick={() => setfilterItem(e === "All" ? "" : e)}
-          >
-            {e}
-          </h4>
-        ))}
+      <div className="d-flex w-100 my-2 mx-auto justify-content-between">
+        <div className="w-75 d-flex justify-content-between px-5">
+          {courseCategory.map((e, index) => (
+            <h5
+              key={index}
+              className="filterItems"
+              onClick={() => setfilterItem(e === "All" ? "" : e)}
+            >
+              {e}
+            </h5>
+          ))}
+        </div>
+        <div style={{ flex: "1 1 0%" }} className="w-25">
+          <MDBFormInline className="md-form">
+            <input
+              ref={ref}
+              className="form-control mr-sm-2"
+              type="text"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <MDBBtn
+              gradient="aqua"
+              rounded
+              size="sm"
+              type="submit"
+              onClick={(e) => {
+                e.preventDefault();
+                setsearch(ref.current.value);
+              }}
+              className="mr-auto"
+            >
+              Search
+            </MDBBtn>
+          </MDBFormInline>
+        </div>
       </div>
       <Container>
         {enrolledCourse.length > 0 && (
