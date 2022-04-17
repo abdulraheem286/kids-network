@@ -17,7 +17,7 @@ const VideoDetails = ({ courseVideos, index }) => {
       <div className="w-100 d-flex justify-content-end">
         <AddModal courseId={courseVideos.courseId} />
       </div>
-      <Collapse>
+      <Collapse accordion>
         {courseVideos?.videos.map((video) => (
           <Panel header={video.title} key={video.id}>
             <VideoCard video={video} courseId={courseVideos.courseId} />

@@ -8,6 +8,7 @@ import {
 import { useLocation, Link } from "react-router-dom";
 import AdminCourses from "./AdminCourses";
 import "./Admin.css";
+import Users from "./Users/Users";
 const { Header, Content, Sider } = Layout;
 
 export default function Admin() {
@@ -25,7 +26,7 @@ export default function Admin() {
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className="logo" />
-        <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
+        <Menu theme="dark" mode="inline">
           <Menu.Item key="1" icon={<FolderOutlined />}>
             <Link to={"/admin/courses"}>Courses</Link>
           </Menu.Item>
@@ -60,7 +61,7 @@ export default function Admin() {
           >
             {location.pathname.includes("courses") && <AdminCourses />}
             {location.pathname.includes("shop") && <h1>Shop</h1>}
-            {location.pathname.includes("users") && <h1>Users</h1>}
+            {location.pathname.includes("users") && <Users />}
           </div>
         </Content>
       </Layout>

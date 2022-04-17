@@ -61,7 +61,7 @@ const CourseCard = () => {
           Refresh
         </Button>
       </Tooltip>
-      <Collapse>
+      <Collapse accordion>
         <Panel header="Courses" key="1" extra={<AddModal />}>
           {courses.map((course) => (
             <CourseDetails key={course.id} course={course} />
