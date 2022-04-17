@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import firebase from "firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { MDBBtn } from "mdbreact";
+import { Button } from "antd";
 const CourseInfo = ({ cousreId, courseTitle, courseInfo }) => {
   const [state, setstate] = useState({
     author: "",
@@ -36,20 +38,20 @@ const CourseInfo = ({ cousreId, courseTitle, courseInfo }) => {
     }
   };
   return (
-    <div>
-      <div>
-        <button
+    <div className="border rounded p-2 my-3">
+      <div className="d-flex my-2 justify-content-evenly">
+        <Button
           onClick={(e) => {
             e.preventDefault();
             setdisableState(false);
           }}
-          type=""
+          type="primary"
         >
           Edit
-        </button>
-        <button onClick={updateDoc} type="">
+        </Button>
+        <Button onClick={updateDoc} className="mx-4" type="primary">
           Save
-        </button>
+        </Button>
       </div>
       <div className="w-100 d-flex justify-content-between">
         <p>Course ID:</p>
@@ -134,10 +136,14 @@ const CourseInfo = ({ cousreId, courseTitle, courseInfo }) => {
           <label>Chapters</label>
           <ul>
             {state?.chapters?.map((chapter, index) => (
-              <li className="w-50 d-flex justify-content-between " key={index}>
+              <li
+                className="w-50 p-0 m-0 d-flex justify-content-between "
+                key={index}
+              >
                 {chapter}
                 <FontAwesomeIcon
-                  icon={faTrash}
+                  icon={faTrashCan}
+                  style={{ color: "red" }}
                   onClick={(e) => {
                     e.preventDefault();
                     setstate({
@@ -160,8 +166,9 @@ const CourseInfo = ({ cousreId, courseTitle, courseInfo }) => {
               setchapter(e.target.value);
             }}
           />
-          <button
-            type=""
+          <Button
+            type="primary"
+            className="my-2"
             onClick={(e) => {
               e.preventDefault();
               setstate({ ...state, chapters: [...state.chapters, chapter] });
@@ -169,7 +176,7 @@ const CourseInfo = ({ cousreId, courseTitle, courseInfo }) => {
             }}
           >
             Add Chapters
-          </button>
+          </Button>
         </div>
       </form>
     </div>

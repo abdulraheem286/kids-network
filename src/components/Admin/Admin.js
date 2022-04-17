@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { useLocation, Link } from "react-router-dom";
 import AdminCourses from "./AdminCourses";
-
+import "./Admin.css";
 const { Header, Content, Sider } = Layout;
 
 export default function Admin() {

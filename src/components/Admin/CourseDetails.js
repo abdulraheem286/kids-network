@@ -1,7 +1,9 @@
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import firebase from "firebase";
+import { Button } from "antd";
+
 const CourseDetails = ({ course }) => {
   const [state, setstate] = useState({
     coursecategory: "",
@@ -38,23 +40,23 @@ const CourseDetails = ({ course }) => {
     alert("Course Deleted");
   };
   return (
-    <form>
+    <form className="border rounded my-3 p-2">
       <div className="d-flex">
-        <button
-          type=""
+        <Button
+          type="primary"
           onClick={(e) => {
             e.preventDefault();
             setdisableState(false);
           }}
         >
           Edit
-        </button>
-        <button type="" onClick={saveSettings}>
+        </Button>
+        <Button className="mx-4" type="primary" onClick={saveSettings}>
           Save
-        </button>
-        <button type="" onClick={deleteCourse}>
+        </Button>
+        <Button danger onClick={deleteCourse}>
           Delete
-        </button>
+        </Button>
       </div>
 
       <div className="d-flex justify-content-between">
@@ -113,7 +115,7 @@ const CourseDetails = ({ course }) => {
               {" "}
               {user}
               <FontAwesomeIcon
-                icon={faTrash}
+                icon={faTrashCan}
                 onClick={() => updateEnrolledUsers(user)}
               />
             </li>

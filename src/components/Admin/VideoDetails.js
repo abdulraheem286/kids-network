@@ -5,7 +5,7 @@ import { Modal, Button } from "antd";
 const { Panel } = Collapse;
 const VideoDetails = ({ courseVideos, index }) => {
   return (
-    <div className="border p-1 my-3">
+    <div className="border p-2 rounded my-3">
       <div className="w-100 d-flex justify-content-between">
         <label> Course Id:</label>
         <p>{courseVideos.courseId}</p>
@@ -74,17 +74,22 @@ const VideoCard = ({ video, courseId }) => {
   };
   return (
     <form>
-      <div>
-        <button
+      <div className="my-2">
+        <Button
+          type="primary"
           onClick={(e) => {
             e.preventDefault();
             setdisabledState(false);
           }}
         >
           Edit
-        </button>
-        <button onClick={saveSettings}>Save</button>
-        <button onClick={deleteDoc}>Delete</button>
+        </Button>
+        <Button className="mx-4" type="primary" onClick={saveSettings}>
+          Save
+        </Button>
+        <Button danger onClick={deleteDoc}>
+          Delete
+        </Button>
       </div>
 
       <div className="w-100 d-flex justify-content-between">
