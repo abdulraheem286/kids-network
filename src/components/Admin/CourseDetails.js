@@ -109,7 +109,7 @@ const CourseDetails = ({ course }) => {
         <label>Enrolled User</label>
         <ul>
           {state.enrolleduser.map((user, index) => (
-            <li className="w-25 d-flex justify-content-between " key={index}>
+            <li className="w-50 d-flex justify-content-between " key={index}>
               {" "}
               {user}
               <FontAwesomeIcon

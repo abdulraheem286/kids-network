@@ -140,7 +140,12 @@ const VideoCard = ({ video, courseId }) => {
 const AddModal = ({ courseId }) => {
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
-
+  const [state, setstate] = useState({
+    title: "",
+    thumbnail: "",
+    description: "",
+    link: "",
+  });
   const showModal = () => {
     setVisible(true);
   };
@@ -156,6 +161,12 @@ const AddModal = ({ courseId }) => {
         .doc(videoId)
         .set(state)
         .then(() => {
+          setstate({
+            title: "",
+            thumbnail: "",
+            description: "",
+            link: "",
+          });
           setVisible(false);
         });
     } catch (error) {
@@ -165,14 +176,15 @@ const AddModal = ({ courseId }) => {
 
   const handleCancel = () => {
     console.log("Clicked cancel button");
+    setstate({
+      title: "",
+      thumbnail: "",
+      description: "",
+      link: "",
+    });
     setVisible(false);
   };
-  const [state, setstate] = useState({
-    title: "",
-    thumbnail: "",
-    description: "",
-    link: "",
-  });
+
   const changeHandler = (e) => {
     setstate({ ...state, [e.target.name]: e.target.value });
   };

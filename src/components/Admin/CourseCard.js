@@ -5,6 +5,7 @@ import CourseDetails from "./CourseDetails";
 import { Modal, Button } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 import VideoDetails from "./VideoDetails";
+import CourseInfo from "./CourseInfo";
 const { Panel } = Collapse;
 
 const CourseCard = () => {
@@ -61,7 +62,7 @@ const CourseCard = () => {
         </Button>
       </Tooltip>
       <Collapse>
-        <Panel header="Course Details" key="1" extra={<AddModal />}>
+        <Panel header="Courses" key="1" extra={<AddModal />}>
           {courses.map((course) => (
             <CourseDetails key={course.id} course={course} />
           ))}
@@ -75,6 +76,16 @@ const CourseCard = () => {
             />
           ))}
         </Panel>
+        <Panel header="Course Details" key="3">
+          {courses.map((course, index) => (
+            <CourseInfo
+              key={course.id}
+              courseTitle={course.coursetitle}
+              courseInfo={course}
+              cousreId={course.id}
+            />
+          ))}
+        </Panel>
       </Collapse>
     </div>
   );
@@ -85,7 +96,13 @@ export default CourseCard;
 const AddModal = () => {
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
-
+  const [state, setstate] = useState({
+    coursecategory: "",
+    coursetitle: "",
+    coursedescription: "",
+    courseimage: "",
+    enrolleduser: [],
+  });
   const showModal = () => {
     setVisible(true);
   };
@@ -97,6 +114,12 @@ const AddModal = () => {
         .collection("courses")
         .add(state);
       if (course) {
+        setstate({
+          coursecategory: "",
+          coursetitle: "",
+          coursedescription: "",
+          courseimage: "",
+        });
         setVisible(false);
       }
     } catch (error) {
@@ -106,15 +129,15 @@ const AddModal = () => {
 
   const handleCancel = () => {
     console.log("Clicked cancel button");
+    setstate({
+      coursecategory: "",
+      coursetitle: "",
+      coursedescription: "",
+      courseimage: "",
+    });
     setVisible(false);
   };
-  const [state, setstate] = useState({
-    coursecategory: "",
-    coursetitle: "",
-    coursedescription: "",
-    courseimage: "",
-    enrolleduser: [],
-  });
+
   const changeHandler = (e) => {
     setstate({ ...state, [e.target.name]: e.target.value });
   };

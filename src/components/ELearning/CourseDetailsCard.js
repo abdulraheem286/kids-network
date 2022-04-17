@@ -8,18 +8,34 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-const CourseDetailsCard = () => {
+const CourseDetailsCard = ({ courseDetails }) => {
   return (
     <div className=" w-100 mt-4">
       <h3 style={{ fontWeight: "bold", margin: "5px 0" }} className="my-1">
         $149.00
       </h3>
       <table className="my-2 w-100">
-        <Row icon={faSliders} text="Beginner" category="Level" />
-        <Row icon={faTv} text="8 Lectures" category="Lectures" />
-        <Row icon={faStopwatch} text="1h 30 minutes" category="Duration" />
-        <Row icon={faCube} text="Data Sciences" category="Category" />
-        <Row icon={faLanguage} text="English" category="Language" />
+        <Row icon={faSliders} text={courseDetails?.level} category="Level" />
+        <Row
+          icon={faTv}
+          text={`${courseDetails?.lectures} Lectures`}
+          category="Lectures"
+        />
+        <Row
+          icon={faStopwatch}
+          text={courseDetails?.duration}
+          category="Duration"
+        />
+        <Row
+          icon={faCube}
+          text={courseDetails?.coursecategory}
+          category="Category"
+        />
+        <Row
+          icon={faLanguage}
+          text={courseDetails?.language}
+          category="Language"
+        />
       </table>
     </div>
   );

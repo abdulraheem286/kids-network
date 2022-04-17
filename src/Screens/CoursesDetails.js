@@ -150,7 +150,7 @@ export default function CoursesDetails(props) {
                   <h2 className="font-weight-bold text-danger">
                     {courseData.coursetitle}
                   </h2>
-                  <h6>By Abdullah Riaz</h6>
+                  <h6>By {courseData?.author}</h6>
                   <img
                     src={courseData.courseimage}
                     alt="courseimages"
@@ -169,14 +169,7 @@ export default function CoursesDetails(props) {
                     }}
                   >
                     <h3>Description</h3>
-                    <p>
-                      Veniam mollit excepteur excepteur amet aliquip quis sint
-                      esse id cillum. Duis irure laboris consectetur laboris
-                      anim. Consectetur enim ad nulla do proident occaecat est.
-                      Reprehenderit sunt occaecat adipisicing pariatur ex.
-                      Dolore exercitation laborum fugiat labore quis. Aliquip
-                      laboris amet enim proident nisi velit veniam nisi nostrud.
-                    </p>
+                    <p>{courseData?.detailedDescription}</p>
                     <h3>Course Contents: </h3>
                     <div
                       className="border rounded-3 my-5"
@@ -186,13 +179,11 @@ export default function CoursesDetails(props) {
                         backgroundColor: "#f5f5f5",
                       }}
                     >
-                      {new Array(5).fill(0).map((_, index) => (
+                      {courseData?.chapters?.map((chapter, index) => (
                         <ChapterCards
                           number={index}
                           key={index}
-                          title={
-                            "How to do this and Eran more monryadsadsadasdsad"
-                          }
+                          title={chapter}
                         />
                       ))}
                     </div>
@@ -258,7 +249,7 @@ export default function CoursesDetails(props) {
                       Enroll Now
                     </button>
                   )}
-                  <CourseDetailsCard />
+                  <CourseDetailsCard courseDetails={courseData} />
                   <form className=" w-100 my-5">
                     <h3>Leave a review: </h3>
 
