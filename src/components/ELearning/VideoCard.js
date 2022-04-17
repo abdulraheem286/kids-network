@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router";
 
-const VideoCard = ({ thumbnail, videoLink }) => {
+const VideoCard = ({ thumbnail, videoLink, title, author }) => {
   const navigate = useNavigate();
   const params = useParams();
   useEffect(() => {}, [params]);
@@ -28,12 +28,9 @@ const VideoCard = ({ thumbnail, videoLink }) => {
 
       <Col className="justify-content-center d-flex flex-column">
         <h5 className="text-start fw-bold" style={{ fontSize: "16px" }}>
-          {" "}
-          Machine Learning with Python
+          {title}
         </h5>
-        <h6 style={{ fontWeight: "lighter", fontSize: "14px" }}>
-          Code with Mosh
-        </h6>
+        <h6 style={{ fontWeight: "lighter", fontSize: "14px" }}>{author}</h6>
       </Col>
     </Row>
   );

@@ -25,7 +25,7 @@ export default function Card({
         if (items) {
           const length = items?.length;
           const openedItems = items?.filter(
-            (item) => item[token.email]?.state === "opened"
+            (item) => item[token.email.split(".")[0]]?.state === "opened"
           );
           const openedItemsLength = openedItems.length;
           const percentage = Math.round((openedItemsLength / length) * 100);

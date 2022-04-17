@@ -29,7 +29,7 @@ export default function CoursesDetails(props) {
   const [rating, setrating] = useState(0);
   const [sent, setsent] = useState(false);
   const [deleteComment, setdelete] = useState(false);
-
+  const [mainVideo, setmainVideo] = useState();
   async function submitReview() {
     try {
       await firebase
@@ -70,6 +70,15 @@ export default function CoursesDetails(props) {
         .get()
         .then((res) => {
           setreviews(res.docs.map((e) => ({ id: e.id, ...e.data() })));
+        });
+      firebase
+        .firestore()
+        .collection("courses")
+        .doc(params.data)
+        .collection("coursevideos")
+        .get()
+        .then((res) => {
+          setmainVideo(res.docs.map((e) => ({ id: e.id, ...e.data() }))[0]);
         });
       setsent(false);
       setdelete(false);
@@ -233,9 +242,7 @@ export default function CoursesDetails(props) {
                         className="btn btn-success btn-lg rounded-pill"
                         onClick={() =>
                           navigate(
-                            `/courseVideos/${
-                              params.data
-                            }?video=${"7eh4d6sabA0"}`,
+                            `/courseVideos/${params.data}?video=${mainVideo?.id}`,
                             { state: "opened" }
                           )
                         }

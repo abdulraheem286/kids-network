@@ -1,7 +1,7 @@
 import { Collapse } from "antd";
 import React, { useEffect, useState } from "react";
 import firebase from "firebase";
-
+import { Modal, Button } from "antd";
 const { Panel } = Collapse;
 const VideoDetails = ({ courseVideos, index }) => {
   return (
@@ -13,6 +13,9 @@ const VideoDetails = ({ courseVideos, index }) => {
       <div className="w-100 d-flex justify-content-between">
         <label>Course Title:</label>
         <p>{courseVideos.coursetitle}</p>
+      </div>
+      <div className="w-100 d-flex justify-content-end">
+        <AddModal courseId={courseVideos.courseId} />
       </div>
       <Collapse>
         {courseVideos?.videos.map((video) => (
@@ -132,5 +135,105 @@ const VideoCard = ({ video, courseId }) => {
         />
       </div>
     </form>
+  );
+};
+const AddModal = ({ courseId }) => {
+  const [visible, setVisible] = React.useState(false);
+  const [confirmLoading, setConfirmLoading] = React.useState(false);
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleOk = async () => {
+    try {
+      const videoId = state.link.split("=")[1];
+      firebase
+        .firestore()
+        .collection("courses")
+        .doc(courseId)
+        .collection("coursevideos")
+        .doc(videoId)
+        .set(state)
+        .then(() => {
+          setVisible(false);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleCancel = () => {
+    console.log("Clicked cancel button");
+    setVisible(false);
+  };
+  const [state, setstate] = useState({
+    title: "",
+    thumbnail: "",
+    description: "",
+    link: "",
+  });
+  const changeHandler = (e) => {
+    setstate({ ...state, [e.target.name]: e.target.value });
+  };
+
+  return (
+    <>
+      <Button type="primary" onClick={showModal}>
+        Add Video
+      </Button>
+      <Modal
+        title="Title"
+        visible={visible}
+        onOk={handleOk}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+      >
+        <form>
+          <div className="w-100 d-flex justify-content-between">
+            <label>Video Title</label>
+            <input
+              type="text"
+              name="title"
+              required
+              value={state.title}
+              onChange={changeHandler}
+              className="w-50"
+            />
+          </div>
+          <div className="w-100 d-flex justify-content-between">
+            <label>Video Link</label>
+            <input
+              type="text"
+              name="link"
+              required
+              value={state.link}
+              onChange={changeHandler}
+              className="w-50"
+            />
+          </div>
+          <div className="w-100 d-flex justify-content-between">
+            <label>Video Description</label>
+            <textarea
+              type="text"
+              name="description"
+              value={state.description}
+              onChange={changeHandler}
+              className="w-50"
+            />
+          </div>
+          <div className="w-100 d-flex justify-content-between">
+            <label>Video Thumbnail</label>
+            <input
+              type="text"
+              name="thumbnail"
+              value={state.thumbnail}
+              onChange={changeHandler}
+              className="w-50"
+            />
+          </div>
+        </form>
+      </Modal>
+    </>
   );
 };
