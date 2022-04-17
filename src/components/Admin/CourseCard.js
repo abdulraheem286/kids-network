@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Collapse, Tooltip } from "antd";
+import { Collapse, Tooltip, List, Typography } from "antd";
 import firebase from "firebase";
 import CourseDetails from "./CourseDetails";
 import { Modal, Button } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 import VideoDetails from "./VideoDetails";
 import CourseInfo from "./CourseInfo";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 const { Panel } = Collapse;
 
 const CourseCard = () => {
   const [courses, setcourses] = useState([]);
   const [courseVideos, setcourseVideos] = useState([]);
+  const [courseCategory, setcourseCategory] = useState([]);
+  const [category, setcategory] = useState("");
   const [refresh, setrefresh] = useState(false);
   const getVideos = async (data) => {
     try {
@@ -46,10 +50,40 @@ const CourseCard = () => {
           setcourses(data);
           getVideos(data);
         });
+      firebase
+        .firestore()
+        .collection("categories")
+        .doc("courseCategory")
+        .get()
+        .then((res) => {
+          if (res?.data()) {
+            setcourseCategory(res.data()?.categories);
+          }
+        });
     };
     loadData();
     setrefresh(false);
   }, [refresh]);
+  const addCourseCategory = (e) => {
+    e.preventDefault();
+    setcourseCategory([...courseCategory, category]);
+    setcategory("");
+  };
+  const saveCategory = async (e) => {
+    e.preventDefault();
+    try {
+      await firebase
+        .firestore()
+        .collection("categories")
+        .doc("courseCategory")
+        .set({ categories: courseCategory });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const removeCategory = (item) => {
+    setcourseCategory(courseCategory.filter((category) => category !== item));
+  };
   return (
     <div>
       <Tooltip title="refresh">
@@ -64,7 +98,11 @@ const CourseCard = () => {
       <Collapse accordion>
         <Panel header="Courses" key="1" extra={<AddModal />}>
           {courses.map((course) => (
-            <CourseDetails key={course.id} course={course} />
+            <CourseDetails
+              key={course.id}
+              categories={courseCategory}
+              course={course}
+            />
           ))}
         </Panel>
         <Panel header="Course Videos" key="2">
@@ -85,6 +123,43 @@ const CourseCard = () => {
               cousreId={course.id}
             />
           ))}
+        </Panel>
+        <Panel
+          header="Course Category"
+          key="4"
+          extra={
+            <Button type="primary" onClick={saveCategory}>
+              Save
+            </Button>
+          }
+        >
+          <List
+            bordered
+            dataSource={courseCategory}
+            renderItem={(item, index) => (
+              <List.Item className="w-50 d-flex justify-content-between">
+                <div>
+                  <Typography.Text mark>{index}</Typography.Text> {item}
+                </div>
+                <FontAwesomeIcon
+                  icon={faTrashCan}
+                  onClick={() => removeCategory(item)}
+                />
+              </List.Item>
+            )}
+          />
+          <form className="d-flex">
+            <input
+              type="text"
+              value={category}
+              onChange={(e) => setcategory(e.target.value)}
+              className="w-25"
+              placeholder="Add Category"
+            />
+            <Button className="ml-4" type="primary" onClick={addCourseCategory}>
+              Add Course Category{" "}
+            </Button>
+          </form>
         </Panel>
       </Collapse>
     </div>

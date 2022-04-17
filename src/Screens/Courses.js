@@ -26,10 +26,18 @@ const Courses = () => {
   const token = useToken();
   const [search, setsearch] = useState("");
   const ref = useRef(null);
+  const [courseCategory, setcourseCategory] = useState([]);
+
   useEffect(() => {
     if (!token) navigate("/sign-in", { replace: true });
     const loadData = async () => {
       let courseRef = await firebase.firestore().collection("courses").get();
+      const courseCategoryRef = await firebase
+        .firestore()
+        .collection("categories")
+        .doc("courseCategory")
+        .get();
+      setcourseCategory(courseCategoryRef.data().categories);
       if (search) {
         courseRef = _.filter(courseRef.docs, (doc) => {
           if (
@@ -96,13 +104,7 @@ const Courses = () => {
     });
     return items;
   };
-  const courseCategory = [
-    "All",
-    "Business",
-    "Coding",
-    "Bitcoin",
-    "Development",
-  ];
+
   return (
     <>
       <Header

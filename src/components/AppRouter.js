@@ -10,8 +10,9 @@ import CoursesDetails from "../Screens/CoursesDetails";
 import CoursesVideos from "./../Screens/CoursesVideos";
 import Community from "./Community/Community";
 import Admin from "./Admin/Admin";
-
+import { useToken } from "../hooks/useToken";
 export default function AppRouter() {
+  const token = useToken();
   return (
     <Routes>
       <Route exact path="/" element={<LearningLandingPage />} />
@@ -22,8 +23,12 @@ export default function AppRouter() {
       <Route exact path="/community" element={<Community />} />
       <Route exact path="/coursedetails/:data" element={<CoursesDetails />} />
       <Route exact path="/coursevideos/:id" element={<CoursesVideos />} />
-      <Route exact path="/admin" element={<Admin />} />
-      <Route exact path="/admin/*" element={<Admin />} />
+      {token?.isAdmin && (
+        <>
+          <Route exact path="/admin" element={<Admin />} />
+          <Route exact path="/admin/*" element={<Admin />} />
+        </>
+      )}
     </Routes>
   );
 }

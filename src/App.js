@@ -45,6 +45,13 @@ export default function App() {
                   Community
                 </Link>
               </li>
+              {userDetails?.isAdmin && (
+                <li className="nav-item">
+                  <Link className="nav-link " to={"/admin/courses"}>
+                    Admin Panel
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
           <div className="collapse navbar-collapse">

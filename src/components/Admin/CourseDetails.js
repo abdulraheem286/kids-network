@@ -3,8 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import firebase from "firebase";
 import { Button } from "antd";
+import { Select } from "antd";
+const { Option } = Select;
 
-const CourseDetails = ({ course }) => {
+const CourseDetails = ({ course, categories }) => {
   const [state, setstate] = useState({
     coursecategory: "",
     coursetitle: "",
@@ -12,14 +14,13 @@ const CourseDetails = ({ course }) => {
     courseimage: "",
     enrolleduser: [],
     id: "",
+    ...course,
   });
   const [disableState, setdisableState] = useState(true);
   const changeHandler = (e) => {
     setstate({ ...state, [e.target.name]: e.target.value });
   };
-  useEffect(() => {
-    setstate(course);
-  }, [course]);
+
   const saveSettings = async (e) => {
     e.preventDefault();
     await firebase
@@ -76,14 +77,18 @@ const CourseDetails = ({ course }) => {
       </div>
       <div className="w-100 d-flex justify-content-between">
         <label>Course Category</label>
-        <input
-          type="text"
-          name="coursecategory"
-          value={state.coursecategory}
-          onChange={changeHandler}
+        <Select
           disabled={disableState}
-          className="w-50"
-        />
+          defaultValue={state?.coursecategory}
+          className="w-50 my-2"
+          onChange={(e) => setstate({ ...state, coursecategory: e })}
+        >
+          {categories.map((item, index) => (
+            <Option key={index} value={item}>
+              {item}
+            </Option>
+          ))}
+        </Select>
       </div>
       <div className="w-100 d-flex justify-content-between">
         <label>Course Description</label>
