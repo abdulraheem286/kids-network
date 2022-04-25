@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout, Menu } from "antd";
 import {
   TeamOutlined,
@@ -9,6 +9,9 @@ import { useLocation, Link } from "react-router-dom";
 import AdminCourses from "./AdminCourses";
 import "./Admin.css";
 import Users from "./Users/Users";
+import { useNavigate } from "react-router";
+import { useToken } from "../../hooks/useToken";
+import AdminShop from "./Shop/AdminShop";
 const { Header, Content, Sider } = Layout;
 
 export default function Admin() {
@@ -22,6 +25,12 @@ export default function Admin() {
   };
 
   const { collapsed } = state;
+  const token = useToken();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!token) navigate("/sign-in", { replace: true });
+  }, [navigate, token]);
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
@@ -60,7 +69,7 @@ export default function Admin() {
             style={{ padding: 24, minHeight: 360 }}
           >
             {location.pathname.includes("courses") && <AdminCourses />}
-            {location.pathname.includes("shop") && <h1>Shop</h1>}
+            {location.pathname.includes("shop") && <AdminShop />}
             {location.pathname.includes("users") && <Users />}
           </div>
         </Content>

@@ -61,8 +61,8 @@ const UserDetails = ({ user }) => {
             setState({ ...state, isAdmin: e });
           }}
         >
-          <Option value="true">True</Option>
-          <Option value="false">False</Option>
+          <Option value={true}>True</Option>
+          <Option value={false}>False</Option>
         </Select>{" "}
       </div>
     </div>

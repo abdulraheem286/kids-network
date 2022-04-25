@@ -11,7 +11,7 @@ export default function App() {
     JSON.parse(localStorage.getItem("user"))
   );
   const navigate = useNavigate();
-  useEffect(() => {}, [userDetails]);
+  useEffect(() => { }, [userDetails]);
   const logout = () => {
     localStorage.removeItem("user");
     setUserDetails(null);
@@ -36,7 +36,7 @@ export default function App() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={"/sign-up"}>
+                <Link className="nav-link" to={"/shop"}>
                   Shop with Us
                 </Link>
               </li>

@@ -11,6 +11,7 @@ import CoursesVideos from "./../Screens/CoursesVideos";
 import Community from "./Community/Community";
 import Admin from "./Admin/Admin";
 import { useToken } from "../hooks/useToken";
+import Shop from "./Shop/Shop";
 export default function AppRouter() {
   const token = useToken();
   return (
@@ -23,6 +24,7 @@ export default function AppRouter() {
       <Route exact path="/community" element={<Community />} />
       <Route exact path="/coursedetails/:data" element={<CoursesDetails />} />
       <Route exact path="/coursevideos/:id" element={<CoursesVideos />} />
+      <Route exact path="/shop" element={<Shop />} />
       {token?.isAdmin && (
         <>
           <Route exact path="/admin" element={<Admin />} />

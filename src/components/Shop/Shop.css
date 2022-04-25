@@ -1,0 +1,8 @@
+.productItems{
+transition: transform 0.2s ease-in-out;
+}
+.productItems:hover{
+    transform: scale(1.03);
+    font-weight: 700;
+    cursor: pointer;
+}
