@@ -4,6 +4,8 @@ import firebase from "firebase"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons'
 import { ReloadOutlined } from "@ant-design/icons"
+import Products from './Products'
+import AddProduct from './AddProduct'
 const { Panel } = Collapse
 const AdminShop = () => {
     const [productCategory, setproductCategory] = useState([]);
@@ -60,7 +62,7 @@ const AdminShop = () => {
             <Collapse accordion>
                 <Panel
                     header="Product Category"
-                    key="4"
+                    key="1"
                     extra={
                         <Button type="primary" onClick={saveCategory}>
                             Save
@@ -94,6 +96,9 @@ const AdminShop = () => {
                             Add Course Category{" "}
                         </Button>
                     </form>
+                </Panel>
+                <Panel key="2" header="Products" extra={<AddProduct />}>
+                    <Products />
                 </Panel>
             </Collapse>
         </div>

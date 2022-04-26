@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 import { useToken } from '../../hooks/useToken';
 import firebase from "firebase"
 import "./Shop.css"
+import ProductCard from './ProductCard';
 const Shop = () => {
     const token = useToken();
     const [switchState, setswitchState] = useState(false)
@@ -19,7 +20,7 @@ const Shop = () => {
     }, [])
 
     return (
-        <div className='w-100 mh-100'>
+        <div className='w-100'>
             <div className='d-flex w-100 justify-content-between p-4'>
                 <p className='fs-4 fw-bold'>Welcome to Kid's Network Store</p>
                 <div className='d-flex'>
@@ -51,10 +52,11 @@ const Shop = () => {
                     </Col>
                 </Row>
 
-                <Row className="mt-5 border w-100 h-100">
-                    <h5>
-                        All Products
-                    </h5>
+                <h5 className='mt-5'>
+                    All Products
+                </h5>
+                <Row className="px-2 w-100 h-100" xs={3}>
+                    <ProductCard />
                 </Row>
             </Container>
         </div>
