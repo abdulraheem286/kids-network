@@ -97,8 +97,8 @@ const AdminShop = () => {
                         </Button>
                     </form>
                 </Panel>
-                <Panel key="2" header="Products" extra={<AddProduct />}>
-                    <Products />
+                <Panel key="2" header="Products" extra={<AddProduct categories={productCategory} />}>
+                    <Products refresh={refresh} categories={productCategory} />
                 </Panel>
             </Collapse>
         </div>

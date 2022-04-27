@@ -1,8 +1,8 @@
-import { Alert, Button, Input, Modal } from 'antd'
+import { Alert, Button, Input, Modal, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useToken } from '../../../hooks/useToken'
 import firebase from "firebase"
-const AddProduct = ({ }) => {
+const AddProduct = ({ categories }) => {
     const token = useToken()
     const [visible, setvisible] = useState(false)
     const [userId, setuserId] = useState("")
@@ -52,10 +52,15 @@ const AddProduct = ({ }) => {
     const submitHandler = async (e) => {
         e.preventDefault()
         const finalProduct = { ...product, author: `${token.fName} ${token.lName}`, author_email: token.email }
-
+        if (!finalProduct.category) {
+            alert("Select a product category")
+            return
+        }
         try {
-            await firebase.firestore().collection("products").add(finalProduct)
-            await firebase.firestore().collection("users").doc(userId).collection("store").add(finalProduct)
+            const data = await firebase.firestore().collection("products")
+                .add(finalProduct)
+            await firebase.firestore().collection("users")
+                .doc(userId).collection("store").doc(data.id).set(finalProduct)
             setalertMessage("sent")
             setproduct(
                 {
@@ -70,6 +75,9 @@ const AddProduct = ({ }) => {
                     category: ""
                 }
             )
+            setTimeout(() => {
+                setvisible(false)
+            }, 500);
         } catch (error) {
             console.log(error)
             setalertMessage("failed")
@@ -98,7 +106,13 @@ const AddProduct = ({ }) => {
                     </div>
                     <div className="d-flex w-100 justify-content-between px-2">
                         <label>Product Category</label>
-                        <Input required placeholder='category' className="w-50" name='category' type={"text"} value={product.category} onChange={changeHandler} />
+                        <Select className='w-50' value={product.category} onChange={(e) => setproduct({ ...product, category: e })}>
+                            {categories?.map((category, index) => (
+                                <Select.Option key={index} value={category}>
+                                    {category}
+                                </Select.Option>
+                            ))}
+                        </Select>
                     </div>
                     <div className="d-flex w-100 justify-content-between px-2">
                         <label>Product Description</label>
