@@ -1,7 +1,10 @@
-import { List, Switch } from 'antd';
-import { MDBCarousel, MDBCarouselItem, MDBContainer, MDBView, MDBCarouselInner } from 'mdbreact';
+import { Col, Row, List, Switch } from 'antd';
+import {
+    MDBCarousel,
+    MDBCarouselItem, MDBContainer, MDBView, MDBCarouselInner
+} from 'mdbreact';
 import React, { useEffect, useState } from 'react'
-import { Col, Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import { useToken } from '../../hooks/useToken';
 import firebase from "firebase"
@@ -11,18 +14,27 @@ const Shop = () => {
     const token = useToken();
     const [switchState, setswitchState] = useState(false)
     const [productsCategory, setproductsCategory] = useState([])
+    const [products, setproducts] = useState([])
     const navigate = useNavigate();
     useEffect(() => {
         if (!token) navigate("/sign-in", { replace: true });
     }, [navigate, token]);
     useEffect(() => {
-        firebase.firestore().collection("categories").doc("productCategory").get().then(res => setproductsCategory(res.data().categories))
+        firebase.firestore().collection("categories")
+            .doc("productCategory").get().then(res => setproductsCategory(res.data().categories))
+        firebase.firestore().collection("products").get().then(products => {
+            setproducts(products?.docs.map(doc => ({ id: doc.id, ...doc.data() })))
+        })
     }, [])
 
     return (
         <div className='w-100'>
             <div className='d-flex w-100 justify-content-between p-4'>
-                <p className='fs-4 fw-bold'>Welcome to Kid's Network Store</p>
+                <p className='fs-2 fw-bold' style={{
+                    fontSize: "22px", fontWeight: "bold", textDecoration: "underline",
+                    textUnderlineOffset: "8px"
+                }}>
+                    Welcome to <span style={{ color: "#65daff" }}>Kid's Network </span>Store</p>
                 <div className='d-flex'>
                     <p className='mx-4'>{!switchState ? "Switch as a Seller" : "Switch as a Buyer"}</p>
                     <Switch onChange={(e) => setswitchState(e)} />
@@ -32,9 +44,9 @@ const Shop = () => {
 
                 <Row className='h-100'>
                     <Col xs={{
-                        span: 2
+                        span: 4
                     }}>
-                        <div>
+                        <div className='d-flex justify-center'>
                             <List
                                 header={"Products Categories"}
                                 size='small'
@@ -47,7 +59,7 @@ const Shop = () => {
                             />
                         </div>
                     </Col>
-                    <Col >
+                    <Col xs={{ span: 20 }}>
                         <CarouselPage />
                     </Col>
                 </Row>
@@ -55,8 +67,13 @@ const Shop = () => {
                 <h5 className='mt-5'>
                     All Products
                 </h5>
-                <Row className="px-2 w-100 h-100" xs={3}>
-                    <ProductCard />
+                <Row className="px-2 w-100 h-100" justify="space-between" >
+                    {
+                        products?.map(product => (
+                            <ProductCard key={product.id} product={product} />
+
+                        ))
+                    }
                 </Row>
             </Container>
         </div>
