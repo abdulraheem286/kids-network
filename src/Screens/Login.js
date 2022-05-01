@@ -33,7 +33,7 @@ export default function Login() {
           .then((res) => {
             res.forEach((doc) => {
               if (values.password === doc.data().password) {
-                localStorage.setItem("user", JSON.stringify(doc.data()));
+                localStorage.setItem("user", JSON.stringify({ id: doc.id, ...doc.data() }));
                 authContext.setUserDetails(doc.data());
                 setloggedIn("loggedIn");
                 setTimeout(() => {

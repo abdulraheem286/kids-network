@@ -4,13 +4,8 @@ import firebase from "firebase"
 import Product from './Product'
 
 const { Panel } = Collapse
-const Products = ({ categories, refresh }) => {
-    const [products, setproducts] = useState([])
-    useEffect(() => {
-        firebase.firestore().collection("products").get().then(snapshot => {
-            setproducts(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })))
-        }).catch(error => console.log(error))
-    }, [refresh])
+const Products = ({ categories, products }) => {
+
 
     return (
         <Collapse accordion>

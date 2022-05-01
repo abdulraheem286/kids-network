@@ -35,11 +35,14 @@ export default function SignUp() {
         .then((res) => {
           firebase
             .firestore()
-            .collection("users")
-            .add(values)
+            .collection("users").doc(res.user.uid)
+            .set(values)
             .then(() => {
               setsignedIn("signedIn");
-              localStorage.setItem("user", JSON.stringify(values));
+              localStorage.setItem("user", JSON.stringify({
+                id: res.user.uid,
+                values
+              }));
               authContext.setUserDetails(values);
               setTimeout(() => {
                 navigate("/", { replace: true });

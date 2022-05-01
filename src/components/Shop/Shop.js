@@ -10,6 +10,7 @@ import { useToken } from '../../hooks/useToken';
 import firebase from "firebase"
 import "./Shop.css"
 import ProductCard from './ProductCard';
+import Store from './Store';
 const Shop = () => {
     const token = useToken();
     const [switchState, setswitchState] = useState(false)
@@ -40,42 +41,45 @@ const Shop = () => {
                     <Switch onChange={(e) => setswitchState(e)} />
                 </div>
             </div>
-            <Container>
+            {
+                !switchState ? <Container>
 
-                <Row className='h-100'>
-                    <Col xs={{
-                        span: 4
-                    }}>
-                        <div className='d-flex justify-center'>
-                            <List
-                                header={"Products Categories"}
-                                size='small'
-                                dataSource={productsCategory}
-                                renderItem={(item) => (
-                                    <List.Item className='w-full text-center  px-4' style={{ fontSize: "14px" }}>
-                                        <p className="productItems">{item}</p>
-                                    </List.Item>
-                                )}
-                            />
-                        </div>
-                    </Col>
-                    <Col xs={{ span: 20 }}>
-                        <CarouselPage />
-                    </Col>
-                </Row>
+                    <Row className='h-100'>
+                        <Col xs={{
+                            span: 4
+                        }}>
+                            <div className='d-flex justify-center'>
+                                <List
+                                    header={"Products Categories"}
+                                    size='small'
+                                    dataSource={productsCategory}
+                                    renderItem={(item) => (
+                                        <List.Item className='w-full text-center  px-4' style={{ fontSize: "14px" }}>
+                                            <p className="productItems">{item}</p>
+                                        </List.Item>
+                                    )}
+                                />
+                            </div>
+                        </Col>
+                        <Col xs={{ span: 20 }}>
+                            <CarouselPage />
+                        </Col>
+                    </Row>
 
-                <h5 className='mt-5'>
-                    All Products
-                </h5>
-                <Row className="px-2 w-100 h-100" justify="space-between" >
-                    {
-                        products?.map(product => (
-                            <ProductCard key={product.id} product={product} />
+                    <h5 className='mt-5'>
+                        All Products
+                    </h5>
+                    <Row className="px-2 w-100 h-100" justify="space-between" >
+                        {
+                            products?.map(product => (
+                                <ProductCard key={product.id} product={product} />
 
-                        ))
-                    }
-                </Row>
-            </Container>
+                            ))
+                        }
+                    </Row>
+                </Container>
+                    : <Store />
+            }
         </div>
     )
 }

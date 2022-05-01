@@ -10,7 +10,7 @@ const { Panel } = Collapse
 const AdminShop = () => {
     const [productCategory, setproductCategory] = useState([]);
     const [category, setcategory] = useState("");
-
+    const [products, setproducts] = useState([])
     const [refresh, setrefresh] = useState(false);
     useEffect(() => {
         function loadData() {
@@ -24,6 +24,10 @@ const AdminShop = () => {
                         setproductCategory(res.data()?.categories);
                     }
                 });
+            firebase.firestore().collection("products").get().then(snapshot => {
+                setproducts(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })))
+            }).catch(error => console.log(error))
+
         }
         loadData()
         setrefresh(false);
@@ -98,7 +102,7 @@ const AdminShop = () => {
                     </form>
                 </Panel>
                 <Panel key="2" header="Products" extra={<AddProduct categories={productCategory} />}>
-                    <Products refresh={refresh} categories={productCategory} />
+                    <Products products={products} categories={productCategory} />
                 </Panel>
             </Collapse>
         </div>
