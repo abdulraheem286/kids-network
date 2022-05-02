@@ -6,3 +6,11 @@ transition: transform 0.2s ease-in-out;
     font-weight: 700;
     cursor: pointer;
 }
+.storeCard{
+    transition: transform 0.2s ease-in-out;
+}
+.storeCard:hover{
+    transform: scale(1.03);
+    cursor: pointer;
+border: 1px solid black;
+}

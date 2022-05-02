@@ -1,4 +1,4 @@
-import { Col, Row, List, Switch } from 'antd';
+import { Col, Row, List, Switch, Card } from 'antd';
 import {
     MDBCarousel,
     MDBCarouselItem, MDBContainer, MDBView, MDBCarouselInner
@@ -16,6 +16,7 @@ const Shop = () => {
     const [switchState, setswitchState] = useState(false)
     const [productsCategory, setproductsCategory] = useState([])
     const [products, setproducts] = useState([])
+    const [stores, setstores] = useState([])
     const navigate = useNavigate();
     useEffect(() => {
         if (!token) navigate("/sign-in", { replace: true });
@@ -26,6 +27,8 @@ const Shop = () => {
         firebase.firestore().collection("products").get().then(products => {
             setproducts(products?.docs.map(doc => ({ id: doc.id, ...doc.data() })))
         })
+        firebase.firestore().collection("users").where("store", ">", "").get().
+            then(res => setstores(res.docs.map(doc => ({ id: doc.id, ...doc.data() }))))
     }, [])
 
     return (
@@ -74,6 +77,26 @@ const Shop = () => {
                             products?.map(product => (
                                 <ProductCard key={product.id} product={product} />
 
+                            ))
+                        }
+                    </Row>
+
+                    <h5 className='mt-5'>
+                        Available Stores
+                    </h5>
+                    <Row className="px-2 w-100 h-100" justify="space-between" >
+                        {
+                            stores?.map(store => (
+                                <Card onClick={() => navigate(`/store/${store.id}`, {
+                                    state: store
+                                })} className="storeCard" key={store.id} title={store.store}>
+                                    <p>
+                                        Seller Name: {store.fName} {store.lName}
+                                    </p>
+                                    <p>
+                                        Seller Contact: {store.email}
+                                    </p>
+                                </Card>
                             ))
                         }
                     </Row>
