@@ -1,9 +1,9 @@
-import { Col, Row, List, Switch, Card } from 'antd';
+import { Col, Row, List, Switch, Card, Input, Button } from 'antd';
 import {
     MDBCarousel,
     MDBCarouselItem, MDBContainer, MDBView, MDBCarouselInner
 } from 'mdbreact';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import { useToken } from '../../hooks/useToken';
@@ -11,25 +11,53 @@ import firebase from "firebase"
 import "./Shop.css"
 import ProductCard from './ProductCard';
 import Store from './Store';
+import _ from 'lodash';
 const Shop = () => {
     const token = useToken();
     const [switchState, setswitchState] = useState(false)
     const [productsCategory, setproductsCategory] = useState([])
     const [products, setproducts] = useState([])
     const [stores, setstores] = useState([])
+    const [selectedCategory, setselectedCategory] = useState("All")
     const navigate = useNavigate();
+    const productsSearchRef = useRef();
+    const storeSearchRef = useRef()
+    const [productsSearch, setproductsSearch] = useState("")
+    const [storeSearch, setstoreSearch] = useState("")
     useEffect(() => {
         if (!token) navigate("/sign-in", { replace: true });
     }, [navigate, token]);
     useEffect(() => {
-        firebase.firestore().collection("categories")
-            .doc("productCategory").get().then(res => setproductsCategory(res.data().categories))
-        firebase.firestore().collection("products").get().then(products => {
-            setproducts(products?.docs.map(doc => ({ id: doc.id, ...doc.data() })))
-        })
-        firebase.firestore().collection("users").where("store", ">", "").get().
-            then(res => setstores(res.docs.map(doc => ({ id: doc.id, ...doc.data() }))))
-    }, [])
+        const loadData = async () => {
+            const categories = await firebase.firestore().collection("categories")
+                .doc("productCategory").get()
+            setproductsCategory(categories.data().categories)
+
+            let products = await firebase.firestore().collection("products").get()
+
+            products = productsSearch ? _.filter(products?.docs, product => {
+                if (
+                    product.data().title.toLowerCase().includes(productsSearch.toLowerCase())
+                ) {
+                    return product;
+                }
+            })
+                : products?.docs
+            setproducts(products?.map(doc => ({ id: doc.id, ...doc.data() })))
+
+            let stores = await firebase.firestore().collection("users").where("store", ">", "").get()
+            stores = storeSearch ? stores?.docs.filter(store => {
+                if (
+                    store.data().store.toLowerCase().includes(storeSearch.toLowerCase())
+                ) {
+                    return store;
+                }
+            })
+                : stores?.docs
+            setstores(stores?.map(doc => ({ id: doc.id, ...doc.data() })))
+        }
+        loadData()
+    }, [productsSearch, storeSearch])
 
     return (
         <div className='w-100'>
@@ -58,7 +86,7 @@ const Shop = () => {
                                     dataSource={productsCategory}
                                     renderItem={(item) => (
                                         <List.Item className='w-full text-center  px-4' style={{ fontSize: "14px" }}>
-                                            <p className="productItems">{item}</p>
+                                            <p onClick={() => setselectedCategory(item)} className="productItems">{item}</p>
                                         </List.Item>
                                     )}
                                 />
@@ -68,23 +96,52 @@ const Shop = () => {
                             <CarouselPage />
                         </Col>
                     </Row>
+                    <div className='px-4 d-flex justify-content-between mt-5'>
 
-                    <h5 className='mt-5'>
-                        All Products
-                    </h5>
-                    <Row className="px-2 w-100 h-100" justify="space-between" >
+                        <h5 className="">
+                            {selectedCategory} Products
+                        </h5>
+                        <div className='w-50 d-flex'>
+
+                            <input className='p-1 rounded'
+                                onChange={(e) => {
+                                    if (!e.target.value) {
+                                        setproductsSearch(e.target.value);
+                                    }
+                                }}
+                                ref={productsSearchRef} placeholder="Search Products ..." />
+                            <Button type="primary" onClick={() => setproductsSearch(productsSearchRef.current.value)}>Search</Button>
+                        </div>
+                    </div>
+                    <Row className="px-2 w-100 h-100" justify="space-evenly" >
                         {
                             products?.map(product => (
-                                <ProductCard key={product.id} product={product} />
+                                selectedCategory === "All" ? <ProductCard key={product.id} product={product} />
+                                    : selectedCategory === product.category ? <ProductCard key={product.id} product={product} /> : null
 
                             ))
                         }
                     </Row>
 
-                    <h5 className='mt-5'>
-                        Available Stores
-                    </h5>
-                    <Row className="px-2 w-100 h-100" justify="space-between" >
+                    <div className='px-4 d-flex justify-content-between mt-5'>
+
+                        <h5 className=''>
+                            Available Stores                    </h5>
+                        <div className='w-50 d-flex'>
+
+                            <input className='p-1 rounded' ref={storeSearchRef}
+                                onChange={(e) => {
+                                    if (!e.target.value) {
+                                        setstoreSearch(e.target.value);
+                                    }
+                                }}
+                                placeholder="Search Stores ..." />
+                            <Button type="primary" onClick={(e) => {
+                                setstoreSearch(storeSearchRef.current.value)
+                            }}>Search</Button>
+                        </div>
+                    </div>
+                    <Row className="px-2 w-100 h-100" justify="space-evenly" >
                         {
                             stores?.map(store => (
                                 <Card onClick={() => navigate(`/store/${store.id}`, {
@@ -123,7 +180,7 @@ const CarouselPage = () => {
                         <MDBView>
                             <img
                                 className="d-block w-100"
-                                src="https://mdbootstrap.com/img/Photos/Slides/img%20(130).webp"
+                                src="https://icms-image.slatic.net/images/ims-web/4c506832-5d4f-4b7a-8adb-6ef3c39a57df.jpg_1200x1200.jpg"
                                 alt="First slide"
                             />
                         </MDBView>
@@ -132,7 +189,7 @@ const CarouselPage = () => {
                         <MDBView>
                             <img
                                 className="d-block w-100"
-                                src="https://mdbootstrap.com/img/Photos/Slides/img%20(129).webp"
+                                src="https://icms-image.slatic.net/images/ims-web/f3a04e14-3e75-49c3-97b5-9c92d97a9323.jpg"
                                 alt="Second slide"
                             />
                         </MDBView>
@@ -141,7 +198,7 @@ const CarouselPage = () => {
                         <MDBView>
                             <img
                                 className="d-block w-100"
-                                src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).webp"
+                                src="https://icms-image.slatic.net/images/ims-web/e6bcb8af-df90-4633-b71d-32c2d2831412.jpg"
                                 alt="Third slide"
                             />
                         </MDBView>

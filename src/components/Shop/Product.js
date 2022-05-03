@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import { useLocation, useNavigate } from 'react-router'
 import firebase from "firebase"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStar } from '@fortawesome/free-regular-svg-icons'
+import { faStar as faStarSolid } from "@fortawesome/free-solid-svg-icons"
 const Product = () => {
     const location = useLocation()
     const navigate = useNavigate()
@@ -17,6 +20,7 @@ const Product = () => {
         city: "",
         country: ""
     })
+    const [rating, setrating] = useState(-1)
     useEffect(() => {
         firebase.firestore().collection("users").where("email", "==", location.state.author_email)
             .get().then(snapshot => {
@@ -24,6 +28,7 @@ const Product = () => {
                 setaddress({ ...address, ...snapshot.docs[0].data()?.address })
             })
         setproduct({ ...location.state })
+        setrating(-1)
     }, [location])
     const changeHandler = (e) => {
         setaddress({ ...address, [e.target.name]: e.target.value })
@@ -32,23 +37,23 @@ const Product = () => {
         e.preventDefault()
 
         const leftItems = product.quantity - itemsToBuy
+        const averageRating = product?.rating ? (rating + product?.rating) / 2 : (rating)
         try {
             await firebase.firestore().collection("products").doc(product.id).update({
+                rating: averageRating,
                 quantity: leftItems
             })
             if (saveAddress) {
                 await firebase.firestore().collection("users").doc(userId).update({
                     address
                 })
-                await firebase.firestore().collection("users").doc(userId).collection("store").doc(product.id).update({
-                    quantity: leftItems
-                })
+
             }
-            else {
-                await firebase.firestore().collection("users").doc(userId).collection("store").doc(product.id).update({
-                    quantity: leftItems
-                })
-            }
+            await firebase.firestore().collection("users").doc(userId).collection("store").doc(product.id).update({
+
+                rating: averageRating,
+                quantity: leftItems
+            })
             navigate("/order", { state: true })
         } catch (error) {
             console.log(error)
@@ -142,6 +147,18 @@ const Product = () => {
                         <div className='w-100'>
                             <label className='w-50'>Save Address for later use</label>
                             <Input className='w-25' type={"checkbox"} checked={saveAddress} onChange={e => setsaveAddress(e.target.checked)} />
+                        </div>
+                        <div>
+                            {
+                                Array(5).fill(0).map((_, index) => (
+
+                                    index <= rating ? <FontAwesomeIcon style={{ color: "yellow" }}
+                                        onClick={() => setrating(index)} icon={faStarSolid} /> :
+                                        <FontAwesomeIcon icon={faStar} onClick={() => setrating(index)} />
+
+
+                                ))
+                            }
                         </div>
                         <Button type='primary' htmlType='submit' className='mt-2'>Ship Product</Button>
                     </form>
