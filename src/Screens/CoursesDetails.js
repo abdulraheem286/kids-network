@@ -130,7 +130,7 @@ export default function CoursesDetails(props) {
       <Headers
         pageName="Course Details"
         bgImage={
-          "https://images.pexels.com/photos/414548/pexels-photo-414548.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          "https://www.ideafist.com/wp-content/uploads/2013/05/contact-us-banner.jpg"
         }
       />
       <BreadcrumbPage />

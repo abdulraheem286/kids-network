@@ -3,16 +3,21 @@ import { Container } from "react-bootstrap";
 
 const Footer = () => (
   <footer
-    className="page-footer font-small blue pt-4 bg-light"
-    style={{ marginTop: 100 }}
+    className="page-footer font-small blue bg-light"
+    style={{ paddingTop: "40px", paddingBottom: "10px", marginTop: "100px" }}
   >
     <Container>
       <div className="container-fluid text-center text-md-left">
         <div className="row">
           <div className="col-md-6 mt-md-0 mt-3">
-            <h5 className="text-uppercase">Footer Content</h5>
-            <p style={{ maxWidth: 250 }}>
-              Here you can use rows and columns to organize your footer content.
+            <img
+              src={require("../Assets/Logo.svg")}
+              style={styles.mainLogo}
+              alt="Logo"
+            />{" "}
+            <p style={{ maxWidth: 250, fontSize: "14px", marginTop: "10px" }}>
+              Kids Network Organization provides best platform to raise a child
+              in every aspect of life.
             </p>
           </div>
 
@@ -75,5 +80,11 @@ const Footer = () => (
     </Container>
   </footer>
 );
+
+const styles = {
+  mainLogo: {
+    maxHeight: 50,
+  },
+};
 
 export default Footer;

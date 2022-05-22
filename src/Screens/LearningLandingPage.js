@@ -9,49 +9,83 @@ const LearningLandingPage = () => {
     <>
       <div
         className="d-flex flex-column
-        justify-content-start align-items-center"
+        justify-content align-items-center"
         style={{
-          minHeight: "100vh",
-          padding: "1rem",
+          alignContent: "center",
+          justifyContent: "center",
+          position: "relative",
+          minHeight: "90vh",
           minWidth: "90vw",
-          margin: "0 auto",
+          backgroundPosition: "center center",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           borderBottom: "1px solid #65daff",
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1517673132405-a56a62b18caf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=876&q=80')",
+            "url('https://img.freepik.com/free-photo/little-girl-participating-online-classes_23-2149041079.jpg?t=st=1653218261~exp=1653218861~hmac=ea2d39231d71b221f0e58a512b847de5dfec0f4cade800e40a77d6874d6cae56&w=1060')",
         }}
       >
-        <h1
-          className="text-light"
-          style={{ fontSize: "48px", fontFamily: "'Raleway', sans-serif" }}
+        <div
+          style={{
+            backgroundColor: "rgb(0,0,0,0.5)",
+            position: "absolute",
+            height: "100%",
+            width: "100%",
+          }}
+        />
+        <div
+          style={{
+            justifyContent: "center",
+            alignContent: "center",
+            textAlign: "center",
+            alignItems: "center",
+            position: "relative",
+            zIndex: "100",
+          }}
         >
-          Make every study hour count
-        </h1>
-        <p
-          className="text-light"
-          style={{ fontSize: "30px", fontFamily: "'Raleway', sans-serif" }}
-        >
-          Access to multiple courses and video tutorials
-          <span
+          <h1
             className="text-light"
             style={{
               fontSize: "48px",
-              fontFamily: "serif",
+              fontFamily: "'Poppins', sans-serif",
               fontWeight: "bold",
             }}
           >
-            {" "}
-            24/7
-          </span>
-        </p>
-        <CommentCard />
-        <Link
-          to="/courses"
-          className="btn align-self-end courses_btn btn-dark btn-lg w-25 btn-block"
-        >
-          See our Courses
-        </Link>
+            Make every study hour count
+          </h1>
+          <p
+            className="text-light"
+            style={{ fontSize: "24px", fontFamily: "'Poppins', sans-serif" }}
+          >
+            Access to multiple courses and video tutorials
+            <span
+              className="text-light"
+              style={{
+                fontSize: "34px",
+                fontFamily: "Poppins",
+                fontWeight: "bold",
+                color: "Black",
+              }}
+            >
+              {" "}
+              24/7
+            </span>
+          </p>
+
+          <Link
+            style={{
+              margin: "auto",
+              backgroundColor: "rgb(101,218,255)",
+              fontFamily: "Poppins",
+              color: "Black",
+              fontSize: "16px",
+              borderRadius: "100px 100px 100px 100px",
+            }}
+            to="/courses"
+            className="btn align-self-end courses_btn btn-dark btn-lg w-25 btn-block"
+          >
+            See our Courses
+          </Link>
+        </div>
       </div>
       <FeatureSection />
       <AboutSection />

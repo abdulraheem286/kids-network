@@ -1,6 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 .courses_btn{
-    transition: all 1s ease-in-out;
+    transition: all 2s ease-in-out;
     border: none;
 
 }

@@ -58,8 +58,7 @@ const CommentCard = () => {
         className="text-light"
         style={{ fontSize: "14px", textAlign: "justify" }}
       >
-        Ad culpa non minim anim fugiat eiusmod tempor tempor. Est tempor amet
-        reprehenderit anim minim nostrud anim nisi et amet. Magna commodo ad
+        Ad culpa non minim anim fugiat eiusmod tempor tempor.
       </p>
     </div>
   );
