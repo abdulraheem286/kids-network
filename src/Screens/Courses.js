@@ -114,8 +114,8 @@ const Courses = () => {
         }
       />
       <BreadcrumbPage />
-      <div className="d-flex w-100 my-2 mx-auto justify-content-between">
-        <div className="w-75 d-flex justify-content-between px-5">
+      <div className="d-flex w-75 my-2 mx-auto justify-content-center">
+        <div className="w-75 mx-auto d-flex justify-content-between  px-5">
           {courseCategory.map((e, index) => (
             <h5
               key={index}
@@ -126,7 +126,7 @@ const Courses = () => {
             </h5>
           ))}
         </div>
-        <div style={{ flex: "1 1 0%" }} className="w-25">
+        <div style={{ flex: "1 1 0%" }} className="d-flex w-25">
           <MDBFormInline className="md-form">
             <input
               ref={ref}
@@ -149,7 +149,7 @@ const Courses = () => {
                 e.preventDefault();
                 setsearch(ref.current.value);
               }}
-              className="mr-auto"
+              className="mr-auto border"
             >
               Search
             </MDBBtn>

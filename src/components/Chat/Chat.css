@@ -1,0 +1,10 @@
+.paperPlane{
+    height: 20px;
+    width: 20px;
+    margin-top: -1%;
+    transition: transform 0.2s ease-in-out;
+}
+.paperPlane:hover{
+    transform: scale(1.05);
+    color: blue;
+}

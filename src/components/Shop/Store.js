@@ -4,7 +4,9 @@ import { useToken } from '../../hooks/useToken'
 import { Card, Col, Row, Input, Button } from 'antd'
 import Products from '../Admin/Shop/Products'
 import AddProduct from '../Admin/Shop/AddProduct'
-import { ReloadOutlined } from "@ant-design/icons"
+import { ReloadOutlined, MessageOutlined } from "@ant-design/icons"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPaperPlane } from '@fortawesome/free-regular-svg-icons'
 const Store = () => {
     const token = useToken()
     const [products, setproducts] = useState([])
@@ -13,6 +15,14 @@ const Store = () => {
     const [storeName, setstoreName] = useState("")
     const [visible, setvisible] = useState(false)
     const [refresh, setrefresh] = useState(false)
+    const [chats, setchats] = useState([])
+    const [changeMessageState, setchangeMessageState] = useState(false)
+    const [activeChat, setactiveChat] = useState([])
+    const [message, setmessage] = useState({
+        text: "",
+        author: "",
+        timestamp: null
+    })
     useEffect(() => {
         firebase
             .firestore()
@@ -31,6 +41,14 @@ const Store = () => {
             })
         setrefresh(false)
     }, [refresh])
+    useEffect(() => {
+        const unsub = firebase.firestore().collection("users").doc(token.id).collection("chats").onSnapshot(snapshot => {
+
+            setchats(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })))
+        })
+        return () => unsub()
+    })
+
     const createStore = async () => {
         try {
             await firebase.firestore().collection("users").doc(token?.id).update({
@@ -41,9 +59,26 @@ const Store = () => {
             console.log(error)
         }
     }
+    const sendMessage = async () => {
+        try {
+            const userMessages = [...activeChat.chat, message];
+            await firebase.firestore().collection("users").doc(token.id)
+                .collection("chats").doc(activeChat.id).set({
+                    chat: [...userMessages]
+                })
+            setchangeMessageState(!changeMessageState)
+            setmessage({ ...message, text: "" })
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return (
         <div className=' px-4 h-100'>
-            <Button icon={<ReloadOutlined />} className="mb-2" onClick={() => setrefresh(!refresh)}>Refresh</Button>
+            <div className='d-flex'>
+                <Button icon={<ReloadOutlined />} className="mb-2" onClick={() => setrefresh(!refresh)}>Refresh</Button>
+
+            </div>
+
             {products.length > 0 ? (
                 <div className=''>
                     <AddProduct categories={categories} />
@@ -64,6 +99,54 @@ const Store = () => {
                                 </Col>
                             ))
                         }
+                        <Col xs={{
+                            span: 10
+                        }}>
+                            <div className='border d-flex' style={{ height: "467px" }}>
+                                <div className='d-flex flex-column h-100 w-25' style={{ overflowY: "scroll" }}>
+                                    {
+                                        chats?.map((chat, index) => (
+                                            <p className='p-1 border-bottom my-2 text-center'
+                                                key={index} style={{ cursor: "pointer" }}
+                                                onClick={() => setactiveChat(chat)}>
+                                                {chat.id.split("@")[0]}
+                                            </p>
+                                        ))
+                                    }
+                                </div>
+                                <div className='h-100 w-75 border d-flex justify-content-between flex-column'>
+                                    <div style={{ overflowY: "scroll" }}>
+
+                                        {
+                                            activeChat?.chat?.map((message, index) => (
+                                                <div className='w-100 d-flex' key={index}>
+
+                                                    <div className={`rounded m-2
+${message?.author !== token.email ? "float-right" : "float-left"} w-50 border`} style={{ fontSize: "10px" }}>
+                                                        <p className='border-bottom p-1'>{message?.author}</p>
+                                                        <p className='p-1 m-0 p-0'>{message?.text}</p>
+                                                        <p className='m-0 p-1 float-right'>{new Date(message?.timestamp).toLocaleTimeString()}</p>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                    <div className='d-flex align-items-center w-75 mx-auto'>
+                                        <input className='w-75 h-100 rounded-pill'
+                                            value={message.text} onChange={e => setmessage({
+                                                ...message, text: e.target.value,
+                                                timestamp: Date.now(),
+                                                author: token.email
+                                            })} placeholder='Send a message' />
+                                        <FontAwesomeIcon className='mx-3 paperPlane'
+                                            onClick={sendMessage} icon={faPaperPlane} />
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </Col>
                     </Row>
                     <h3 className='my-3'>Edit your products</h3>
                     <div className='d-flex flex-column w-100'>

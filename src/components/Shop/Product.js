@@ -6,8 +6,11 @@ import firebase from "firebase"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-regular-svg-icons'
 import { faStar as faStarSolid } from "@fortawesome/free-solid-svg-icons"
+import { useToken } from "../../hooks/useToken"
+import Chat from '../Chat/Chat'
 const Product = () => {
     const location = useLocation()
+    const token = useToken()
     const navigate = useNavigate()
     const [product, setproduct] = useState({})
     const [itemsToBuy, setitemsToBuy] = useState(0)
@@ -21,12 +24,17 @@ const Product = () => {
         country: ""
     })
     const [rating, setrating] = useState(-1)
+    const [chatOpen, setchatOpen] = useState(false)
+
     useEffect(() => {
         firebase.firestore().collection("users").where("email", "==", location.state.author_email)
             .get().then(snapshot => {
                 setuserId(snapshot.docs[0].id)
-                setaddress({ ...address, ...snapshot.docs[0].data()?.address })
             })
+        firebase.firestore().collection("users").doc(token.id).get().then(doc => {
+            setaddress({ ...address, ...doc.data()?.address })
+
+        })
         setproduct({ ...location.state })
         setrating(-1)
     }, [location])
@@ -44,16 +52,17 @@ const Product = () => {
                 quantity: leftItems
             })
             if (saveAddress) {
-                await firebase.firestore().collection("users").doc(userId).update({
+                await firebase.firestore().collection("users").doc(token.id).update({
                     address
                 })
 
             }
-            await firebase.firestore().collection("users").doc(userId).collection("store").doc(product.id).update({
+            await firebase.firestore().collection("users")
+                .doc(userId).collection("store").doc(product.id).update({
 
-                rating: averageRating,
-                quantity: leftItems
-            })
+                    rating: averageRating,
+                    quantity: leftItems
+                })
             navigate("/order", { state: true })
         } catch (error) {
             console.log(error)
@@ -67,7 +76,7 @@ const Product = () => {
             </Row>
             <Row className='my-5'>
                 <Col xs={{ span: 8 }}>
-                    <img src={product.image} className="w-100 h-100" />
+                    {/* <img src={product.image} className="w-100 h-100" /> */}
                 </Col>
                 <Col xs={{ span: 8 }} className="p-3">
                     <h2>{product.title}</h2>
@@ -98,24 +107,25 @@ const Product = () => {
                 </Col>
             </Row>
             <Row>
-                <Col xs={{ span: 8 }}>
+                <Col>
                     <div className='d-flex w-full justify-content-between align-content-center'>
-                        <label className='w-50' style={{ fontWeight: "500", fontSize: "22px" }}>Quantity: </label>
-                        <InputNumber type="number" min={0} value={itemsToBuy}
-                            max={product.quantity}
-                            onChange={(e) => setitemsToBuy(e)} />
+                        <label className='w-100' style={{ fontWeight: "500", fontSize: "22px" }}>
+                            Chat with the seller: </label>
                     </div>
 
                 </Col>
                 <Col>
-                    <Button type='primary' className='ml-2' size='large' onClick={() => {
-                        if (itemsToBuy <= 0) {
-                            alert("Atleast select 1 item.")
-                            return
-                        }
-                        setaddressDiv(true)
-                    }}>Buy Now</Button>
+                    <Button type='primary' onClick={() => setchatOpen(!chatOpen)} className=' rounded ml-2' size='large' >Chat</Button>
                 </Col>
+            </Row>
+            <Row>
+                <Col xs={{
+                    span: 24
+                }}>
+
+                    {chatOpen && <Chat author={product?.author} author_email={product?.author_email} />}
+                </Col>
+
             </Row>
             {addressDiv && <Row className='p-2 my-5'>
                 <Col xs={{ span: 12 }}>
@@ -152,9 +162,9 @@ const Product = () => {
                             {
                                 Array(5).fill(0).map((_, index) => (
 
-                                    index <= rating ? <FontAwesomeIcon style={{ color: "yellow" }}
+                                    index <= rating ? <FontAwesomeIcon key={index} style={{ color: "yellow" }}
                                         onClick={() => setrating(index)} icon={faStarSolid} /> :
-                                        <FontAwesomeIcon icon={faStar} onClick={() => setrating(index)} />
+                                        <FontAwesomeIcon key={index} icon={faStar} onClick={() => setrating(index)} />
 
 
                                 ))

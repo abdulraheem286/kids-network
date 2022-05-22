@@ -13,7 +13,7 @@ const ProductCard = ({ product }) => {
   }
   return (
     <div>
-      <Card onClick={navigateToPage} size='small' bordered={false} className="bootstrap__card my-3"
+      <Card onClick={navigateToPage} size='small' bordered={false} className="bootstrap__card mx-3 my-3"
         style={{ width: "188px", height: "290px", border: "1px solid #dee2e6", borderRadius: "5px" }}>
         <img className='w-100 h-75' src={product?.image} />
         <div className='mt-2'>

@@ -146,7 +146,7 @@ const Shop = () => {
                             stores?.map(store => (
                                 <Card onClick={() => navigate(`/store/${store.id}`, {
                                     state: store
-                                })} className="storeCard" key={store.id} title={store.store}>
+                                })} className="storeCard mx-3" key={store.id} title={store.store}>
                                     <p>
                                         Seller Name: {store.fName} {store.lName}
                                     </p>
