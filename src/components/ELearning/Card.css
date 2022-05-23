@@ -1,8 +1,14 @@
 .card{
     transition: transform .3s ease-in-out;
 }
+
+.wrapper{
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+}
+
 .wrapper:hover,.wrapper:hover .card{
     color: white;
-    background-color: #65daff;
+    background-color: #113C49;
     transform: scale(1.05);
 }

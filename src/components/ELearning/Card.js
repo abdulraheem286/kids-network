@@ -50,7 +50,13 @@ export default function Card({
               alt="Card"
             />
             <div className="card-body">
-              {title && <h5>{title}</h5>}
+              {title && (
+                <p>
+                  <span style={{ fontWeight: "bold", fontSize: "20px" }}>
+                    {title}
+                  </span>
+                </p>
+              )}
               <p className="card-text">{cardDescription}</p>
               <p className="card-text">
                 <hr />
@@ -78,7 +84,6 @@ const style = {
     padding: "15px",
     marginTop: 30,
     cursor: "Pointer",
-    height: "451px",
     border: "1px solid rgba(0,0,0,.125)",
     borderRadius: "0.25rem",
     overflow: "hidden",
