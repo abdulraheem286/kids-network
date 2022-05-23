@@ -5,6 +5,7 @@ import "./Chat.css"
 import Message from './Message'
 import firebase from "firebase"
 import { useToken } from '../../hooks/useToken'
+import { faRefresh } from '@fortawesome/free-solid-svg-icons'
 const Chat = ({ author, author_email }) => {
     const token = useToken()
     const [message, setmessage] = useState({
@@ -55,14 +56,15 @@ const Chat = ({ author, author_email }) => {
     }
     return (
         <div className='d-flex flex-column justify-content-between p-2 rounded border w-100 mt-3'
-            style={{ height: "550px" }}>
+            style={{ height: "550px", backgroundColor: "#1890ff" }}>
             <div className='d-flex justify-content-between border-bottom p-1 pb-2 w-100'
-                style={{ height: "50px" }}>
+                style={{ height: "50px", color: "white" }}>
                 <div className='d-flex
                  justify-content-center align-items-center'>
                     <img className='rounded-circle  mr-4'
                         src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.Nhwvll4m1Jc3wjjmi2OGFgHaGZ%26pid%3DApi&f=1" style={{ width: "50px", height: "50px" }} />
-                    <p className='mt-2'>{author}</p>
+                    <h4 style={{ color: "white" }} className='mt-2'>{author}</h4>
+                    <FontAwesomeIcon className='mx-3' onClick={() => setchangeMessageState(!changeMessageState)} icon={faRefresh} />
 
                 </div>
                 <div className="d-flex align-items-center mx-5">
