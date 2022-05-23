@@ -76,7 +76,7 @@ const Product = () => {
             </Row>
             <Row className='my-5'>
                 <Col xs={{ span: 8 }}>
-                    {/* <img src={product.image} className="w-100 h-100" /> */}
+                    <img src={product.image} className="w-100 h-100" />
                 </Col>
                 <Col xs={{ span: 8 }} className="p-3">
                     <h2>{product.title}</h2>
