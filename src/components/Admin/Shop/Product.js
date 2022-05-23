@@ -74,6 +74,7 @@ const Product = ({ product: mainProduct, categories }) => {
                     <label>Product Category</label>
                     <Select disabled={disabledState} className='w-50' value={product.category} onChange={(e) => setproduct({ ...product, category: e })}>
                         {categories?.map((category, index) => (
+                            category !== "All" &&
                             <Select.Option key={index} value={category}>
                                 {category}
                             </Select.Option>

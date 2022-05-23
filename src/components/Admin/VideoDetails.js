@@ -213,6 +213,7 @@ const AddModal = ({ courseId }) => {
         Add Video
       </Button>
       <Modal
+        okText="Save"
         title="Title"
         visible={visible}
         onOk={handleOk}

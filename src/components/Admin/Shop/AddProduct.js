@@ -89,6 +89,7 @@ const AddProduct = ({ categories }) => {
         <>
             <Button type="primary" onClick={() => setvisible(true)}>Add a Product</Button>
             <Modal title="Add a Product"
+                okText="Draft"
                 onOk={handleOk}
                 onCancel={handleCancel}
                 visible={visible}>
@@ -110,6 +111,7 @@ const AddProduct = ({ categories }) => {
                         <label>Product Category</label>
                         <Select className='w-50' value={product.category} onChange={(e) => setproduct({ ...product, category: e })}>
                             {categories?.map((category, index) => (
+                                category !== "All" &&
                                 <Select.Option key={index} value={category}>
                                     {category}
                                 </Select.Option>

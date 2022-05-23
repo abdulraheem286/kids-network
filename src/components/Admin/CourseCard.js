@@ -142,7 +142,7 @@ const CourseCard = () => {
             dataSource={courseCategory}
             renderItem={(item, index) => (
               item !== "All" &&
-              <List.Item className="w-50 d-flex justify-content-between">
+              <List.Item className="w-50 p-2 d-flex justify-content-between">
                 <div>
                   <Typography.Text mark>{index}</Typography.Text> {item}
                 </div>
@@ -232,6 +232,7 @@ const AddModal = ({ categories }) => {
         Add Course
       </Button>
       <Modal
+        okText="Save"
         title="Title"
         visible={visible}
         onOk={handleOk}

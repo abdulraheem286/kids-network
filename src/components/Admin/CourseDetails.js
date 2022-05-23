@@ -90,6 +90,7 @@ const CourseDetails = ({ course, categories }) => {
           onChange={(e) => setstate({ ...state, coursecategory: e })}
         >
           {categories.map((item, index) => (
+            item !== "All" &&
             <Option key={index} value={item}>
               {item}
             </Option>
