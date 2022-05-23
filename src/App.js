@@ -11,7 +11,7 @@ export default function App() {
     JSON.parse(localStorage.getItem("user"))
   );
   const navigate = useNavigate();
-  useEffect(() => { }, [userDetails]);
+  useEffect(() => {}, [userDetails]);
   const logout = () => {
     localStorage.removeItem("user");
     setUserDetails(null);
@@ -21,7 +21,7 @@ export default function App() {
     <div className="App">
       <nav className="navbar navbar-expand-lg navbar-light ">
         <div className="container-fluid">
-          <Link className="navbar-brand font-weight-bold" to={"/sign-in"}>
+          <Link className="navbar-brand font-weight-bold" to={"/"}>
             <img
               src={require("./Assets/Logo.svg")}
               style={styles.mainLogo}

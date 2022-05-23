@@ -114,23 +114,25 @@ const Courses = () => {
         }
       />
       <BreadcrumbPage />
-      <div className="d-flex w-75 my-2 mx-auto justify-content-center">
-        <div className="w-75 mx-auto d-flex justify-content-between  px-5">
-          {courseCategory.map((e, index) => (
-            <h5
-              key={index}
-              className="filterItems"
-              onClick={() => setfilterItem(e === "All" ? "" : e)}
-            >
-              {e}
-            </h5>
-          ))}
-        </div>
-        <div style={{ flex: "1 1 0%" }} className="d-flex w-25">
-          <MDBFormInline className="md-form">
+
+      <Container>
+        <div className="d-flex justify-content-between mb-5">
+          <div className="d-flex">
+            {courseCategory.map((e, index) => (
+              <button
+                key={index}
+                className="filterItems px-4 py-1 mr-2 btn btn-dark"
+                onClick={() => setfilterItem(e === "All" ? "" : e)}
+              >
+                {e}
+              </button>
+            ))}
+          </div>
+
+          <div className="d-flex">
             <input
               ref={ref}
-              className="form-control mr-sm-2"
+              className="form-control"
               type="text"
               placeholder="Search"
               onChange={(e) => {
@@ -142,21 +144,21 @@ const Courses = () => {
             />
             <MDBBtn
               gradient="aqua"
-              rounded
               size="sm"
               type="submit"
               onClick={(e) => {
                 e.preventDefault();
                 setsearch(ref.current.value);
               }}
-              className="mr-auto border"
+              className="mr-auto "
             >
-              Search
+              <img src={require("../Assets/search-icon.png")} />
             </MDBBtn>
-          </MDBFormInline>
+          </div>
         </div>
-      </div>
-      <Container>
+
+        {/* Code For E-Learning Cards Below. */}
+
         {enrolledCourse.length > 0 && (
           <>
             <h1>Your Courses</h1>

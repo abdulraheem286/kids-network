@@ -16,7 +16,9 @@ const ReviewCard = ({
     <div className="d-flex flex-column mt-3 mb-3 align-items-start">
       <div className="d-flex align-items-center">
         <img
-          src={photo}
+          src={
+            "https://i.ibb.co/prSK5Kj/imgbin-avatar-child-computer-icons-user-profile-png.png"
+          }
           style={{ width: "52px", height: "52px" }}
           className="rounded-circle me-5"
           alt=""
