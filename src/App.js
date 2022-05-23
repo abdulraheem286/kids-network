@@ -32,6 +32,11 @@ export default function App() {
             <ul className="navbar-nav ml-auto font-weight-bold">
               <li className="nav-item">
                 <Link className="nav-link" to={"/"}>
+                  Home
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/courses"}>
                   E-Learning
                 </Link>
               </li>
@@ -47,7 +52,7 @@ export default function App() {
               </li>
               {userDetails?.isAdmin && (
                 <li className="nav-item">
-                  <Link className="nav-link " to={"/admin/courses"}>
+                  <Link className="nav-link " to={"/admin"}>
                     Admin Panel
                   </Link>
                 </li>
@@ -84,9 +89,11 @@ export default function App() {
           </div>
         </div>
       </nav>
+
       <AuthContext.Provider value={{ userDetails, setUserDetails }}>
         <AppRouter />
       </AuthContext.Provider>
+
       <Footer />
     </div>
   );

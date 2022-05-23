@@ -1,90 +1,73 @@
 import React from "react";
-import { Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import "./Footer.css";
 
 const Footer = () => (
-  <footer
-    className="page-footer font-small blue bg-light"
-    style={{ paddingTop: "40px", paddingBottom: "10px", marginTop: "100px" }}
-  >
-    <Container>
-      <div className="container-fluid text-center text-md-left">
-        <div className="row">
-          <div className="col-md-6 mt-md-0 mt-3">
-            <img
-              src={require("../Assets/Logo.svg")}
-              style={styles.mainLogo}
-              alt="Logo"
-            />{" "}
-            <p style={{ maxWidth: 250, fontSize: "14px", marginTop: "10px" }}>
-              Kids Network Organization provides best platform to raise a child
-              in every aspect of life.
-            </p>
-          </div>
-
-          <hr className="clearfix w-100 d-md-none pb-0" />
-
-          <div className="col-md-2 mb-md-0 mb-3">
-            <h5 className="text-uppercase">e-com</h5>
-            <ul className="list-unstyled">
+  <>
+    <footer className="footer">
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-md-9 text-center">
+            <div className="footer-site-logo mb-4">
+              <Link to={"/"}>
+                <img src={require("../Assets/Logo.svg")} />
+              </Link>
+            </div>
+            <ul className="list-unstyled nav-links mb-5">
               <li>
-                <a href="#!">Link 1</a>
+                <a href="/">Home</a>
               </li>
               <li>
-                <a href="#!">Link 2</a>
+                <Link to={"/courses"}>E-Learning</Link>
               </li>
               <li>
-                <a href="#!">Link 3</a>
+                <Link to={"/shop"}>Shop Now</Link>
               </li>
               <li>
-                <a href="#!">Link 4</a>
+                <Link to={"/community"}>Community</Link>
               </li>
             </ul>
-          </div>
 
-          <div className="col-md-2 mb-md-0 mb-3">
-            <h5 className="text-uppercase">e-learn</h5>
-            <ul className="list-unstyled">
-              <li>
-                <a href="#!">Link 1</a>
-              </li>
-              <li>
-                <a href="#!">Link 2</a>
-              </li>
-              <li>
-                <a href="#!">Link 3</a>
-              </li>
-              <li>
-                <a href="#!">Link 4</a>
-              </li>
-            </ul>
-          </div>
+            {/* <div className="social mb-4">
+              <h3>Stay in touch</h3>
+              <ul className="list-unstyled">
+                <li className="in">
+                  <a href="#">
+                    <span className="icon-instagram"></span>
+                  </a>
+                </li>
+                <li className="fb">
+                  <a href="#">
+                    <span className="icon-facebook"></span>
+                  </a>
+                </li>
+                <li className="tw">
+                  <a href="#">
+                    <span className="icon-twitter"></span>
+                  </a>
+                </li>
+                <li className="pin">
+                  <a href="#">
+                    <span className="icon-pinterest"></span>
+                  </a>
+                </li>
+                <li className="dr">
+                  <a href="#">
+                    <span className="icon-dribbble"></span>
+                  </a>
+                </li>
+              </ul>
+            </div> */}
 
-          <div className="col-md-2 mb-md-0 mb-3">
-            <h5 className="text-uppercase">Community</h5>
-            <ul className="list-unstyled">
-              <li>
-                <a href="#!">Link 1</a>
-              </li>
-              <li>
-                <a href="#!">Link 2</a>
-              </li>
-            </ul>
+            <div className="copyright">
+              © 2020 Copyright:
+              <a href="/"> KidsNetwork</a>
+            </div>
           </div>
         </div>
       </div>
-
-      <div className="footer-copyright text-center py-3">
-        © 2020 Copyright:
-        <a href="/"> KidsNetwork</a>
-      </div>
-    </Container>
-  </footer>
+    </footer>
+  </>
 );
-
-const styles = {
-  mainLogo: {
-    maxHeight: 50,
-  },
-};
 
 export default Footer;
