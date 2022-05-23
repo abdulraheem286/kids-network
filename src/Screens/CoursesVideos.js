@@ -15,6 +15,7 @@ import {
 } from "mdbreact";
 import ReviewCard from "../components/ELearning/ReviewCard";
 import { useToken } from "../hooks/useToken";
+import Header from "../components/ELearning/Header";
 
 export default function CoursesDetails() {
   const [courseVideo, setVideoData] = useState();
@@ -158,7 +159,20 @@ export default function CoursesDetails() {
 
   return (
     <div style={{ minHeight: "100vh", maxWidth: "100vw" }}>
-      <BreadcrumbPage params={params} />
+      <Header
+        pageName="Courses Videos"
+        bgImage={
+          "https://img.freepik.com/free-photo/happy-family-watching-movie-laptop-while-eating-popcorn-home_637285-12232.jpg?t=st=1653321620~exp=1653322220~hmac=47076cf7fe5272d3d5f2837f77fbc188a474017bb6ee8eecf47a1122e1457a25&w=996"
+        }
+        bcpt1="Home"
+        bcl1="/"
+        bcpt2=" / Courses"
+        bcl2="/courses"
+        bcpt3=" / Course Details"
+        bcl3=""
+        bcpt4=" / Course Videos"
+      />
+
       {courseVideo && (
         <Container fluid className=" mx-auto">
           <Row>
@@ -240,50 +254,3 @@ export default function CoursesDetails() {
     </div>
   );
 }
-const BreadcrumbPage = ({ params }) => {
-  return (
-    <MDBContainer>
-      <MDBBreadcrumb>
-        <MDBBreadcrumbItem active>
-          <Link
-            to={"/"}
-            style={{
-              textDecoration: "none",
-              color: "black",
-              fontWeight: "600",
-              fontSize: "20px",
-            }}
-          >
-            /Home
-          </Link>
-        </MDBBreadcrumbItem>
-        <MDBBreadcrumbItem icon="arrow">
-          <Link
-            to={"/courses"}
-            style={{
-              textDecoration: "none",
-              color: "black",
-              fontWeight: "600",
-              fontSize: "20px",
-            }}
-          >
-            /Courses
-          </Link>
-        </MDBBreadcrumbItem>
-        <MDBBreadcrumbItem icon="arrow">
-          <Link
-            to={`/coursedetails/${params.id}`}
-            style={{
-              textDecoration: "none",
-              color: "black",
-              fontWeight: "600",
-              fontSize: "20px",
-            }}
-          >
-            /CoursesDetails
-          </Link>
-        </MDBBreadcrumbItem>
-      </MDBBreadcrumb>
-    </MDBContainer>
-  );
-};

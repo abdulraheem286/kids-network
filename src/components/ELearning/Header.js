@@ -1,42 +1,46 @@
 import React from "react";
 import { Container } from "react-bootstrap";
+import Breadcrumb from "./Breadcrumb";
+import "./Header.css";
 
-const Header = ({ pageName, bgImage }) => {
+const Header = ({
+  pageName,
+  bgImage,
+  bcl1,
+  bcpt1,
+  bcl2,
+  bcpt2,
+  bcl3,
+  bcpt3,
+  bcpt4,
+}) => {
   return (
     <>
       <div
         style={{
-          backgroundColor: "#F5F5F5",
-          height: 400,
+          height: "400px",
           backgroundImage: `url(${bgImage})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           position: "relative",
+          backgroundPosition: " 50% 20%",
         }}
       >
-        <div
-          style={{
-            backgroundColor: "rgba(0, 0, 0, 0.3)",
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-          }}
-        />
+        <div className="overlay">
+          <Container>
+            <h1 className="headerTitle">{pageName}</h1>
 
-        <Container
-          style={{ paddingTop: 100, position: "relative", zIndex: "100" }}
-        >
-          <h1
-            style={{
-              textUnderlineOffset: "8px",
-              fontSize: "48px",
-              fontFamily: "'Poppins', sans-serif",
-              color: "white",
-            }}
-          >
-            {pageName}
-          </h1>
-        </Container>
+            <Breadcrumb
+              bcpt1={bcpt1}
+              bcl1={bcl1}
+              bcpt2={bcpt2}
+              bcl2={bcl2}
+              bcpt3={bcpt3}
+              bcl3={bcl3}
+              bcpt4={bcpt4}
+            />
+          </Container>
+        </div>
       </div>
     </>
   );

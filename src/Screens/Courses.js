@@ -5,16 +5,9 @@ import firebase from "firebase";
 import "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import Header from "./../components/ELearning/Header";
-import {
-  MDBBreadcrumb,
-  MDBBreadcrumbItem,
-  MDBBtn,
-  MDBContainer,
-} from "mdbreact";
-import { Link } from "react-router-dom";
+import { MDBBtn } from "mdbreact";
 import { useToken } from "../hooks/useToken";
 import "./Courses.css";
-import { MDBCol, MDBFormInline, MDBIcon } from "mdbreact";
 import _ from "lodash";
 
 const Courses = () => {
@@ -112,11 +105,17 @@ const Courses = () => {
         bgImage={
           "https://www.s7template.com/react/eduskills/assets/images/banner-image-00.jpg"
         }
+        bcpt1="Home"
+        bcl1="/"
+        bcpt2=" / Courses"
+        bcl2=""
+        bcpt3=""
+        bcl3=""
+        bcpt4=""
       />
-      <BreadcrumbPage />
 
       <Container>
-        <div className="d-flex justify-content-between mb-5">
+        <div className="d-flex justify-content-between mb-5 mt-5">
           <div className="d-flex">
             {courseCategory.map((e, index) => (
               <button
@@ -181,25 +180,3 @@ const Courses = () => {
 };
 
 export default Courses;
-
-const BreadcrumbPage = () => {
-  return (
-    <MDBContainer>
-      <MDBBreadcrumb>
-        <MDBBreadcrumbItem active>
-          <Link
-            to={"/"}
-            style={{
-              textDecoration: "none",
-              color: "black",
-              fontWeight: "600",
-              fontSize: "20px",
-            }}
-          >
-            /Home
-          </Link>
-        </MDBBreadcrumbItem>
-      </MDBBreadcrumb>
-    </MDBContainer>
-  );
-};

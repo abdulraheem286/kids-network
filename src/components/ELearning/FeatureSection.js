@@ -88,7 +88,7 @@ export default FeatureSection;
 function FeatureSectionCard({ icon, title, desc }) {
   return (
     <div className="feature__card">
-      <img src={icon} />
+      <img alt="icon" src={icon} />
       <h4>{title}</h4>
       <p>{desc}</p>
     </div>

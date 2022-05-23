@@ -132,8 +132,15 @@ export default function CoursesDetails(props) {
         bgImage={
           "https://www.ideafist.com/wp-content/uploads/2013/05/contact-us-banner.jpg"
         }
+        bcpt1="Home"
+        bcl1="/"
+        bcpt2=" / Courses"
+        bcl2="/courses"
+        bcpt3=" / Course Details"
+        bcl3=""
+        bcpt4=""
       />
-      <BreadcrumbPage />
+
       <Container>
         {courseData && (
           <>
@@ -291,37 +298,3 @@ export default function CoursesDetails(props) {
     </>
   );
 }
-const BreadcrumbPage = () => {
-  return (
-    <MDBContainer>
-      <MDBBreadcrumb>
-        <MDBBreadcrumbItem active>
-          <Link
-            to={"/"}
-            style={{
-              textDecoration: "none",
-              color: "black",
-              fontWeight: "600",
-              fontSize: "20px",
-            }}
-          >
-            /Home
-          </Link>
-        </MDBBreadcrumbItem>
-        <MDBBreadcrumbItem icon="arrow">
-          <Link
-            to={"/courses"}
-            style={{
-              textDecoration: "none",
-              color: "black",
-              fontWeight: "600",
-              fontSize: "20px",
-            }}
-          >
-            /Courses
-          </Link>
-        </MDBBreadcrumbItem>
-      </MDBBreadcrumb>
-    </MDBContainer>
-  );
-};

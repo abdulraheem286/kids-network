@@ -1,0 +1,15 @@
+.breadcrumb_main{
+    background: none;
+    padding: 0%;
+}
+
+.breadcrumb_link{
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.breadcrumb_link:hover {
+    text-decoration: none;
+    color: #65DAFF;
+}
