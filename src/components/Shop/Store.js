@@ -99,31 +99,49 @@ const Store = () => {
                                 </Col>
                             ))
                         }
+                    </Row>
+                    <Row className='my-3'>
                         <Col xs={{
-                            span: 10
+                            span: 24
                         }}>
-                            <div className='border d-flex' style={{ height: "467px" }}>
-                                <div className='d-flex flex-column h-100 w-25' style={{ overflowY: "scroll" }}>
+                            <div className='border d-flex p-2' style={{ height: "467px" }}>
+                                <div className='d-flex flex-column h-100 w-25' style={{
+                                    backgroundColor: "whitesmoke", overflowY: "scroll"
+                                }}>
                                     {
                                         chats?.map((chat, index) => (
-                                            <p className='p-1 border-bottom my-2 text-center'
-                                                key={index} style={{ cursor: "pointer" }}
+                                            <p className={`p-1 border text-center`}
+                                                key={index} style={{
+                                                    cursor: "pointer",
+
+                                                    backgroundColor: chat.id == activeChat.id ?
+                                                        "#1890ff" : "white",
+                                                    color: chat.id == activeChat.id ?
+                                                        "white" : "#282828",
+                                                }}
                                                 onClick={() => setactiveChat(chat)}>
-                                                {chat.id.split("@")[0]}
+                                                {chat.id.split("@")[0].replace(/^\w/, c => c.toUpperCase())}
                                             </p>
                                         ))
                                     }
                                 </div>
                                 <div className='h-100 w-75 border d-flex justify-content-between flex-column'>
+                                    <div className="w-100 border text-center p-1">
+                                        {activeChat?.id?.split("@")[0].toUpperCase()}
+                                    </div>
+
                                     <div style={{ overflowY: "scroll" }}>
 
                                         {
                                             activeChat?.chat?.map((message, index) => (
-                                                <div className='w-100 d-flex' key={index}>
+                                                <div className={`w-100
+                                                ${message.author === token.email ? "justify-content-start" : "justify-content-end"} d-flex`} key={index}>
 
-                                                    <div className={`rounded m-2
-${message?.author !== token.email ? "float-right" : "float-left"} w-50 border`} style={{ fontSize: "10px" }}>
-                                                        <p className='border-bottom p-1'>{message?.author}</p>
+                                                    <div className={`rounded m-2 w-25 border`} style={{ fontSize: "10px" }}>
+                                                        <p style={{
+                                                            backgroundColor: "#282828",
+                                                            color: "whitesmoke"
+                                                        }} className='border-bottom p-1'>{message?.author.split("@")[0]}</p>
                                                         <p className='p-1 m-0 p-0'>{message?.text}</p>
                                                         <p className='m-0 p-1 float-right'>{new Date(message?.timestamp).toLocaleTimeString()}</p>
                                                     </div>
