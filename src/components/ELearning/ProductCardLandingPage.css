@@ -1,0 +1,9 @@
+.bootstrap__card {
+    transition: all 0.2s ease-in-out;
+}
+
+.bootstrap__card:hover {
+    transform: scale(1.02);
+    border: 1px solid black !important;
+    cursor: pointer;
+}

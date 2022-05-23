@@ -1,0 +1,43 @@
+.community_main
+{
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+.community_head
+{
+    font-size: 48px;
+    line-height: 64px;
+    text-align: center;
+    color: #113C49;
+    font-family: Poppins;
+    font-weight: bold;
+}
+
+.community_desc
+{
+    color: #113C49;
+    text-align: center; 
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.community_button
+{
+    margin: auto;
+    background-color: rgb(101,218,255);
+    font-family: Poppins;
+    color: Black;
+    font-size: 16px;
+    border-radius: 100px 100px 100px 100px;
+    margin-bottom: 40px;
+}
+
+.community_img
+{
+    object-fit: contain;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}

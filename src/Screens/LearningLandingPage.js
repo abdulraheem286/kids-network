@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import AboutSection from "../components/ELearning/AboutSection";
-import CommentCard from "../components/ELearning/CommentCard";
+import CommunitySection from "../components/ELearning/CommunitySection";
 import FeatureSection from "../components/ELearning/FeatureSection";
+import ProductsSection from "../components/ELearning/ProductsSection";
+
 import "./LearningLandingPage.css";
 const LearningLandingPage = () => {
   return (
@@ -53,14 +55,14 @@ const LearningLandingPage = () => {
             Make every study hour count
           </h1>
           <p
-            className="text-light"
-            style={{ fontSize: "24px", fontFamily: "'Poppins', sans-serif" }}
+            className="text-light p-2"
+            style={{ fontSize: "20px", fontFamily: "'Poppins', sans-serif" }}
           >
             Access to multiple courses and video tutorials
             <span
               className="text-light"
               style={{
-                fontSize: "34px",
+                fontSize: "30px",
                 fontFamily: "Poppins",
                 fontWeight: "bold",
                 color: "Black",
@@ -88,6 +90,8 @@ const LearningLandingPage = () => {
         </div>
       </div>
       <FeatureSection />
+      <ProductsSection />
+      <CommunitySection />
       <AboutSection />
     </>
   );
