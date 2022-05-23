@@ -26,8 +26,10 @@ const Product = ({ product: mainProduct, categories }) => {
     }
     const submitHandler = async (e) => {
         e.preventDefault()
-        if (!product.category) {
-            alert("Select a product category")
+        if (!product.category || !product.brand || !product.description || !product.image
+            || !product.delivery || !product.price || !product.quantity
+            || !product.title || !product.service) {
+            alert("Make sure to add all the values")
             return
         }
         try {

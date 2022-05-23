@@ -33,6 +33,10 @@ const AdminShop = () => {
         setrefresh(false);
     }, [refresh]);
     const addProductCategory = (e) => {
+        if (!category) {
+            alert("Make sure to add a valid value")
+            return
+        }
         e.preventDefault();
         setproductCategory([...productCategory, category]);
         setcategory("");
@@ -75,9 +79,9 @@ const AdminShop = () => {
                 >
                     <List
                         bordered
-                        dataSource={productCategory}
+                        dataSource={productCategory.filter(item => item !== "All")}
                         renderItem={(item, index) => (
-                            <List.Item className="w-50 d-flex justify-content-between">
+                            <List.Item className=" p-2 w-50 d-flex justify-content-between">
                                 <div>
                                     <Typography.Text mark>{index}</Typography.Text> {item}
                                 </div>

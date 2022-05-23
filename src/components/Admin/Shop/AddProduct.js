@@ -52,8 +52,10 @@ const AddProduct = ({ categories }) => {
     const submitHandler = async (e) => {
         e.preventDefault()
         const finalProduct = { ...product, author: `${token.fName} ${token.lName}`, author_email: token.email }
-        if (!finalProduct.category) {
-            alert("Select a product category")
+        if (!finalProduct.category || !finalProduct.brand || !finalProduct.description || !finalProduct.image
+            || !finalProduct.delivery || !finalProduct.price || !finalProduct.quantity
+            || !finalProduct.title || !finalProduct.service) {
+            alert("Make sure to add all the values")
             return
         }
         try {
