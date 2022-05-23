@@ -179,13 +179,13 @@ export default function CoursesDetails(props) {
                         backgroundColor: "#f5f5f5",
                       }}
                     >
-                      {courseData?.chapters?.map((chapter, index) => (
+                      {/* {courseData?.chapters?.map((chapter, index) => (
                         <ChapterCards
                           number={index}
                           key={index}
                           title={chapter}
                         />
-                      ))}
+                      ))} */}
                     </div>
                   </div>
 
@@ -195,6 +195,7 @@ export default function CoursesDetails(props) {
                     </h3>
                     {reviews?.map((item) => (
                       <ReviewCard
+                        enrolled={enrolledUser}
                         key={item.id}
                         name={item.name}
                         pageId={params.data}
@@ -250,38 +251,40 @@ export default function CoursesDetails(props) {
                     </button>
                   )}
                   <CourseDetailsCard courseDetails={courseData} />
-                  <form className=" w-100 my-5">
-                    <h3>Leave a review: </h3>
+                  {enrolledUser && (
+                    <form className=" w-100 my-5">
+                      <h3>Leave a review: </h3>
 
-                    <MDBInput
-                      value={review}
-                      name={"review"}
-                      onChange={(e) => setreview(e.target.value)}
-                      type="textarea"
-                      background
-                    />
-                    <div className="mb-2">
-                      {new Array(5).fill(0).map((_, i) => {
-                        return i < rating ? (
-                          <i
-                            key={i}
-                            onClick={() => setrating(i + 1)}
-                            className="fa fa-star text-warning"
-                          ></i>
-                        ) : (
-                          <i
-                            key={i}
-                            onClick={() => setrating(i + 1)}
-                            className="fa fa-star text-secondary"
-                          ></i>
-                        );
-                      })}
-                    </div>
+                      <MDBInput
+                        value={review}
+                        name={"review"}
+                        onChange={(e) => setreview(e.target.value)}
+                        type="textarea"
+                        background
+                      />
+                      <div className="mb-2">
+                        {new Array(5).fill(0).map((_, i) => {
+                          return i < rating ? (
+                            <i
+                              key={i}
+                              onClick={() => setrating(i + 1)}
+                              className="fa fa-star text-warning"
+                            ></i>
+                          ) : (
+                            <i
+                              key={i}
+                              onClick={() => setrating(i + 1)}
+                              className="fa fa-star text-secondary"
+                            ></i>
+                          );
+                        })}
+                      </div>
 
-                    <MDBBtn onClick={submitReview} color="dark">
-                      Submit
-                    </MDBBtn>
-                  </form>
+                      <MDBBtn onClick={submitReview} color="dark">
+                        Submit
+                      </MDBBtn>
+                    </form>
+                  )}
                 </div>
               </div>
             </div>
