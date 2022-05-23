@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Collapse, Tooltip, List, Typography } from "antd";
+import { Collapse, Tooltip, List, Typography, Select } from "antd";
 import firebase from "firebase";
 import CourseDetails from "./CourseDetails";
 import { Modal, Button } from "antd";
@@ -66,6 +66,10 @@ const CourseCard = () => {
   }, [refresh]);
   const addCourseCategory = (e) => {
     e.preventDefault();
+    if (!category) {
+      alert("Make sure to add a category")
+      return
+    }
     setcourseCategory([...courseCategory, category]);
     setcategory("");
   };
@@ -96,7 +100,7 @@ const CourseCard = () => {
         </Button>
       </Tooltip>
       <Collapse accordion>
-        <Panel header="Courses" key="1" extra={<AddModal />}>
+        <Panel header="Courses" key="1" extra={<AddModal categories={courseCategory} />}>
           {courses.map((course) => (
             <CourseDetails
               key={course.id}
@@ -137,6 +141,7 @@ const CourseCard = () => {
             bordered
             dataSource={courseCategory}
             renderItem={(item, index) => (
+              item !== "All" &&
               <List.Item className="w-50 d-flex justify-content-between">
                 <div>
                   <Typography.Text mark>{index}</Typography.Text> {item}
@@ -168,7 +173,7 @@ const CourseCard = () => {
 
 export default CourseCard;
 
-const AddModal = () => {
+const AddModal = ({ categories }) => {
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
   const [state, setstate] = useState({
@@ -183,6 +188,10 @@ const AddModal = () => {
   };
 
   const handleOk = async () => {
+    if (!state.coursecategory || !state.coursetitle || !state.coursedescription || !state.courseimage) {
+      alert("Make sure to add value in all fields")
+      return
+    }
     try {
       const course = await firebase
         .firestore()
@@ -241,21 +250,22 @@ const AddModal = () => {
               className="w-50"
             />
           </div>
-          <div className="w-100 d-flex justify-content-between">
-            <label>Course Category</label>
-            <input
-              type="text"
-              name="coursecategory"
-              required
-              value={state.coursecategory}
-              onChange={changeHandler}
-              className="w-50"
-            />
+          <div className="w-100 mb-2 d-flex justify-content-between">
+            <label className="w-50">Course Category</label>
+            <Select className="w-50" value={state.coursecategory} onChange={e => setstate({ ...state, coursecategory: e })}>
+              {categories?.map((category, index) => (
+                category !== "All" && <Select.Option key={index} value={category}>
+                  {category}
+                </Select.Option>
+
+              ))}
+            </Select>
           </div>
           <div className="w-100 d-flex justify-content-between">
             <label>Course Description</label>
             <textarea
               type="text"
+              required
               name="coursedescription"
               value={state.coursedescription}
               onChange={changeHandler}
@@ -267,6 +277,7 @@ const AddModal = () => {
             <input
               type="text"
               name="courseimage"
+              required
               value={state.courseimage}
               onChange={changeHandler}
               className="w-50"

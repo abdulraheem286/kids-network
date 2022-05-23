@@ -29,6 +29,9 @@ export default function Admin() {
   const navigate = useNavigate();
   useEffect(() => {
     if (!token) navigate("/sign-in", { replace: true });
+    if (!token.isAdmin) {
+      navigate("/", { replace: true })
+    }
   }, [navigate, token]);
 
   return (

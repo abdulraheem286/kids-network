@@ -46,6 +46,10 @@ const VideoCard = ({ video, courseId }) => {
   };
   const saveSettings = async (e) => {
     e.preventDefault();
+    if (!state.description || !state.link || !state.title || !state.thumbnail) {
+      alert("Make sure to add all the values")
+      return
+    }
     try {
       await firebase
         .firestore()
@@ -54,6 +58,7 @@ const VideoCard = ({ video, courseId }) => {
         .collection("coursevideos")
         .doc(state.id)
         .update(state);
+      setdisabledState(true)
     } catch (error) {
       console.log(error);
     }
@@ -100,6 +105,7 @@ const VideoCard = ({ video, courseId }) => {
         <label>Video Title:</label>
         <input
           className="w-50"
+          required
           disabled={disabledState}
           onChange={changeHandler}
           type="text"
@@ -113,6 +119,7 @@ const VideoCard = ({ video, courseId }) => {
           className="w-50"
           disabled={disabledState}
           onChange={changeHandler}
+          required
           type="text"
           name="link"
           value={state?.link}
@@ -124,6 +131,7 @@ const VideoCard = ({ video, courseId }) => {
           className="w-50"
           disabled={disabledState}
           onChange={changeHandler}
+          required
           name="description"
           value={state?.description}
         />
@@ -134,6 +142,7 @@ const VideoCard = ({ video, courseId }) => {
           className="w-50"
           disabled={disabledState}
           onChange={changeHandler}
+          required
           type="text"
           name="thumbnail"
           value={state?.thumbnail}
@@ -156,6 +165,10 @@ const AddModal = ({ courseId }) => {
   };
 
   const handleOk = async () => {
+    if (!state.description || !state.link || !state.title || !state.thumbnail) {
+      alert("Make sure to add all the values")
+      return
+    }
     try {
       const videoId = state.link.split("=")[1];
       firebase
@@ -236,6 +249,7 @@ const AddModal = ({ courseId }) => {
               name="description"
               value={state.description}
               onChange={changeHandler}
+              required
               className="w-50"
             />
           </div>
@@ -244,6 +258,7 @@ const AddModal = ({ courseId }) => {
             <input
               type="text"
               name="thumbnail"
+              required
               value={state.thumbnail}
               onChange={changeHandler}
               className="w-50"

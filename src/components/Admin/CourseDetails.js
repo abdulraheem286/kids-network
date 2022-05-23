@@ -23,11 +23,16 @@ const CourseDetails = ({ course, categories }) => {
 
   const saveSettings = async (e) => {
     e.preventDefault();
+    if (!state.coursecategory || !state.coursetitle || !state.coursedescription || !state.courseimage) {
+      alert("Make sure to add value in all fields")
+      return
+    }
     await firebase
       .firestore()
       .collection("courses")
       .doc(state.id)
       .update(state);
+    setdisableState(true)
   };
   const updateEnrolledUsers = (user) => {
     setstate({
@@ -69,6 +74,7 @@ const CourseDetails = ({ course, categories }) => {
         <input
           type="text"
           name="coursetitle"
+          required
           value={state.coursetitle}
           onChange={changeHandler}
           disabled={disableState}
@@ -95,6 +101,7 @@ const CourseDetails = ({ course, categories }) => {
         <textarea
           type="text"
           name="coursedescription"
+          required
           value={state.coursedescription}
           onChange={changeHandler}
           disabled={disableState}
@@ -106,6 +113,7 @@ const CourseDetails = ({ course, categories }) => {
         <input
           type="text"
           name="courseimage"
+          required
           value={state.courseimage}
           onChange={changeHandler}
           disabled={disableState}

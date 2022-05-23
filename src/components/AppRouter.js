@@ -32,12 +32,8 @@ export default function AppRouter() {
       <Route exact path="/product/:id" element={<Product />} />
       <Route exact path="/order" element={<Order />} />
       <Route exact path="/store/:id" element={<SellerStore />} />
-      {token?.isAdmin && (
-        <>
-          <Route exact path="/admin" element={<Admin />} />
-          <Route exact path="/admin/*" element={<Admin />} />
-        </>
-      )}
+      <Route exact path="/admin" element={<Admin />} />
+      <Route exact path="/admin/*" element={<Admin />} />
     </Routes>
   );
 }
