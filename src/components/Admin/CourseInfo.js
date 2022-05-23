@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import firebase from "firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import { MDBBtn } from "mdbreact";
 import { Button } from "antd";
 const CourseInfo = ({ cousreId, courseTitle, courseInfo }) => {
   const [state, setstate] = useState({

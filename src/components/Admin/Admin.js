@@ -12,7 +12,7 @@ import Users from "./Users/Users";
 import { useNavigate } from "react-router";
 import { useToken } from "../../hooks/useToken";
 import AdminShop from "./Shop/AdminShop";
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 export default function Admin() {
   const [state, setState] = useState({

@@ -1,6 +1,6 @@
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import firebase from "firebase";
 import { Button } from "antd";
 import { Select } from "antd";

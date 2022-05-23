@@ -24,6 +24,13 @@ const Community = () => {
         color={"white"}
         pageName={"Kids Network Community"}
         bgImage="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+        bcpt1="Home"
+        bcl1="/"
+        bcpt2=" / Community"
+        bcl2="/"
+        bcpt3=""
+        bcl3=""
+        bcpt4=""
       />
       <Container style={{ width: "80%", margin: "2% auto" }}>
         <Row>
@@ -103,7 +110,7 @@ const Community = () => {
           </Col>
           <Col className="" xs={{ span: 3, offset: 1 }}></Col>
         </Row>
-      </Container>
+      </Container>{" "}
     </div>
   );
 };
