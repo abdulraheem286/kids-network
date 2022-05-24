@@ -48,7 +48,7 @@ const Courses = () => {
         })
       );
       let enrolledCourse = courseRef?.map((e) => {
-        if (e.data().enrolleduser.includes(token.email)) {
+        if (e.data().enrolleduser.includes(token?.email)) {
           return {
             id: e.id,
             data: e.data(),
@@ -59,7 +59,7 @@ const Courses = () => {
       setenrolledCourse(enrolledCourse);
 
       let unenrolledCourse = courseRef?.map((e) => {
-        if (!e.data().enrolleduser.includes(token.email)) {
+        if (!e.data().enrolleduser.includes(token?.email)) {
           return {
             id: e.id,
             data: e.data(),

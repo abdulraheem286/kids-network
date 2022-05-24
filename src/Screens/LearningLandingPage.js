@@ -18,12 +18,11 @@ const LearningLandingPage = () => {
           position: "relative",
           minHeight: "90vh",
           minWidth: "90vw",
-          backgroundPosition: "center center",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           borderBottom: "1px solid #65daff",
-          backgroundImage:
-            "url('https://img.freepik.com/free-photo/little-girl-participating-online-classes_23-2149041079.jpg?t=st=1653218261~exp=1653218861~hmac=ea2d39231d71b221f0e58a512b847de5dfec0f4cade800e40a77d6874d6cae56&w=1060')",
+          backgroundPosition: " 50% 70%",
+          backgroundImage: "url('https://i.ibb.co/9TkTVbM/landing-Banner.jpg')",
         }}
       >
         <div
