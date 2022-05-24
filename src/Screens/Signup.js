@@ -35,14 +35,18 @@ export default function SignUp() {
         .then((res) => {
           firebase
             .firestore()
-            .collection("users").doc(res.user.uid)
+            .collection("users")
+            .doc(res.user.uid)
             .set(values)
             .then(() => {
               setsignedIn("signedIn");
-              localStorage.setItem("user", JSON.stringify({
-                id: res.user.uid,
-                values
-              }));
+              localStorage.setItem(
+                "user",
+                JSON.stringify({
+                  id: res.user.uid,
+                  values,
+                })
+              );
               authContext.setUserDetails(values);
               setTimeout(() => {
                 navigate("/", { replace: true });
@@ -153,15 +157,14 @@ export default function SignUp() {
                 >
                   Register
                 </button>
+                <p className="forgot-password text-right">
+                  Already registered <a href="sign-in">Login?</a>
+                </p>
               </Form>
             </div>
           </div>
         )}
       </Formik>
-
-      <p className="forgot-password text-right">
-        Already registered <a href="sign-in">Login?</a>
-      </p>
     </>
   );
 }
