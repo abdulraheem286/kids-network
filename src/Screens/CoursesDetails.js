@@ -164,13 +164,12 @@ export default function CoursesDetails(props) {
                   />
                   <div
                     style={{
-                      marginTop: 50,
                       height: "fit-content",
                     }}
                   >
-                    <h3>Description</h3>
+                    <h4>Description</h4>
                     <p>{courseData?.detailedDescription}</p>
-                    <h3>Course Contents: </h3>
+                    <h4>Course Contents: </h4>
                     <div
                       className="border rounded-3 my-5"
                       style={{
@@ -190,13 +189,14 @@ export default function CoursesDetails(props) {
                   </div>
 
                   <div>
-                    <h3>
+                    <h4>
                       Reviews: <small>({reviews?.length})</small>{" "}
-                    </h3>
+                    </h4>
                     {reviews?.map((item) => (
                       <ReviewCard
-                        enrolled={enrolledUser}
                         key={item.id}
+                        photo="https://i.ibb.co/prSK5Kj/imgbin-avatar-child-computer-icons-user-profile-png.png"
+                        enrolled={enrolledUser}
                         name={item.name}
                         pageId={params.data}
                         itemId={item.id}
@@ -253,7 +253,7 @@ export default function CoursesDetails(props) {
                   <CourseDetailsCard courseDetails={courseData} />
                   {enrolledUser && (
                     <form className=" w-100 my-5">
-                      <h3>Leave a review: </h3>
+                      <h4>Leave a review: </h4>
 
                       <MDBInput
                         value={review}

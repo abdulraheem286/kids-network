@@ -11,9 +11,6 @@ import React from "react";
 const CourseDetailsCard = ({ courseDetails }) => {
   return (
     <div className=" w-100 mt-4">
-      <h3 style={{ fontWeight: "bold", margin: "5px 0" }} className="my-1">
-        $149.00
-      </h3>
       <table className="my-2 w-100">
         <Row icon={faSliders} text={courseDetails?.level} category="Level" />
         <Row
