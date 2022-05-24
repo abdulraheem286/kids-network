@@ -50,19 +50,21 @@ export default function Card({
               alt="Card"
             />
             <div className="card-body">
-              {title && (
-                <p>
-                  <span style={{ fontWeight: "bold", fontSize: "20px" }}>
-                    {title}
-                  </span>
-                </p>
-              )}
-              <p className="card-text">{cardDescription}</p>
-              <p className="card-text">
-                <hr />
-                <small>{courseCategory}</small>
+              <p>
+                <span style={{ fontWeight: "bold", fontSize: "20px" }}>
+                  {title}
+                </span>
               </p>
-              <ProgressBar now={percentage} label={`${percentage}%`} />
+
+              <p className="card-desc">{cardDescription}</p>
+
+              <div style={{ marginBottom: "0px" }}>
+                <hr />
+                <p className="card-category">
+                  <small>{courseCategory}</small>
+                </p>
+                <ProgressBar now={percentage} label={`${percentage}%`} />
+              </div>
             </div>
           </div>
         </div>
@@ -89,9 +91,6 @@ const style = {
     overflow: "hidden",
     transition: "transform .3s ease-in-out",
 
-    "&:hover": {
-      background: "#efefef",
-    },
     "&:last-child": {
       borderRight: "solid 1px #cccccc",
     },

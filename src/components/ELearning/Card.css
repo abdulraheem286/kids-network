@@ -5,10 +5,21 @@
 .wrapper{
     border-radius: 8px;
     box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    height: 520px;
 }
 
 .wrapper:hover,.wrapper:hover .card{
     color: white;
     background-color: #113C49;
     transform: scale(1.05);
+}
+
+.card-desc{
+    height: 75px;
+    overflow: hidden;
+}
+
+.card-desc{
+    height: 75px;
+    overflow: hidden;
 }
