@@ -7,7 +7,6 @@ import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { MDBBtn, MDBInput } from "mdbreact";
 import ReviewCard from "../components/ELearning/ReviewCard";
-import ChapterCards from "../components/ELearning/ChapterCards";
 import { useToken } from "../hooks/useToken";
 import CourseDetailsCard from "../components/ELearning/CourseDetailsCard";
 
@@ -150,7 +149,12 @@ export default function CoursesDetails(props) {
                   <h2 className="font-weight-bold text-danger">
                     {courseData.coursetitle}
                   </h2>
-                  <h6>By {courseData?.author}</h6>
+                  <h6>
+                    By{" "}
+                    <span style={{ fontWeight: "bold" }}>
+                      {courseData?.author}
+                    </span>
+                  </h6>
                   <img
                     src={courseData.courseimage}
                     alt="courseimages"
@@ -169,29 +173,12 @@ export default function CoursesDetails(props) {
                   >
                     <h4>Description</h4>
                     <p>{courseData?.detailedDescription}</p>
-                    <h4>Course Contents: </h4>
-                    <div
-                      className="border rounded-3 my-5"
-                      style={{
-                        borderRadius: "5px",
-                        boxShadow: "0 25px 50px -12px rgb(0 0 0 / 0.25)",
-                        backgroundColor: "#f5f5f5",
-                      }}
-                    >
-                      {/* {courseData?.chapters?.map((chapter, index) => (
-                        <ChapterCards
-                          number={index}
-                          key={index}
-                          title={chapter}
-                        />
-                      ))} */}
-                    </div>
                   </div>
-
-                  <div>
-                    <h4>
+                  <hr />
+                  <div className="mt-4">
+                    <h5>
                       Reviews: <small>({reviews?.length})</small>{" "}
-                    </h4>
+                    </h5>
                     {reviews?.map((item) => (
                       <ReviewCard
                         key={item.id}
