@@ -136,7 +136,7 @@ export default function CoursesDetails() {
         bcpt2=" / Courses"
         bcl2="/courses"
         bcpt3=" / Course Details"
-        bcl3=""
+        bcl3="/"
         bcpt4=" / Course Videos"
       />
 
