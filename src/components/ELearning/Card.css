@@ -1,25 +1,26 @@
-.card{
-    transition: transform .3s ease-in-out;
+.card {
+  transition: transform 0.3s ease-in-out;
 }
 
-.wrapper{
-    border-radius: 8px;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-    height: 520px;
+.wrapper {
+  border-radius: 8px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-.wrapper:hover,.wrapper:hover .card{
-    color: white;
-    background-color: #113C49;
-    transform: scale(1.05);
+.wrapper:hover,
+.wrapper:hover .card {
+  color: white;
+  background-color: #113c49;
+  transform: scale(1.05);
 }
 
-.card-desc{
-    height: 75px;
-    overflow: hidden;
+.card-desc {
+  height: 75px;
+  overflow: hidden;
 }
 
-.card-desc{
-    height: 75px;
-    overflow: hidden;
+.card-title {
+  font-weight: bold;
+  font-size: 20px;
+  height: 50px;
 }

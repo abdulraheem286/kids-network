@@ -30,7 +30,16 @@ const VideoCard = ({ thumbnail, videoLink, title, author }) => {
         <h5 className="text-start fw-bold" style={{ fontSize: "16px" }}>
           {title}
         </h5>
-        <h6 style={{ fontWeight: "lighter", fontSize: "14px" }}>{author}</h6>
+        <h6
+          style={{
+            fontWeight: "lighter",
+            fontSize: "14px",
+            // height: "18px",
+            // overflow: "hidden",
+          }}
+        >
+          {author}
+        </h6>
       </Col>
     </Row>
   );

@@ -14,8 +14,8 @@ export default function CoursesDetails() {
   const [courseVideo, setVideoData] = useState();
   const location = useLocation();
   const params = useParams();
+  const [videoDetails, setvideoDetails] = useState([]);
   const [video, setvideo] = useState("");
-  const [videoDetails, setvideoDetails] = useState({});
   const [review, setreview] = useState("");
   const [rating, setrating] = useState(0);
   const [sent, setsent] = useState(false);
@@ -27,6 +27,7 @@ export default function CoursesDetails() {
     const urlSearch = new URLSearchParams(location.search);
     const video = urlSearch.get("video");
     setvideo(video);
+
     const loaddata = async () => {
       firebase
         .firestore()
@@ -41,6 +42,7 @@ export default function CoursesDetails() {
           }));
 
           setvideos(data);
+
           setvideoDetails(data.find((item) => item.id === video));
         });
       firebase

@@ -50,11 +50,7 @@ export default function Card({
               alt="Card"
             />
             <div className="card-body">
-              <p>
-                <span style={{ fontWeight: "bold", fontSize: "20px" }}>
-                  {title}
-                </span>
-              </p>
+              <p className="card-title">{title}</p>
 
               <p className="card-desc">{cardDescription}</p>
 
@@ -91,7 +87,7 @@ const style = {
     overflow: "hidden",
     transition: "transform .3s ease-in-out",
 
-    "&:last-child": {
+    "&:lastChild": {
       borderRight: "solid 1px #cccccc",
     },
   },
