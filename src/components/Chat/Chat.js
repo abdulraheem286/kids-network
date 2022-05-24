@@ -6,7 +6,7 @@ import Message from './Message'
 import firebase from "firebase"
 import { useToken } from '../../hooks/useToken'
 import { faRefresh } from '@fortawesome/free-solid-svg-icons'
-const Chat = ({ author, author_email }) => {
+const Chat = ({ author, author_email, product }) => {
     const token = useToken()
     const [message, setmessage] = useState({
         text: "",
@@ -24,7 +24,7 @@ const Chat = ({ author, author_email }) => {
 
                 const userChat = await firebase.firestore().collection("users")
                     .doc(authorId.docs[0].id)
-                    .collection("chats").doc(token.email).get()
+                    .collection("store").doc(product.id).collection("chats").doc(token.email).get()
 
                 setauthorId(authorId.docs[0].id)
                 if (userChat.data()?.chat) {
@@ -45,7 +45,7 @@ const Chat = ({ author, author_email }) => {
             const userMessages = [...messages, message];
             setmessages([...messages, message])
             await firebase.firestore().collection("users").doc(authorId)
-                .collection("chats").doc(token.email).set({
+                .collection("store").doc(product.id).collection("chats").doc(token.email).set({
                     chat: [...userMessages]
                 })
             setchangeMessageState(!changeMessageState)
