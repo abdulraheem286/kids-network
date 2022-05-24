@@ -162,22 +162,14 @@ export default function CoursesDetails(props) {
                       objectFit: "cover",
                     }}
                   />
-
                   <div
-                    className="bottom-border rounded-3 my-5"
                     style={{
                       height: "fit-content",
                     }}
                   >
                     <h4>Description</h4>
                     <p>{courseData?.detailedDescription}</p>
-<<<<<<< Updated upstream
                     <h4>Course Contents: </h4>
-=======
-                  </div>
-
-                  {/* <h3>Course Contents: </h3>
->>>>>>> Stashed changes
                     <div
                       className="border rounded-3 my-5"
                       style={{
@@ -186,16 +178,15 @@ export default function CoursesDetails(props) {
                         backgroundColor: "#f5f5f5",
                       }}
                     >
-                      {courseData?.chapters?.map((chapter, index) => (
+                      {/* {courseData?.chapters?.map((chapter, index) => (
                         <ChapterCards
                           number={index}
                           key={index}
                           title={chapter}
                         />
-                      ))}
-                    </div> */}
-
-                  <hr />
+                      ))} */}
+                    </div>
+                  </div>
 
                   <div>
                     <h4>
