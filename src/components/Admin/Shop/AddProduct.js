@@ -15,6 +15,7 @@ const AddProduct = ({ categories }) => {
         image: "",
         delivery: "",
         service: "",
+        type: "",
         brand: "",
         category: ""
     })
@@ -40,7 +41,8 @@ const AddProduct = ({ categories }) => {
                 delivery: "",
                 service: "",
                 brand: "",
-                category: ""
+                category: "",
+                type: ""
             }
         )
         setalertMessage("")
@@ -54,7 +56,7 @@ const AddProduct = ({ categories }) => {
         const finalProduct = { ...product, author: `${token.fName} ${token.lName}`, author_email: token.email }
         if (!finalProduct.category || !finalProduct.brand || !finalProduct.description || !finalProduct.image
             || !finalProduct.delivery || !finalProduct.price || !finalProduct.quantity
-            || !finalProduct.title || !finalProduct.service) {
+            || !finalProduct.title || !finalProduct.service || !finalProduct.type) {
             alert("Make sure to add all the values")
             return
         }
@@ -74,7 +76,8 @@ const AddProduct = ({ categories }) => {
                     delivery: "",
                     service: "",
                     brand: "",
-                    category: ""
+                    category: "",
+                    type: ""
                 }
             )
             setTimeout(() => {
@@ -116,6 +119,18 @@ const AddProduct = ({ categories }) => {
                                     {category}
                                 </Select.Option>
                             ))}
+                        </Select>
+                    </div>
+                    <div className="d-flex w-100 justify-content-between px-2">
+                        <label>Product Type</label>
+                        <Select className='w-50' value={product.type}
+                            onChange={(e) => setproduct({ ...product, type: e })}>
+                            <Select.Option value={"Old"}>
+                                {"Old"}
+                            </Select.Option>
+                            <Select.Option value={"New"}>
+                                {"New"}
+                            </Select.Option>
                         </Select>
                     </div>
                     <div className="d-flex w-100 justify-content-between px-2">

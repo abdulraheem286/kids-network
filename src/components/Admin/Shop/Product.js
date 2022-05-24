@@ -11,7 +11,8 @@ const Product = ({ product: mainProduct, categories }) => {
         delivery: "",
         service: "",
         brand: "",
-        category: ""
+        category: "",
+        type: ""
     })
     const [userId, setuserId] = useState("")
     const [disabledState, setdisabledState] = useState(true)
@@ -28,7 +29,7 @@ const Product = ({ product: mainProduct, categories }) => {
         e.preventDefault()
         if (!product.category || !product.brand || !product.description || !product.image
             || !product.delivery || !product.price || !product.quantity
-            || !product.title || !product.service) {
+            || !product.title || !product.service || !product.type) {
             alert("Make sure to add all the values")
             return
         }
@@ -79,6 +80,18 @@ const Product = ({ product: mainProduct, categories }) => {
                                 {category}
                             </Select.Option>
                         ))}
+                    </Select>
+                </div>
+                <div className="d-flex w-100 justify-content-between px-2">
+                    <label>Product Type</label>
+                    <Select disabled={disabledState} className='w-50' value={product.type}
+                        onChange={(e) => setproduct({ ...product, type: e })}>
+                        <Select.Option value={"Old"}>
+                            {"Old"}
+                        </Select.Option>
+                        <Select.Option value={"New"}>
+                            {"New"}
+                        </Select.Option>
                     </Select>
                 </div>
                 <div className="d-flex w-100 justify-content-between px-2">

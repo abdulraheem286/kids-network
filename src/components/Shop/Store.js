@@ -31,6 +31,7 @@ const Store = () => {
             .get()
             .then((res) => {
                 if (res?.data()) {
+                    console.log(res.data())
                     setcategories(res.data()?.categories);
                 }
             });
