@@ -123,7 +123,8 @@ const Product = () => {
                     span: 24
                 }}>
 
-                    {chatOpen && <Chat author={product?.author} author_email={product?.author_email} />}
+                    {chatOpen && <Chat author={product?.author}
+                        product={product} author_email={product?.author_email} />}
                 </Col>
 
             </Row>

@@ -18,6 +18,7 @@ const Store = () => {
     const [chats, setchats] = useState([])
     const [changeMessageState, setchangeMessageState] = useState(false)
     const [activeChat, setactiveChat] = useState([])
+    const [activeProduct, setactiveProduct] = useState({})
     const [message, setmessage] = useState({
         text: "",
         author: "",
@@ -42,13 +43,17 @@ const Store = () => {
             })
         setrefresh(false)
     }, [refresh])
-    useEffect(() => {
-        const unsub = firebase.firestore().collection("users").doc(token.id).collection("chats").onSnapshot(snapshot => {
 
-            setchats(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })))
-        })
+    useEffect(() => {
+        const unsub = firebase.firestore()
+            .collection("users").doc(token.id).collection("store").doc(activeProduct?.id)
+            .collection("chats")
+            .onSnapshot(snapshot => {
+
+                setchats(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })))
+            })
         return () => unsub()
-    })
+    }, [activeProduct])
 
     const createStore = async () => {
         try {
@@ -63,7 +68,7 @@ const Store = () => {
     const sendMessage = async () => {
         try {
             const userMessages = [...activeChat.chat, message];
-            await firebase.firestore().collection("users").doc(token.id)
+            await firebase.firestore().collection("users").doc(token.id).collection("store").doc(activeProduct?.id)
                 .collection("chats").doc(activeChat.id).set({
                     chat: [...userMessages]
                 })
@@ -110,6 +115,26 @@ const Store = () => {
                                     backgroundColor: "whitesmoke", overflowY: "scroll"
                                 }}>
                                     {
+                                        products?.map((product, index) => (
+                                            <p className={`p-1 border text-center`}
+                                                key={index} style={{
+                                                    cursor: "pointer",
+
+                                                    backgroundColor: product.id == activeProduct.id ?
+                                                        "#1890ff" : "white",
+                                                    color: product.id == activeProduct.id ?
+                                                        "white" : "#282828",
+                                                }}
+                                                onClick={() => setactiveProduct(product)}>
+                                                {product.title.split("@")[0].replace(/^\w/, c => c.toUpperCase())}
+                                            </p>
+                                        ))
+                                    }
+                                </div>
+                                <div className='d-flex flex-column h-100 w-25' style={{
+                                    backgroundColor: "whitesmoke", overflowY: "scroll"
+                                }}>
+                                    {
                                         chats?.map((chat, index) => (
                                             <p className={`p-1 border text-center`}
                                                 key={index} style={{
@@ -126,7 +151,7 @@ const Store = () => {
                                         ))
                                     }
                                 </div>
-                                <div className='h-100 w-75 border d-flex justify-content-between flex-column'>
+                                <div className='h-100 w-50 border d-flex justify-content-between flex-column'>
                                     <div className="w-100 border text-center p-1">
                                         {activeChat?.id?.split("@")[0].toUpperCase()}
                                     </div>
