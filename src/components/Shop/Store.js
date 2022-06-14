@@ -7,6 +7,7 @@ import AddProduct from '../Admin/Shop/AddProduct'
 import { ReloadOutlined, MessageOutlined } from "@ant-design/icons"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane } from '@fortawesome/free-regular-svg-icons'
+import ProdModal from './ProdModal'
 const Store = () => {
     const token = useToken()
     const [products, setproducts] = useState([])
@@ -78,6 +79,10 @@ const Store = () => {
             console.log(error)
         }
     }
+    const [modalVisible, setmodalVisible] = useState({
+        visible: false,
+        product: null
+    })
     return (
         <div className=' px-4 h-100'>
             <div className='d-flex'>
@@ -89,11 +94,14 @@ const Store = () => {
                 <div className=''>
                     <AddProduct categories={categories} />
                     <h3 className='my-3'>Welcome to {token?.store}</h3>
+                    <ProdModal visible={modalVisible.visible} product={modalVisible.product}
+                        categories={categories} setmodalVisible={setmodalVisible} />
                     <Row>
                         {
                             products.map((product) => (
                                 <Col key={product.id}>
-                                    <Card title={product.title}>
+                                    <Card title={product.title} style={{ cursor: "pointer" }}
+                                        onClick={() => setmodalVisible({ visible: true, product })}>
                                         <img style={{ height: "200px", width: "200px" }} src={product.image} />
                                         <div className="d-flex flex-column mt-2">
                                             <p>Category: {product.category}</p>
@@ -102,6 +110,7 @@ const Store = () => {
                                             <p>Brand: {product.brand}</p>
                                         </div>
                                     </Card>
+
                                 </Col>
                             ))
                         }
@@ -192,10 +201,10 @@ const Store = () => {
 
                         </Col>
                     </Row>
-                    <h3 className='my-3'>Edit your products</h3>
+                    {/* <h3 className='my-3'>Edit your products</h3>
                     <div className='d-flex flex-column w-100'>
                         <Products products={products} categories={categories} />
-                    </div>
+                    </div> */}
                 </div>
             ) : <>
                 <h1>{productsMessage}</h1>
