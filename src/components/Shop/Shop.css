@@ -14,3 +14,11 @@ transition: transform 0.2s ease-in-out;
     cursor: pointer;
 border: 1px solid black;
 }
+.prod-types{
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    cursor: pointer;
+}
+.prod-types:hover{
+transform: scale(1.05);
+}

@@ -13,9 +13,9 @@ const Chat = ({ author, author_email, product }) => {
         timestamp: null,
         author: ""
     })
-    const [messages, setmessages] = useState([])
+    const [messages, setmessages] = useState([])// db
     const [authorId, setauthorId] = useState("")
-    const [changeMessageState, setchangeMessageState] = useState(false)
+    const [changeMessageState, setchangeMessageState] = useState(false)// current write
     useEffect(() => {
         async function getMessages() {
             try {
