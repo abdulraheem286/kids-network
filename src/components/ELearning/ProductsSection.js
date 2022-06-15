@@ -31,7 +31,7 @@ const ProductsSection = () => {
           classy. Here at Kids Network, we pay attention to all minor details.
         </p>
 
-        <Row style={{ justifyContent: "space-between" }}>
+        <Row style={{ justifyContent: "center" }}>
           {products?.map((product) => (
             <ProductCardLandingPage key={product.id} product={product} />
           ))}

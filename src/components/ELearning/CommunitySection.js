@@ -15,18 +15,18 @@ const CommunitySection = () => {
           help people in a way we couldn’t as individuals.
         </p>
 
-        <Link
-          to="/community"
-          className="community_button btn align-self-end courses_btn btn-dark btn-lg w-25 btn-block"
-        >
-          Join Now
-        </Link>
-
         <img
           className="community_img"
           src="https://i.ibb.co/1nghGQy/Community-BG.png"
           alt="bg"
         />
+
+        <Link
+          to="/community"
+          className="community_button btn align-self-end courses_btn btn-dark btn-lg w-25 btn-block mt-5"
+        >
+          Join Now
+        </Link>
       </div>
     </div>
   );

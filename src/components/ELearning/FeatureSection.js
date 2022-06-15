@@ -26,7 +26,7 @@ const FeatureSection = () => {
             }
             title={"Home Tutoring"}
             desc={
-              "His exquisite sincerity education shameless ten earnestly breakfast. Scale began quiet up short wrong in Personal attention."
+              "Provides Home Tutoring through online courses and videos that is accessible to everyone at anytime. Nourish your skills from home without any time limit."
             }
           />
           <FeatureSectionCard
@@ -35,16 +35,16 @@ const FeatureSection = () => {
             }
             title={"Online Tutoring"}
             desc={
-              "His exquisite sincerity education shameless ten earnestly breakfast. Scale began quiet up short wrong in Personal attention."
+              "Provides Online Learning platform for courses and videos that can be accessed at anytime. Can be accessed from anywhere."
             }
           />
           <FeatureSectionCard
             icon={
               "https://www.s7template.com/tf/eduskills/assets/images/we-offer/03.png"
             }
-            title={"Group Tutoring"}
+            title={"Feedbacks"}
             desc={
-              "His exquisite sincerity education shameless ten earnestly breakfast. Scale began quiet up short wrong in Personal attention."
+              "Provides Feedback on the enrolled courses for the authencity and better user experience. It enhances the quality and content of the course."
             }
           />
         </section>
@@ -54,27 +54,27 @@ const FeatureSection = () => {
             icon={
               "https://www.s7template.com/tf/eduskills/assets/images/we-offer/01.png"
             }
-            title={"Home Tutoring"}
+            title={"Buy/Sell Products"}
             desc={
-              "His exquisite sincerity education shameless ten earnestly breakfast. Scale began quiet up short wrong in Personal attention."
+              "Provides e-Commerce platform to buy and sell products for the childern without purchasing any subscriptions. "
             }
           />
           <FeatureSectionCard
             icon={
               "https://www.s7template.com/tf/eduskills/assets/images/we-offer/02.png"
             }
-            title={"Online Tutoring"}
+            title={"Community"}
             desc={
-              "His exquisite sincerity education shameless ten earnestly breakfast. Scale began quiet up short wrong in Personal attention."
+              "Provides a community platform for parents to dicuss daily life problems or issues related to their childern. Parents can find solutions as well. "
             }
           />
           <FeatureSectionCard
             icon={
               "https://www.s7template.com/tf/eduskills/assets/images/we-offer/03.png"
             }
-            title={"Group Tutoring"}
+            title={"Community Experts"}
             desc={
-              "His exquisite sincerity education shameless ten earnestly breakfast. Scale began quiet up short wrong in Personal attention."
+              "Provides experts to help parents in resolving the issues free of cost. Experts will be verified from Kids Network. "
             }
           />
         </section>
