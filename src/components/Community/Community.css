@@ -1,12 +1,7 @@
 .icon{
     transition: transform,color 0.3s ease-in-out;
 }
-.item-box:hover{
-background-color: #282828;
-cursor: pointer;
-color: #65daff;
 
-}
 
 .item-box:hover .icon{
     transform: scale(1.2);
