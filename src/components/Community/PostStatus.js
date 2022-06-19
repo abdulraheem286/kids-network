@@ -5,7 +5,6 @@ const PostStatus = ({ type, activePostId }) => {
     const token = useToken()
     const [state, setstate] = useState({
         subject: "",
-        description: ""
     })
     const changeHandler = (e) => {
         setstate({ ...state, [e.target.name]: e.target.value })
@@ -38,7 +37,6 @@ const PostStatus = ({ type, activePostId }) => {
             }
             setstate({
                 subject: "",
-                description: ""
             })
         } catch (error) {
             console.log(error)
@@ -47,14 +45,23 @@ const PostStatus = ({ type, activePostId }) => {
     return (
         <form onSubmit={submitHandler} className='p-2 rounded bg-light'>
             <div>
-                <label>{type} Subject: </label>
-                <input required name="subject" onChange={changeHandler} className="bg-light" style={{ border: "1px solid black" }} />
+                {
+                    type === "Question" && <label className="bg-danger p-1 mb-2 rounded-pill"
+                        style={{ color: "white" }}>#Thread</label>
+                }
+                <input required name="subject" value={state.subject}
+                    placeholder={type === "Question" ? "What's the status ..." :
+                        "Post a comment ..."}
+                    onChange={changeHandler} className="bg-light"
+                    style={{
+                        border: "none",
+                        borderRadius: "0px",
+                        borderBottom: "1px solid black", outline: "none"
+                    }} />
             </div>
-            <div>
-                <label>Description: </label>
-                <textarea required name="description" onChange={changeHandler} className="bg-light" style={{ border: "1px solid black" }} />
-            </div>
-            <button className='btn btn-success p-1' type="submit">Post</button>
+            <button className='btn btn-primary rounded p-1' type="submit">
+                {type === "Question" ? "Post a Thread" : "Post a Comment"}
+            </button>
         </form>
     )
 }

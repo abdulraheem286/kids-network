@@ -13,10 +13,10 @@ const AnswerCard = ({ post }) => {
                 <p>Posted by {post?.postedBy} 12 days ago</p>
                 <h6>
                     <span
-                        className="bg-primary rounded-pill fw-bold p-1 text-light"
+                        className="bg-success rounded-pill fw-bold p-1 text-light"
                         style={{ marginRight: "10px", fontSize: "12px" }}
                     >
-                        Answer
+                        #Open Thread
                     </span>
                     {post?.subject}
                 </h6>
@@ -27,9 +27,7 @@ const AnswerCard = ({ post }) => {
 
 
                 </div>
-                <div>
-                    {post?.description}
-                </div>
+
             </section>
 
         </div>

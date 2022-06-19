@@ -11,9 +11,7 @@ import firebase from "firebase";
 const Community = () => {
   const token = useToken();
   const navigate = useNavigate();
-  const [activePost, setactivePost] = useState({})
   const [questions, setquestions] = useState([])
-  const [answers, setanswers] = useState([])
   useEffect(() => {
     if (!token) navigate("/sign-in", { replace: true });
   }, [navigate, token]);
@@ -33,14 +31,6 @@ const Community = () => {
     getData()
 
   }, [])
-  useEffect(() => {
-    if (activePost?.id) {
-      firebase.firestore().collection("questions").doc(activePost?.id).collection("answers").onSnapshot(snapshot => {
-        const answers = snapshot.docs?.map(doc => ({ id: doc.id, ...doc.data() }))
-        setanswers(answers)
-      })
-    }
-  }, [activePost])
 
   return (
     <div className="d-flex justify-content-between flex-column" style={{ minHeight: "100vh" }}>
@@ -58,22 +48,10 @@ const Community = () => {
       />
       <Container className="h-100" style={{ width: "80%", margin: "2% auto" }}>
         <Row>
-          <Col className="h-100" xs={7}>
+          <Col className="h-100 mx-auto" xs={7}>
             <PostStatus type={"Question"} />
-            {questions?.map(question => <QuestionCard key={question?.id} setactivePost={setactivePost} post={question} />)}
-
+            {questions?.map(question => <QuestionCard key={question?.id} post={question} />)}
           </Col>
-          {
-            questions.length ? <Col className=" h-100" style={{ position: "sticky", top: 0 }} xs={{ span: 5 }}>
-              <PostStatus activePostId={activePost?.id} type={"Answer"} />
-              {/* ActivePost Answers */}
-              {
-                answers?.map(answer => <AnswerCard key={answer?.id} post={answer} />)
-              }
-
-            </Col> : null
-          }
-
         </Row>
       </Container>
     </div>
