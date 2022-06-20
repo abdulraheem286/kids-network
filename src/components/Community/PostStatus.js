@@ -20,6 +20,7 @@ const PostStatus = ({ type, activePostId }) => {
                     userId: token.id,
                     likes: 0,
                     comments: 0,
+                    expert: token?.expert ? true : false,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 })
             }
@@ -29,6 +30,7 @@ const PostStatus = ({ type, activePostId }) => {
                         ...state,
                         postedBy: `${token.fName} ${token.lName}`,
                         userId: token.id,
+                        expert: token?.expert ? true : false,
                         timestamp: firebase.firestore.FieldValue.serverTimestamp()
                     })
                 await firebase.firestore().collection("questions").doc(activePostId).update({
