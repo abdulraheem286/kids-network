@@ -10,7 +10,7 @@ const Footer = () => (
           <div className="col-md-9 text-center">
             <div className="footer-site-logo mb-4">
               <Link to={"/"}>
-                <img src={require("../Assets/Logo.svg")} />
+                <img src={require("../Assets/Logo.svg")} alt="logo" />
               </Link>
             </div>
             <ul className="list-unstyled nav-links mb-5">

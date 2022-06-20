@@ -151,7 +151,7 @@ const Courses = () => {
               }}
               className="mr-auto "
             >
-              <img src={require("../Assets/search-icon.png")} />
+              <img src={require("../Assets/search-icon.png")} alt="search" />
             </MDBBtn>
           </div>
         </div>
