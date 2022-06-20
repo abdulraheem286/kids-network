@@ -15,8 +15,7 @@ const Community = () => {
   const [openModal, setopenModal] = useState(false)
   const [loading, setloading] = useState(false)
   const [expertForm, setexpertForm] = useState({
-    name: "",
-    email: ""
+    question: "",
   })
   useEffect(() => {
     if (!token) navigate("/sign-in", { replace: true });
@@ -39,7 +38,7 @@ const Community = () => {
   }, [])
   async function submitHandler(e) {
     try {
-      if (!expertForm.name || !expertForm.email) {
+      if (!expertForm.question) {
         alert("All fields are required")
         return
       }
@@ -48,7 +47,13 @@ const Community = () => {
       await firebase.firestore().collection("expertsForms").doc(token.id).set({
         ...expertForm,
         approved: false,
+        name: `${token.fName} ${token.lName}`,
+        uid: token.id,
+        email: token.email,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      })
+      setexpertForm({
+        question: ""
       })
       setloading(false)
       setopenModal(false)
@@ -81,17 +86,13 @@ const Community = () => {
 
               <form className='d-flex flex-column border p-2' onSubmit={submitHandler}>
                 <div className="d-flex w-100 justify-content-between px-2">
-                  <label>Name</label>
+                  <label>Question</label>
                   <Input
-                    placeholder='name' className="w-50" required name='name'
-                    type={"text"} value={expertForm.name} onChange={changeHandler} />
+                    placeholder='Why do you want to be an expert?'
+                    className="w-50" required name='question'
+                    type={"text"} value={expertForm.question} onChange={changeHandler} />
                 </div>
-                <div className="d-flex w-100 justify-content-between my-2 px-2">
-                  <label>Email</label>
-                  <Input placeholder='email' className="w-50"
-                    name='email' required type={"email"} value={expertForm.email}
-                    onChange={changeHandler} />
-                </div>
+
 
               </form>
             </Modal>
