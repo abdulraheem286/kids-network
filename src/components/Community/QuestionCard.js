@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMessage, faThumbsUp, faTrashCan, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { faMessage, faThumbsUp, faTrashCan, faPenToSquare, faThumbsDown } from "@fortawesome/free-regular-svg-icons";
 import firebase from "firebase"
 import AnswerCard from './AnswerCard';
 import PostStatus from './PostStatus';
@@ -12,10 +12,29 @@ const QuestionCard = ({ post }) => {
     const [edit, setedit] = useState(false)
     const [subject, setsubject] = useState("")
     const [postAnswer, setpostAnswer] = useState(false)
+    const [liked, setliked] = useState(false)
+    const [allLikes, setallLikes] = useState(0)
+    const [allDislikes, setallDislikes] = useState(0)
     useEffect(() => {
         firebase.firestore().collection("questions").doc(post.id).collection("answers").onSnapshot(snapshot => {
             const answers = snapshot.docs?.map(doc => ({ id: doc.id, ...doc.data() }))
             setanswers(answers)
+        })
+        firebase.firestore().collection("questions").doc(post.id).collection("likes").onSnapshot(snapshot => {
+            const likes = snapshot?.docs?.map(doc => ({ id: doc.id, ...doc.data() }))
+            let allLike = 0
+            let allDisLike = 0
+            for (let i = 0; i < likes?.length; i++) {
+
+                if (likes[i]?.like == true) {
+                    allLike += 1
+                }
+                else {
+                    allDisLike += 1
+                }
+            }
+            setallLikes(allLike)
+            setallDislikes(allDisLike)
         })
     }, [])
     const deletePost = async () => {
@@ -31,6 +50,28 @@ const QuestionCard = ({ post }) => {
                 subject,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const setLike = async () => {
+        try {
+            await firebase.firestore().collection("questions").doc(post?.id).collection("likes")
+                .doc(token.id).set({
+                    like: true,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const setDisLike = async () => {
+        try {
+            await firebase.firestore().collection("questions").doc(post?.id).collection("likes")
+                .doc(token.id).set({
+                    like: false,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                })
         } catch (error) {
             console.log(error)
         }
@@ -103,8 +144,15 @@ const QuestionCard = ({ post }) => {
                         className="d-flex flex-column  item-box p-2"
                         style={{ width: "fit-content", borderRadius: "10px" }}
                     >
-                        <FontAwesomeIcon icon={faThumbsUp} className="icon" />
-                        <p> {post?.likes} Likes</p>
+                        <FontAwesomeIcon icon={faThumbsUp} onClick={setLike} className="icon" />
+                        <p> {allLikes} Likes</p>
+                    </div>
+                    <div
+                        className="d-flex flex-column  item-box p-2"
+                        style={{ width: "fit-content", borderRadius: "10px" }}
+                    >
+                        <FontAwesomeIcon icon={faThumbsDown} onClick={setDisLike} className="icon" />
+                        <p> {allDislikes} Dislikes</p>
                     </div>
                 </div>
                 <div>
