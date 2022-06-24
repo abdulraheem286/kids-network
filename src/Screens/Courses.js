@@ -132,16 +132,12 @@ const Courses = () => {
 
           <div className="d-flex">
             <input
-              ref={ref}
               className="form-control"
               type="text"
               placeholder="Search"
-              onChange={(e) => {
-                if (!e.target.value) {
-                  setsearch(e.target.value);
-                }
-              }}
+              onChange={(e)=>setsearch(e.target.value)}
               aria-label="Search"
+              value={search}
             />
             <MDBBtn
               gradient="aqua"
@@ -155,7 +151,7 @@ const Courses = () => {
             >
               <img src={require("../Assets/search-icon.png")} alt="search" />
             </MDBBtn>
-            <Dictaphone />
+            <Dictaphone setSearch={setsearch}/>
           </div>
         </div>
 
