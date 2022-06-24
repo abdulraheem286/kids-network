@@ -9,8 +9,10 @@ import { MDBBtn } from "mdbreact";
 import { useToken } from "../hooks/useToken";
 import "./Courses.css";
 import _ from "lodash";
+import Dictaphone from "../components/VoiceToText/Dictaphone";
 
 const Courses = () => {
+  const [voiceText, setVoiceText] = React.useState("");
   const [listings, setListings] = useState([]);
   const [enrolledCourse, setenrolledCourse] = useState([]);
   const [unEnrolledCourse, setunEnrolledCourse] = useState([]);
@@ -153,6 +155,7 @@ const Courses = () => {
             >
               <img src={require("../Assets/search-icon.png")} alt="search" />
             </MDBBtn>
+            <Dictaphone />
           </div>
         </div>
 
@@ -174,6 +177,7 @@ const Courses = () => {
             </Row>
           </>
         )}
+        <div></div>
       </Container>
     </>
   );

@@ -28,7 +28,7 @@ const Shop = () => {
   const storeSearchRef = useRef();
   const [productsSearch, setproductsSearch] = useState("");
   const [storeSearch, setstoreSearch] = useState("");
-  const [categorizeProdType, setCategorizeProdType] = useState("")
+  const [categorizeProdType, setCategorizeProdType] = useState("");
   useEffect(() => {
     if (!token) navigate("/sign-in", { replace: true });
   }, [navigate, token]);
@@ -45,15 +45,15 @@ const Shop = () => {
 
       products = productsSearch
         ? _.filter(products?.docs, (product) => {
-          if (
-            product
-              .data()
-              .title.toLowerCase()
-              .includes(productsSearch.toLowerCase())
-          ) {
-            return product;
-          }
-        })
+            if (
+              product
+                .data()
+                .title.toLowerCase()
+                .includes(productsSearch.toLowerCase())
+            ) {
+              return product;
+            }
+          })
         : products?.docs;
       setproducts(products?.map((doc) => ({ id: doc.id, ...doc.data() })));
 
@@ -64,25 +64,41 @@ const Shop = () => {
         .get();
       stores = storeSearch
         ? stores?.docs.filter((store) => {
-          if (
-            store
-              .data()
-              .store.toLowerCase()
-              .includes(storeSearch.toLowerCase())
-          ) {
-            return store;
-          }
-        })
+            if (
+              store
+                .data()
+                .store.toLowerCase()
+                .includes(storeSearch.toLowerCase())
+            ) {
+              return store;
+            }
+          })
         : stores?.docs;
       setstores(stores?.map((doc) => ({ id: doc.id, ...doc.data() })));
     };
     loadData();
   }, [productsSearch, storeSearch]);
 
-
-
   return (
     <div className="w-100">
+      <>
+        <div
+          style={{
+            height: "400px",
+            backgroundImage: `url(https://img.freepik.com/free-photo/robots-efficiently-sorting-hundreds-parcels-per-hour-3d-rendering_41470-3492.jpg?t=st=1655693864~exp=1655694464~hmac=afa51a6514763842ad9e194b7d329c410c1ce1bdeee6493eb8cd61e516366df1&w=1380)`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            position: "relative",
+            backgroundPosition: " 50% 20%",
+          }}
+        >
+          <div className="overlay">
+            <Container>
+              <h1 className="headerTitle">{"Shop With Us"}</h1>
+            </Container>
+          </div>
+        </div>
+      </>
       <div className="d-flex w-100 justify-content-between p-4">
         <p
           className="fs-2 fw-bold"
@@ -160,23 +176,40 @@ const Shop = () => {
             </div>
           </div>
           <div className="d-flex mt-3 justify-content-center">
-            <h4 className="mx-2 prod-types" onClick={() => setCategorizeProdType("")}>All</h4>
-            <h4 className="mx-2 prod-types" onClick={() => setCategorizeProdType("Old")}>Old</h4>
-            <h4 className="mx-2 prod-types" onClick={() => setCategorizeProdType("New")}>New</h4>
-
+            <h4
+              className="mx-2 prod-types"
+              onClick={() => setCategorizeProdType("")}
+            >
+              All
+            </h4>
+            <h4
+              className="mx-2 prod-types"
+              onClick={() => setCategorizeProdType("Old")}
+            >
+              Old
+            </h4>
+            <h4
+              className="mx-2 prod-types"
+              onClick={() => setCategorizeProdType("New")}
+            >
+              New
+            </h4>
           </div>
           <Row className="px-2 w-100 h-100" justify="space-evenly">
             {products?.map((product) =>
-              !categorizeProdType ? selectedCategory === "All" ? (
-                <ProductCard key={product.id} product={product} />
-              ) : selectedCategory === product.category ? (
-                <ProductCard key={product.id} product={product} />
-              ) : null
-                : selectedCategory === "All" && product.type === categorizeProdType ? (
+              !categorizeProdType ? (
+                selectedCategory === "All" ? (
                   <ProductCard key={product.id} product={product} />
-                ) : selectedCategory === product.category && product.type === categorizeProdType ? (
+                ) : selectedCategory === product.category ? (
                   <ProductCard key={product.id} product={product} />
                 ) : null
+              ) : selectedCategory === "All" &&
+                product.type === categorizeProdType ? (
+                <ProductCard key={product.id} product={product} />
+              ) : selectedCategory === product.category &&
+                product.type === categorizeProdType ? (
+                <ProductCard key={product.id} product={product} />
+              ) : null
             )}
           </Row>
 

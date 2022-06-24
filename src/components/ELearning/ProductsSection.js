@@ -12,7 +12,7 @@ const ProductsSection = () => {
     firebase
       .firestore()
       .collection("products")
-      .limit(4)
+      .limit(5)
       .get()
       .then((res) =>
         setproducts(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })))
