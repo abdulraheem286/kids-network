@@ -4,16 +4,19 @@ import { useToken } from "../../hooks/useToken";
 import Header from "../ELearning/Header";
 import { Row, Col, Container } from "react-bootstrap";
 import "./Community.css";
-import AnswerCard from "./AnswerCard";
 import QuestionCard from "./QuestionCard";
 import PostStatus from "./PostStatus";
 import firebase from "firebase";
+import { Button, Modal, Input } from "antd";
 const Community = () => {
   const token = useToken();
   const navigate = useNavigate();
-  const [activePost, setactivePost] = useState({})
   const [questions, setquestions] = useState([])
-  const [answers, setanswers] = useState([])
+  const [openModal, setopenModal] = useState(false)
+  const [loading, setloading] = useState(false)
+  const [expertForm, setexpertForm] = useState({
+    question: "",
+  })
   useEffect(() => {
     if (!token) navigate("/sign-in", { replace: true });
   }, [navigate, token]);
@@ -33,15 +36,34 @@ const Community = () => {
     getData()
 
   }, [])
-  useEffect(() => {
-    if (activePost?.id) {
-      firebase.firestore().collection("questions").doc(activePost?.id).collection("answers").onSnapshot(snapshot => {
-        const answers = snapshot.docs?.map(doc => ({ id: doc.id, ...doc.data() }))
-        setanswers(answers)
+  async function submitHandler(e) {
+    try {
+      if (!expertForm.question) {
+        alert("All fields are required")
+        return
+      }
+      e.preventDefault()
+      setloading(true)
+      await firebase.firestore().collection("expertsForms").doc(token.id).set({
+        ...expertForm,
+        approved: false,
+        name: `${token.fName} ${token.lName}`,
+        uid: token.id,
+        email: token.email,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
       })
+      setexpertForm({
+        question: ""
+      })
+      setloading(false)
+      setopenModal(false)
+    } catch (error) {
+      console.log(error)
     }
-  }, [activePost])
-
+  }
+  const changeHandler = (e) => {
+    setexpertForm({ ...expertForm, [e.target.name]: e.target.value })
+  }
   return (
     <div className="d-flex justify-content-between flex-column" style={{ minHeight: "100vh" }}>
       <Header
@@ -58,22 +80,31 @@ const Community = () => {
       />
       <Container className="h-100" style={{ width: "80%", margin: "2% auto" }}>
         <Row>
-          <Col className="h-100" xs={7}>
+          <Col className="h-100 mx-auto" xs={7}>
+            <Modal visible={openModal}
+              confirmLoading={loading} onOk={submitHandler} onCancel={() => setopenModal(false)} >
+
+              <form className='d-flex flex-column border p-2' onSubmit={submitHandler}>
+                <div className="d-flex w-100 justify-content-between px-2">
+                  <label>Question</label>
+                  <Input
+                    placeholder='Why do you want to be an expert?'
+                    className="w-50" required name='question'
+                    type={"text"} value={expertForm.question} onChange={changeHandler} />
+                </div>
+
+
+              </form>
+            </Modal>
+            {
+              !token?.expert && <Button className="rounded-pill  bg-primary p-1 px-2 text-light my-2" onClick={() => setopenModal(true)}>
+                Become an Expert
+              </Button>
+            }
+
             <PostStatus type={"Question"} />
-            {questions?.map(question => <QuestionCard key={question?.id} setactivePost={setactivePost} post={question} />)}
-
+            {questions?.map(question => <QuestionCard key={question?.id} post={question} />)}
           </Col>
-          {
-            questions.length ? <Col className=" h-100" style={{ position: "sticky", top: 0 }} xs={{ span: 5 }}>
-              <PostStatus activePostId={activePost?.id} type={"Answer"} />
-              {/* ActivePost Answers */}
-              {
-                answers?.map(answer => <AnswerCard key={answer?.id} post={answer} />)
-              }
-
-            </Col> : null
-          }
-
         </Row>
       </Container>
     </div>

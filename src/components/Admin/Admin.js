@@ -4,6 +4,7 @@ import {
   TeamOutlined,
   FolderOutlined,
   ShoppingCartOutlined,
+  FormOutlined
 } from "@ant-design/icons";
 import { useLocation, Link } from "react-router-dom";
 import AdminCourses from "./AdminCourses";
@@ -12,6 +13,7 @@ import Users from "./Users/Users";
 import { useNavigate } from "react-router";
 import { useToken } from "../../hooks/useToken";
 import AdminShop from "./Shop/AdminShop";
+import ExpertForms from "./ExpertForm/ExpertForms";
 const { Content, Sider } = Layout;
 
 export default function Admin() {
@@ -48,6 +50,9 @@ export default function Admin() {
           <Menu.Item key="3" icon={<ShoppingCartOutlined />}>
             <Link to={"/admin/shop"}>Shop</Link>{" "}
           </Menu.Item>
+          <Menu.Item key="4" icon={<FormOutlined />}>
+            <Link to={"/admin/expertForms"}>ExpertForms</Link>{" "}
+          </Menu.Item>
           {/* <Menu.Item key="2" icon={<DesktopOutlined />}>
               Option 2
             </Menu.Item>
@@ -74,6 +79,7 @@ export default function Admin() {
             {location.pathname.includes("courses") && <AdminCourses />}
             {location.pathname.includes("shop") && <AdminShop />}
             {location.pathname.includes("users") && <Users />}
+            {location.pathname.includes("expertForms") && <ExpertForms />}
           </div>
         </Content>
       </Layout>
