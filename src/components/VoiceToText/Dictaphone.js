@@ -11,12 +11,8 @@ const Dictaphone = ({ setSearch }) => {
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
   }
-<<<<<<< Updated upstream
+
   listening && setSearch(transcript);
-  // setSearch(transcript);
-=======
-listening && setSearch(transcript);
->>>>>>> Stashed changes
   return (
     <div>
       {/* <p>Microphone: {listening ? "on" : "off"}</p> */}
