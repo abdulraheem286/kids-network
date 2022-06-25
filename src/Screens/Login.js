@@ -40,14 +40,12 @@ export default function Login() {
           throw new Error("User does not exists")
         }
         res.forEach((doc) => {
-          if (values.password === doc.data().password) {
-            localStorage.setItem("user", JSON.stringify({ id: doc.id, ...doc.data() }));
-            authContext.setUserDetails(doc.data());
-            setloggedIn("loggedIn");
-            setTimeout(() => {
-              navigate("/", { replace: true });
-            }, 1000);
-          }
+          localStorage.setItem("user", JSON.stringify({ id: doc.id, ...doc.data() }));
+          authContext.setUserDetails(doc.data());
+          setloggedIn("loggedIn");
+          setTimeout(() => {
+            navigate("/", { replace: true });
+          }, 1000);
         });
       })
       .catch((error) => {

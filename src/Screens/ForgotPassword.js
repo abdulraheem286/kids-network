@@ -1,14 +1,15 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-
+import firebase from "firebase"
 const validationSchema = Yup.object().shape({
   email: Yup.string().required("*Email is Required").email().label("Email"),
 });
 
 export default function ForgotPassword() {
   const handleSubmit = async (values) => {
-    console.log(values, "values");
+    firebase.auth().sendPasswordResetEmail(values.email)
+    alert("Password reset link has been sent to your email")
   };
   return (
     <>
@@ -23,7 +24,7 @@ export default function ForgotPassword() {
       >
         <div className="outer">
           <div className="inner">
-            <Form>
+            <Form >
               <h3>Forgot Password</h3>
 
               <div className="mb-2">
