@@ -15,7 +15,12 @@ const Community = () => {
   const [openModal, setopenModal] = useState(false)
   const [loading, setloading] = useState(false)
   const [expertForm, setexpertForm] = useState({
-    question: "",
+    address: "",
+    phone: "",
+    education: "",
+    occupation: "",
+    specialization: "",
+    reason: ""
   })
   useEffect(() => {
     if (!token) navigate("/sign-in", { replace: true });
@@ -38,7 +43,7 @@ const Community = () => {
   }, [])
   async function submitHandler(e) {
     try {
-      if (!expertForm.question) {
+      if (!expertForm.address || !expertForm.phone || !expertForm.education || !expertForm.occupation || !expertForm.specialization || !expertForm.reason) {
         alert("All fields are required")
         return
       }
@@ -86,12 +91,41 @@ const Community = () => {
 
               <form className='d-flex flex-column border p-2' onSubmit={submitHandler}>
                 <div className="d-flex w-100 justify-content-between px-2">
-                  <label>Question</label>
+                  <label>Address</label>
                   <Input
-                    placeholder='Why do you want to be an expert?'
-                    className="w-50" required name='question'
-                    type={"text"} value={expertForm.question} onChange={changeHandler} />
+
+                    className="my-1 w-50" required name='address'
+                    type={"text"} value={expertForm.address} onChange={changeHandler} />
                 </div>
+                <div className="d-flex w-100 justify-content-between px-2">
+                  <label>Phone</label>
+                  <Input
+
+                    className="my-1 w-50" required name='phone'
+                    type={"text"} value={expertForm.phone} onChange={changeHandler} />
+                </div>
+                <div className="d-flex w-100 justify-content-between px-2">
+                  <label>Education</label>
+                  <Input
+
+                    className="my-1 w-50" required name='education'
+                    type={"text"} value={expertForm.education} onChange={changeHandler} />
+                </div>
+                <div className="d-flex w-100 justify-content-between px-2">
+                  <label>Specialization</label>
+                  <Input
+
+                    className="my-1 w-50" required name='specialization'
+                    type={"text"} value={expertForm.specialization} onChange={changeHandler} />
+                </div>
+                <div className="d-flex w-100 justify-content-between px-2">
+                  <label>Reason</label>
+                  <Input.TextArea
+
+                    className="my-1 w-50" required name='reason'
+                    type={"text"} value={expertForm.reason} onChange={changeHandler} />
+                </div>
+
 
 
               </form>
