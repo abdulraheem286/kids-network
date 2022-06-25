@@ -4,19 +4,19 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import mic from "../../Assets/mic.png";
 
-const Dictaphone = ({setSearch}) => {
+const Dictaphone = ({ setSearch }) => {
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
   }
-listening && setSearch(transcript);
+  listening && setSearch(transcript);
   // setSearch(transcript);
   return (
     <div>
       {/* <p>Microphone: {listening ? "on" : "off"}</p> */}
-      
+
       <img
         style={{
           marginTop: "10px",
@@ -27,6 +27,7 @@ listening && setSearch(transcript);
           padding: "5px",
           borderRadius: "50px",
         }}
+        alt="microphone"
         src={mic}
         onClick={SpeechRecognition.startListening}
       />

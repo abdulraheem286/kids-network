@@ -33,25 +33,20 @@ export default function SignUp() {
         .auth()
         .createUserWithEmailAndPassword(values.email, values.password)
         .then((res) => {
-          firebase
+          res.user.sendEmailVerification();
+          alert("Email verification send to your email");
+          return res
+        })
+        .then((res) => {
+          return firebase
             .firestore()
             .collection("users")
             .doc(res.user.uid)
             .set(values)
-            .then(() => {
-              setsignedIn("signedIn");
-              localStorage.setItem(
-                "user",
-                JSON.stringify({
-                  id: res.user.uid,
-                  values,
-                })
-              );
-              authContext.setUserDetails(values);
-              setTimeout(() => {
-                navigate("/", { replace: true });
-              }, 1000);
-            });
+        }).then(() => {
+          setTimeout(() => {
+            navigate("/sign-in", { replace: true });
+          }, 1000);
         })
         .catch((err) => {
           console.log(err, "error");

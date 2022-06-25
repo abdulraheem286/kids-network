@@ -25,29 +25,34 @@ export default function Login() {
       .auth()
       .signInWithEmailAndPassword(values.email, values.password)
       .then(async (userCredential) => {
-        firebase
+        if (!userCredential.user.emailVerified) {
+          alert("Email is not verified")
+          throw new Error("Email is not verified")
+        }
+        return firebase
           .firestore()
           .collection("users")
           .where("email", "==", values.email)
           .get()
-          .then((res) => {
-            res.forEach((doc) => {
-              if (values.password === doc.data().password) {
-                localStorage.setItem("user", JSON.stringify({ id: doc.id, ...doc.data() }));
-                authContext.setUserDetails(doc.data());
-                setloggedIn("loggedIn");
-                setTimeout(() => {
-                  navigate("/");
-                }, 1000);
-              }
-            });
-          });
-
-        var user = userCredential.id;
+      }).then((res) => {
+        if (res.empty) {
+          alert("User does not exists");
+          throw new Error("User does not exists")
+        }
+        res.forEach((doc) => {
+          if (values.password === doc.data().password) {
+            localStorage.setItem("user", JSON.stringify({ id: doc.id, ...doc.data() }));
+            authContext.setUserDetails(doc.data());
+            setloggedIn("loggedIn");
+            setTimeout(() => {
+              navigate("/", { replace: true });
+            }, 1000);
+          }
+        });
       })
       .catch((error) => {
-        var errorMessage = error.message;
         setloggedIn("notLoggedIn");
+        console.log(error)
       });
   };
 
