@@ -112,11 +112,23 @@ const Shop = () => {
           Welcome to <span style={{ color: "#65daff" }}>Kid's Network </span>
           Store
         </p>
-        <div className="d-flex">
+        <div
+          className="d-flex"
+          style={{
+            position: "absolute",
+            top: "100px",
+            right: "30px",
+            color: "white",
+            fontWeight: "bold",
+          }}
+        >
           <p className="mx-4">
             {!switchState ? "Switch as a Seller" : "Switch as a Buyer"}
           </p>
-          <Switch onChange={(e) => setswitchState(e)} />
+          <Switch
+            onChange={(e) => setswitchState(e)}
+            style={{ color: "white" }}
+          />
         </div>
       </div>
       {!switchState ? (
@@ -148,6 +160,7 @@ const Shop = () => {
                 />
               </div>
             </Col>
+
             <Col xs={{ span: 20 }}>
               <CarouselPage />
             </Col>
@@ -264,12 +277,13 @@ const Shop = () => {
 };
 
 export default Shop;
+
 const CarouselPage = () => {
   return (
     <MDBContainer>
       <MDBCarousel
         activeItem={1}
-        length={3}
+        length={2}
         showControls={true}
         showIndicators={true}
         className="z-depth-1"
@@ -279,21 +293,12 @@ const CarouselPage = () => {
             <MDBView>
               <img
                 className="d-block w-100"
-                src="https://icms-image.slatic.net/images/ims-web/4c506832-5d4f-4b7a-8adb-6ef3c39a57df.jpg_1200x1200.jpg"
-                alt="First slide"
-              />
-            </MDBView>
-          </MDBCarouselItem>
-          <MDBCarouselItem itemId="2">
-            <MDBView>
-              <img
-                className="d-block w-100"
                 src="https://icms-image.slatic.net/images/ims-web/f3a04e14-3e75-49c3-97b5-9c92d97a9323.jpg"
                 alt="Second slide"
               />
             </MDBView>
           </MDBCarouselItem>
-          <MDBCarouselItem itemId="3">
+          <MDBCarouselItem itemId="2">
             <MDBView>
               <img
                 className="d-block w-100"
