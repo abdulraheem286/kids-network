@@ -6,15 +6,20 @@ import AnswerCard from './AnswerCard';
 import PostStatus from './PostStatus';
 import { useToken } from '../../hooks/useToken';
 import { Button } from 'antd';
+import { useRef } from 'react';
+import { faCameraAlt } from '@fortawesome/free-solid-svg-icons';
 const QuestionCard = ({ post }) => {
     const token = useToken()
     const [answers, setanswers] = useState([])
     const [edit, setedit] = useState(false)
-    const [subject, setsubject] = useState("")
+    const [state, setState] = useState({
+        subject: "",
+        image: ""
+    })
     const [postAnswer, setpostAnswer] = useState(false)
-    const [liked, setliked] = useState(false)
     const [allLikes, setallLikes] = useState(0)
     const [allDislikes, setallDislikes] = useState(0)
+    const ref = useRef(null)
     useEffect(() => {
         firebase.firestore().collection("questions").doc(post.id).collection("answers").onSnapshot(snapshot => {
             const answers = snapshot.docs?.map(doc => ({ id: doc.id, ...doc.data() }))
@@ -26,7 +31,7 @@ const QuestionCard = ({ post }) => {
             let allDisLike = 0
             for (let i = 0; i < likes?.length; i++) {
 
-                if (likes[i]?.like == true) {
+                if (likes[i]?.like === true) {
                     allLike += 1
                 }
                 else {
@@ -44,12 +49,19 @@ const QuestionCard = ({ post }) => {
             console.log(error)
         }
     }
-    const editPost = async () => {
+    const editPost = async (e) => {
+        e.preventDefault()
         try {
             await firebase.firestore().collection("questions").doc(post?.id).update({
-                subject,
+                ...state,
+                image: state?.image ? state.image : post.image,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             })
+            setState({
+                subject: "",
+                image: ""
+            });
+            setedit(false)
         } catch (error) {
             console.log(error)
         }
@@ -75,6 +87,9 @@ const QuestionCard = ({ post }) => {
         } catch (error) {
             console.log(error)
         }
+    }
+    const openFile = () => {
+        ref.current.click()
     }
     return (
         <div
@@ -118,11 +133,43 @@ const QuestionCard = ({ post }) => {
                         #Thread
                     </span>
                     {edit ? <form onSubmit={editPost} className='d-flex my-2'>
-                        <input value={subject} style={{
+                        <input value={state.subject} style={{
                             border: "none", borderBottom: "1px solid black", borderRadius: "0px"
-                        }} onChange={e => setsubject(e.target.value)} />
+                        }} onChange={e => setState({ ...state, subject: e.target.value })} />
+                        <div>
+                            <FontAwesomeIcon className="ml-2" style={{ height: "20px" }} onClick={openFile} icon={faCameraAlt} />
+                            <input
+                                type={"file"}
+                                ref={ref}
+                                accept="image/*"
+                                style={{ display: "none" }}
+                                onChange={(e) => {
+                                    const file = e.target.files[0];
+                                    if (!file) {
+                                        return
+                                    }
+                                    if (file.size > 250000) {
+                                        alert("File Size should not be more than 250kb")
+                                        return
+                                    }
+                                    const reader = new FileReader();
+                                    reader.readAsDataURL(file);
+                                    reader.onload = function (e) {
+                                        setState({ ...state, image: e.target.result });
+                                    };
+                                }}
+                            />
+                        </div>
+                        {
+                            state?.image && (
+                                <img src={state.image} alt="post" className="w-25 h-25 m-2" />
+                            )
+                        }
+
                         <Button htmlType="submit">Submit</Button>
-                    </form> : post?.subject}
+                    </form> : <><p className='m-2'>{post?.subject}</p>
+                        {post?.image && <img src={post?.image} alt="post" className='w-50 h-50 m-2' />}
+                    </>}
                 </h6>
                 <div
                     style={{ fontSize: "16px", marginTop: "20px" }}

@@ -4,11 +4,11 @@ import { useToken } from "../../hooks/useToken";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCameraAlt } from "@fortawesome/free-solid-svg-icons";
 const PostStatus = ({ type, activePostId }) => {
-    const ref=useRef(null)
+  const ref = useRef(null)
   const token = useToken();
   const [state, setstate] = useState({
     subject: "",
-    image:null
+    image: ""
   });
   const changeHandler = (e) => {
     setstate({ ...state, [e.target.name]: e.target.value });
@@ -52,70 +52,78 @@ const PostStatus = ({ type, activePostId }) => {
       }
       setstate({
         subject: "",
+        image: ""
       });
     } catch (error) {
       console.log(error);
     }
   };
-  const openFile=()=>{
+  const openFile = () => {
     ref.current.click()
   }
   return (
     <form onSubmit={submitHandler} className="p-2 rounded bg-light">
-        <div className="d-flex justify-content-between border">
+      <div className="d-flex p-4 justify-content-between border" style={{
+        alignItems: "end"
+      }}>
 
-      <div>
-        {type === "Question" && (
-          <label
-            className="bg-danger p-1 mb-2 rounded-pill"
-            style={{ color: "white" }}
-          >
-            #Thread
-          </label>
-        )}
-        <input
-          required
-          name="subject"
-          value={state.subject}
-          placeholder={
-            type === "Question" ? "What's the status ..." : "Post a comment ..."
-          }
-          onChange={changeHandler}
-          className="bg-light"
-          style={{
-            border: "none",
-            borderRadius: "0px",
-            borderBottom: "1px solid black",
-            outline: "none",
-          }}
-        />
-        
-      </div>
-      <div>
-        <FontAwesomeIcon onClick={openFile} icon={faCameraAlt} />
-      <input
-          type={"file"}
-          ref={ref}
-          accept="image/*"
-          style={{display:"none"}}
-          value={state?.image}
-          onChange={(e) => {
-            const file = e.target.files[0];
-            if (file.size>250000) {
+        <div style={{ flex: "1 1 0" }}>
+          {type === "Question" && (
+            <label
+              className="bg-danger p-1 mb-2 rounded-pill"
+              style={{ color: "white" }}
+            >
+              #Thread
+            </label>
+          )}
+          <input
+            required
+            name="subject"
+            value={state.subject}
+            placeholder={
+              type === "Question" ? "What's the status ..." : "Post a comment ..."
+            }
+            onChange={changeHandler}
+            className="bg-light"
+            style={{
+              border: "none",
+              borderRadius: "0px",
+              borderBottom: "1px solid black",
+              outline: "none",
+            }}
+          />
+
+        </div>
+        <div>
+          <FontAwesomeIcon className="ml-2" style={{ height: "20px" }} onClick={openFile} icon={faCameraAlt} />
+          <input
+            type={"file"}
+            ref={ref}
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (!file) {
+                return
+              }
+              if (file.size > 250000) {
                 alert("File Size should not be more than 250kb")
                 return
-            }
-            if (file) {
+              }
               const reader = new FileReader();
               reader.readAsDataURL(file);
               reader.onload = function (e) {
                 setstate({ ...state, image: e.target.result });
               };
-            }
-          }}
-        />
+            }}
+          />
+        </div>
       </div>
-      </div>
+      {
+        state.image && (
+          <img src={state.image} alt="post" className="w-25 h-25 m-2" />
+        )
+      }
 
       <button className="btn btn-primary rounded p-1" type="submit">
         {type === "Question" ? "Post a Thread" : "Post a Comment"}
