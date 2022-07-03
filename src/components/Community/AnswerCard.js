@@ -13,7 +13,7 @@ const AnswerCard = ({ questionId, post }) => {
             await firebase.firestore().collection("questions").doc(questionId).collection("answers")
                 .doc(post?.id).delete()
             await firebase.firestore().collection("questions").doc(questionId).update({
-                answerCount: firebase.firestore.FieldValue.increment(-1)
+                comments: firebase.firestore.FieldValue.increment(-1)
             })
         } catch (error) {
             console.log(error)

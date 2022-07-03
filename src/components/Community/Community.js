@@ -112,6 +112,13 @@ const Community = () => {
                     type={"text"} value={expertForm.education} onChange={changeHandler} />
                 </div>
                 <div className="d-flex w-100 justify-content-between px-2">
+                  <label>Occupation</label>
+                  <Input
+
+                    className="my-1 w-50" required name='occupation'
+                    type={"text"} value={expertForm.occupation} onChange={changeHandler} />
+                </div>
+                <div className="d-flex w-100 justify-content-between px-2">
                   <label>Specialization</label>
                   <Input
 

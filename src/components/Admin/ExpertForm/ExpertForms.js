@@ -54,7 +54,7 @@ const ExpertForm = ({ form }) => {
             <div className="d-flex w-100 justify-content-between px-2">
                 <label>Name</label>
                 <Input disabled
-                    className="w-50" required name='name'
+                    className="my-1 w-50" required name='name'
                     type={"text"} value={userForm.name} />
             </div>
             <div className="d-flex w-100 justify-content-between px-2">
@@ -62,23 +62,60 @@ const ExpertForm = ({ form }) => {
                 <Input
                     disabled
                     placeholder='Why do you want to be an expert?'
-                    className="w-50" required name='email'
+                    className="my-1 w-50" required name='email'
                     type={"email"} value={userForm.email} />
             </div>
             <div className="d-flex w-100 justify-content-between px-2">
                 <label>User ID</label>
                 <Input disabled
                     placeholder='Why do you want to be an expert?'
-                    className="w-50" required name='uid'
+                    className="my-1 w-50" required name='uid'
                     type={"text"} value={userForm.uid} />
             </div>
             <div className="d-flex w-100 justify-content-between px-2">
-                <label>Question</label>
-                <Input disabled
-                    placeholder='Why do you want to be an expert?'
-                    className="w-50" required name='question'
-                    type={"text"} value={userForm.question} />
+                <label>Address</label>
+                <Input
+                    disabled
+                    className="my-1 w-50" required name='address'
+                    type={"text"} value={userForm.address} />
             </div>
+            <div className="d-flex w-100 justify-content-between px-2">
+                <label>Phone</label>
+                <Input
+                    disabled
+                    className="my-1 w-50" required name='phone'
+                    type={"text"} value={userForm.phone} />
+            </div>
+            <div className="d-flex w-100 justify-content-between px-2">
+                <label>Education</label>
+                <Input
+                    disabled
+                    className="my-1 w-50" required name='education'
+                    type={"text"} value={userForm.education} />
+            </div>
+            <div className="d-flex w-100 justify-content-between px-2">
+                <label>Occupation</label>
+                <Input
+                    disabled
+                    className="my-1 w-50" required name='occupation'
+                    type={"text"} value={userForm.occupation} />
+            </div>
+            <div className="d-flex w-100 justify-content-between px-2">
+                <label>Specialization</label>
+                <Input
+                    disabled
+                    className="my-1 w-50" required name='specialization'
+                    type={"text"} value={userForm.specialization} />
+            </div>
+            <div className="d-flex w-100 justify-content-between px-2">
+                <label>Reason</label>
+                <Input
+                    disabled
+                    className="my-1 w-50" required name='reason'
+                    type={"text"} value={userForm.reason} />
+            </div>
+
+
             <div className="d-flex w-100 justify-content-between px-2">
                 <label>Approval</label>
                 <Select
