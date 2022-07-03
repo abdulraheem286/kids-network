@@ -115,7 +115,7 @@ const QuestionCard = ({ post }) => {
                         borderRadius: "10px",
                         padding: "5px"
                     }}
-                    >Expert</span>} Posted by {post?.postedBy} 12 days ago</p>
+                    >Expert</span>} Posted by {post?.postedBy} on {post?.timestamp?.toDate()?.toLocaleDateString()}</p>
                     {(token?.isAdmin || (token.id === post?.userId)) && <div className='mx-5'>
                         <FontAwesomeIcon className='mx-2' style={{ height: "14px" }} onClick={deletePost}
                             icon={faTrashCan} />

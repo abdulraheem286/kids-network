@@ -36,16 +36,15 @@ const Product = () => {
 
         })
         setproduct({ ...location.state })
-        setrating(-1)
+        setrating(location.state?.rating >= 0 ? location.state?.rating : -1)
     }, [location])
     const changeHandler = (e) => {
         setaddress({ ...address, [e.target.name]: e.target.value })
     }
-    const buyNow = async (e) => {
-        e.preventDefault()
+    const buyNow = async (index) => {
 
         const leftItems = product.quantity - itemsToBuy
-        const averageRating = product?.rating ? (rating + product?.rating) / 2 : (rating)
+        const averageRating = product?.rating ? (index + product?.rating) / 2 : (index)
         try {
             await firebase.firestore().collection("products").doc(product.id).update({
                 rating: averageRating,
@@ -63,7 +62,7 @@ const Product = () => {
                     rating: averageRating,
                     quantity: leftItems
                 })
-            navigate("/order", { state: true })
+            // navigate("/order", { state: true })
         } catch (error) {
             console.log(error)
         }
@@ -86,6 +85,24 @@ const Product = () => {
                     <hr />
                     <p style={{ color: "red", fontSize: "24px", fontWeight: "bold" }}>Rs. {product.price}</p>
                     <p>Quantity {product.quantity} left</p>
+                    <div>
+                        {
+                            Array(5).fill(0).map((_, index) => (
+
+                                index <= rating ? <FontAwesomeIcon key={index} style={{ color: "yellow" }}
+                                    onClick={() => {
+                                        setrating(index)
+                                        buyNow(index)
+                                    }} icon={faStarSolid} /> :
+                                    <FontAwesomeIcon key={index} icon={faStar} onClick={() => {
+                                        setrating(index)
+                                        buyNow(index)
+                                    }} />
+
+
+                            ))
+                        }
+                    </div>
                 </Col>
                 <Col style={{
                     backgroundColor: "#fafafa", display: "flex",
