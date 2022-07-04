@@ -35,15 +35,16 @@ export default function SignUp() {
         .then((res) => {
           res.user.sendEmailVerification();
           alert("Email verification send to your email");
-          return res
+          return res;
         })
         .then((res) => {
           return firebase
             .firestore()
             .collection("users")
             .doc(res.user.uid)
-            .set(values)
-        }).then(() => {
+            .set(values);
+        })
+        .then(() => {
           setTimeout(() => {
             navigate("/sign-in", { replace: true });
           }, 1000);
@@ -58,20 +59,6 @@ export default function SignUp() {
 
   return (
     <>
-      {signedIn === "signedIn" && (
-        <AlertPage
-          color="success"
-          keyword="Congratulation"
-          message="You have been signed up successfully"
-        />
-      )}
-      {signedIn === "notSignedIn" && (
-        <AlertPage
-          color="danger"
-          keyword="Sorry"
-          message="User with same email already exists"
-        />
-      )}
       <Formik
         initialValues={{
           fName: "",
@@ -88,7 +75,7 @@ export default function SignUp() {
           <div className="outer">
             <div className="inner">
               {" "}
-              <Form>
+              <Form style={{ marginBottom: "10px" }}>
                 <h3>Sign Up</h3>
                 <div className="mb-2">
                   <Field
@@ -156,6 +143,20 @@ export default function SignUp() {
                   Already registered <a href="sign-in">Login?</a>
                 </p>
               </Form>
+              {signedIn === "signedIn" && (
+                <AlertPage
+                  color="success"
+                  keyword="Congratulation"
+                  message="Succesfully Signed Up"
+                />
+              )}
+              {signedIn === "notSignedIn" && (
+                <AlertPage
+                  color="danger"
+                  keyword="Sorry"
+                  message="User already exists"
+                />
+              )}
             </div>
           </div>
         )}

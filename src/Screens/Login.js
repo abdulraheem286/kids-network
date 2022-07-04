@@ -26,21 +26,23 @@ export default function Login() {
       .signInWithEmailAndPassword(values.email, values.password)
       .then(async (userCredential) => {
         if (!userCredential.user.emailVerified) {
-          alert("Email is not verified")
-          throw new Error("Email is not verified")
+          throw new Error("Email is not verified");
         }
         return firebase
           .firestore()
           .collection("users")
           .where("email", "==", values.email)
-          .get()
-      }).then((res) => {
+          .get();
+      })
+      .then((res) => {
         if (res.empty) {
-          alert("User does not exists");
-          throw new Error("User does not exists")
+          throw new Error("User does not exists");
         }
         res.forEach((doc) => {
-          localStorage.setItem("user", JSON.stringify({ id: doc.id, ...doc.data() }));
+          localStorage.setItem(
+            "user",
+            JSON.stringify({ id: doc.id, ...doc.data() })
+          );
           authContext.setUserDetails(doc.data());
           setloggedIn("loggedIn");
           setTimeout(() => {
@@ -50,26 +52,12 @@ export default function Login() {
       })
       .catch((error) => {
         setloggedIn("notLoggedIn");
-        console.log(error)
+        console.log(error);
       });
   };
 
   return (
     <>
-      {loggedIn === "loggedIn" && (
-        <AlertPage
-          color="success"
-          keyword="Welcome"
-          message="You have been logged in successfully"
-        />
-      )}
-      {loggedIn === "notLoggedIn" && (
-        <AlertPage
-          color="danger"
-          keyword="Try Again"
-          message="Invalid Credentials"
-        />
-      )}
       <Formik
         initialValues={{
           email: "",
@@ -82,7 +70,7 @@ export default function Login() {
       >
         <div className="outer">
           <div className="inner">
-            <Form>
+            <Form style={{ marginBottom: "10px" }}>
               <h3>Log in</h3>
 
               <div className="mb-2">
@@ -136,6 +124,21 @@ export default function Login() {
                 Forgot <a href="forgot-pass">Password?</a>
               </p>
             </Form>
+
+            {loggedIn === "loggedIn" && (
+              <AlertPage
+                color="success"
+                keyword="Welcome"
+                message="Logged in successfully"
+              />
+            )}
+            {loggedIn === "notLoggedIn" && (
+              <AlertPage
+                color="danger"
+                keyword="Try Again"
+                message="Invalid Credentials"
+              />
+            )}
           </div>
         </div>
       </Formik>

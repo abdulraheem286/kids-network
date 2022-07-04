@@ -4,11 +4,11 @@ import { useToken } from "../../hooks/useToken";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCameraAlt } from "@fortawesome/free-solid-svg-icons";
 const PostStatus = ({ type, activePostId }) => {
-  const ref = useRef(null)
+  const ref = useRef(null);
   const token = useToken();
   const [state, setstate] = useState({
     subject: "",
-    image: ""
+    image: "",
   });
   const changeHandler = (e) => {
     setstate({ ...state, [e.target.name]: e.target.value });
@@ -52,21 +52,23 @@ const PostStatus = ({ type, activePostId }) => {
       }
       setstate({
         subject: "",
-        image: ""
+        image: "",
       });
     } catch (error) {
       console.log(error);
     }
   };
   const openFile = () => {
-    ref.current.click()
-  }
+    ref.current.click();
+  };
   return (
     <form onSubmit={submitHandler} className="p-2 rounded bg-light">
-      <div className="d-flex p-4 justify-content-between border" style={{
-        alignItems: "end"
-      }}>
-
+      <div
+        className="d-flex p-4 justify-content-between border"
+        style={{
+          alignItems: "end",
+        }}
+      >
         <div style={{ flex: "1 1 0" }}>
           {type === "Question" && (
             <label
@@ -81,7 +83,9 @@ const PostStatus = ({ type, activePostId }) => {
             name="subject"
             value={state.subject}
             placeholder={
-              type === "Question" ? "What's the status ..." : "Post a comment ..."
+              type === "Question"
+                ? "What's the status ..."
+                : "Post a comment ..."
             }
             onChange={changeHandler}
             className="bg-light"
@@ -92,10 +96,14 @@ const PostStatus = ({ type, activePostId }) => {
               outline: "none",
             }}
           />
-
         </div>
         <div>
-          <FontAwesomeIcon className="ml-2" style={{ height: "20px" }} onClick={openFile} icon={faCameraAlt} />
+          <FontAwesomeIcon
+            className="ml-2"
+            style={{ height: "20px" }}
+            onClick={openFile}
+            icon={faCameraAlt}
+          />
           <input
             type={"file"}
             ref={ref}
@@ -104,11 +112,11 @@ const PostStatus = ({ type, activePostId }) => {
             onChange={(e) => {
               const file = e.target.files[0];
               if (!file) {
-                return
+                return;
               }
               if (file.size > 250000) {
-                alert("File Size should not be more than 250kb")
-                return
+                alert("File Size should not be more than 250kb");
+                return;
               }
               const reader = new FileReader();
               reader.readAsDataURL(file);
@@ -119,11 +127,9 @@ const PostStatus = ({ type, activePostId }) => {
           />
         </div>
       </div>
-      {
-        state.image && (
-          <img src={state.image} alt="post" className="w-25 h-25 m-2" />
-        )
-      }
+      {state.image && (
+        <img src={state.image} alt="post" className="w-25 h-25 m-2" />
+      )}
 
       <button className="btn btn-primary rounded p-1" type="submit">
         {type === "Question" ? "Post a Thread" : "Post a Comment"}
