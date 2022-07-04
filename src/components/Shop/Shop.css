@@ -1,24 +1,43 @@
-.productItems{
-transition: transform 0.2s ease-in-out;
+.productItems {
+  transition: transform 0.2s ease-in-out;
 }
-.productItems:hover{
-    transform: scale(1.03);
-    font-weight: 700;
-    cursor: pointer;
+.productItems:hover {
+  transform: scale(1.03);
+  font-weight: 700;
+  cursor: pointer;
 }
-.storeCard{
-    transition: transform 0.2s ease-in-out;
+.storeCard {
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
-.storeCard:hover{
-    transform: scale(1.03);
-    cursor: pointer;
-border: 1px solid black;
+.storeCard:hover {
+  transform: scale(1.02);
+  cursor: pointer;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
-.prod-types{
-    text-decoration: underline;
-    text-underline-offset: 4px;
-    cursor: pointer;
+.prod-types {
+  cursor: pointer;
+  font-size: 14px;
+  transition: transform 0.2s ease-in-out;
 }
-.prod-types:hover{
-transform: scale(1.05);
+.prod-types:hover {
+  font-weight: 700;
+  cursor: pointer;
+  transform: scale(1.03);
+}
+
+.categorybox {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 6px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  flex-direction: column;
+}
+
+.filters {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 15px;
 }

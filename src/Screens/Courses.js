@@ -135,7 +135,7 @@ const Courses = () => {
               className="form-control"
               type="text"
               placeholder="Search"
-              onChange={(e)=>setsearch(e.target.value)}
+              onChange={(e) => setsearch(e.target.value)}
               aria-label="Search"
               value={search}
             />
@@ -151,7 +151,7 @@ const Courses = () => {
             >
               <img src={require("../Assets/search-icon.png")} alt="search" />
             </MDBBtn>
-            <Dictaphone setSearch={setsearch}/>
+            <Dictaphone setSearch={setsearch} />
           </div>
         </div>
 

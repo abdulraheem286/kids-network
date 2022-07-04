@@ -5,6 +5,7 @@ import {
   MDBContainer,
   MDBView,
   MDBCarouselInner,
+  MDBBtn,
 } from "mdbreact";
 import React, { useEffect, useRef, useState } from "react";
 import { Container } from "react-bootstrap";
@@ -15,6 +16,9 @@ import "./Shop.css";
 import ProductCard from "./ProductCard";
 import Store from "./Store";
 import _ from "lodash";
+import DictaphoneShop from "../../components/VoiceToText/DictaphoneShop";
+import DictaphoneStore from "../../components/VoiceToText/DictaphoneStore";
+import mic from "../../Assets/mic.png";
 
 const Shop = () => {
   const token = useToken();
@@ -28,6 +32,8 @@ const Shop = () => {
   const storeSearchRef = useRef();
   const [productsSearch, setproductsSearch] = useState("");
   const [storeSearch, setstoreSearch] = useState("");
+  const [shopmic, setshopmic] = useState(false);
+  const [storemic, setstoremic] = useState(false);
   const [categorizeProdType, setCategorizeProdType] = useState("");
   useEffect(() => {
     if (!token) navigate("/sign-in", { replace: true });
@@ -100,18 +106,6 @@ const Shop = () => {
         </div>
       </>
       <div className="d-flex w-100 justify-content-between p-4">
-        <p
-          className="fs-2 fw-bold"
-          style={{
-            fontSize: "22px",
-            fontWeight: "bold",
-            textDecoration: "underline",
-            textUnderlineOffset: "8px",
-          }}
-        >
-          Welcome to <span style={{ color: "#65daff" }}>Kid's Network </span>
-          Store
-        </p>
         <div
           className="d-flex"
           style={{
@@ -139,15 +133,16 @@ const Shop = () => {
                 span: 4,
               }}
             >
-              <div className="d-flex justify-center">
+              <div className="d-flex justify-center categorybox">
                 <List
-                  header={"Products Categories"}
+                  header={"Categories"}
+                  style={{ fontSize: "14px", fontWeight: "bold" }}
                   size="small"
                   dataSource={productsCategory}
                   renderItem={(item) => (
                     <List.Item
-                      className="w-full text-center  px-4"
-                      style={{ fontSize: "14px" }}
+                      className="w-full text-center"
+                      style={{ fontSize: "14px", fontWeight: "normal" }}
                     >
                       <p
                         onClick={() => setselectedCategory(item)}
@@ -158,6 +153,28 @@ const Shop = () => {
                     </List.Item>
                   )}
                 />
+                <div className="justify-content-center">
+                  <h5 className="filters">Filters</h5>
+                  <hr></hr>
+                  <h5
+                    className="prod-types"
+                    onClick={() => setCategorizeProdType("")}
+                  >
+                    All
+                  </h5>
+                  <h5
+                    className="prod-types"
+                    onClick={() => setCategorizeProdType("Old")}
+                  >
+                    Old
+                  </h5>
+                  <h5
+                    className="prod-types"
+                    onClick={() => setCategorizeProdType("New")}
+                  >
+                    New
+                  </h5>
+                </div>
               </div>
             </Col>
 
@@ -165,50 +182,55 @@ const Shop = () => {
               <CarouselPage />
             </Col>
           </Row>
-          <div className="px-4 d-flex justify-content-between mt-5">
-            <h5 className="">{selectedCategory} Products</h5>
-            <div className="w-50 d-flex">
+
+          <div className="d-flex justify-content-between">
+            <h5 className="mt-5">
+              <strong>{selectedCategory} Products</strong>
+            </h5>
+            <div className="d-flex mt-4 align-items-center">
               <input
-                className="p-1 rounded"
-                onChange={(e) => {
-                  if (!e.target.value) {
-                    setproductsSearch(e.target.value);
-                  }
-                }}
-                ref={productsSearchRef}
-                placeholder="Search Products ..."
+                className="form-control"
+                type="text"
+                placeholder="Search"
+                onChange={(e) => setproductsSearch(e.target.value)}
+                aria-label="Search"
+                value={productsSearch}
               />
-              <Button
-                type="primary"
-                onClick={() =>
-                  setproductsSearch(productsSearchRef.current.value)
-                }
-              >
-                Search
-              </Button>
+              <MDBBtn gradient="aqua" size="sm" type="submit">
+                <img
+                  src={require("../../Assets/search-icon.png")}
+                  alt="search"
+                />
+              </MDBBtn>
+
+              <img
+                src={mic}
+                style={{
+                  width: "35px",
+                  padding: "5px",
+                  height: "35px",
+                  backgroundColor: shopmic ? "red" : "transparent",
+                  borderRadius: "50px",
+                }}
+                onClick={() => setshopmic(true)}
+              />
+              {shopmic && (
+                <DictaphoneShop
+                  setproductsSearch={setproductsSearch}
+                  setshopmic={setshopmic}
+                />
+              )}
             </div>
           </div>
-          <div className="d-flex mt-3 justify-content-center">
-            <h4
-              className="mx-2 prod-types"
-              onClick={() => setCategorizeProdType("")}
-            >
-              All
-            </h4>
-            <h4
-              className="mx-2 prod-types"
-              onClick={() => setCategorizeProdType("Old")}
-            >
-              Old
-            </h4>
-            <h4
-              className="mx-2 prod-types"
-              onClick={() => setCategorizeProdType("New")}
-            >
-              New
-            </h4>
-          </div>
-          <Row className="px-2 w-100 h-100" justify="space-evenly">
+          <div
+            className="mt-4 w-100 h-100"
+            justify="space-between"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: "20px",
+            }}
+          >
             {products?.map((product) =>
               !categorizeProdType ? (
                 selectedCategory === "All" ? (
@@ -224,50 +246,81 @@ const Shop = () => {
                 <ProductCard key={product.id} product={product} />
               ) : null
             )}
-          </Row>
-
-          <div className="px-4 d-flex justify-content-between mt-5">
-            <h5 className="">Available Stores </h5>
-            <div className="w-50 d-flex">
-              <input
-                className="p-1 rounded"
-                ref={storeSearchRef}
-                onChange={(e) => {
-                  if (!e.target.value) {
-                    setstoreSearch(e.target.value);
-                  }
-                }}
-                placeholder="Search Stores ..."
-              />
-              <Button
-                type="primary"
-                onClick={(e) => {
-                  setstoreSearch(storeSearchRef.current.value);
-                }}
-              >
-                Search
-              </Button>
-            </div>
           </div>
-          <Row className="px-2 w-100 h-100" justify="space-evenly">
-            {stores?.map((store) => (
-              <Card
-                onClick={() =>
-                  navigate(`/store/${store.id}`, {
-                    state: store,
-                  })
-                }
-                className="storeCard mx-3"
-                key={store.id}
-                title={store.store}
-              >
-                <p>
-                  Seller Name: {store.fName} {store.lName}
-                </p>
-                <p>Seller Contact: {store.email}</p>
-              </Card>
-            ))}
-          </Row>
+
+          <section>
+            <div className="d-flex justify-content-between">
+              <h5 className="mt-5">
+                <strong>Available Stores</strong>
+              </h5>
+              <div className="d-flex mt-4 align-items-center">
+                <input
+                  className="form-control"
+                  type="text"
+                  placeholder="Search"
+                  onChange={(e) => setstoreSearch(e.target.value)}
+                  aria-label="Search"
+                  value={storeSearch}
+                />
+                <MDBBtn gradient="aqua" size="sm" type="submit">
+                  <img
+                    src={require("../../Assets/search-icon.png")}
+                    alt="search"
+                  />
+                </MDBBtn>
+                <img
+                  src={mic}
+                  style={{
+                    width: "35px",
+                    padding: "5px",
+                    height: "35px",
+                    backgroundColor: storemic ? "red" : "transparent",
+                    borderRadius: "50px",
+                  }}
+                  onClick={() => setstoremic(true)}
+                />
+                {storemic && (
+                  <DictaphoneStore
+                    setstoreSearch={setstoreSearch}
+                    setstoremic={setstoremic}
+                  />
+                )}
+              </div>
+            </div>
+
+            <div
+              className="mt-4 w-100 h-100"
+              justify="space-between"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(4, 1fr)",
+                gap: "20px",
+              }}
+            >
+              {stores?.map((store) => (
+                <Card
+                  style={{
+                    width: "100%",
+                    minHeight: "180px",
+                    borderRadius: "5px",
+                  }}
+                  onClick={() =>
+                    navigate(`/store/${store.id}`, {
+                      state: store,
+                    })
+                  }
+                  className="storeCard my-2"
+                  key={store.id}
+                  title={store.store}
+                >
+                  <p>
+                    Seller Name: {store.fName} {store.lName}
+                  </p>
+                  <p>Seller Contact: {store.email}</p>
+                </Card>
+              ))}
+            </div>
+          </section>
         </Container>
       ) : (
         <Store />
