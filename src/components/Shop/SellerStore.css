@@ -1,0 +1,12 @@
+.storeHead {
+  text-align: center;
+  padding-top: 40px;
+  font-weight: 700;
+  padding-bottom: 30px;
+}
+
+.noPro {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

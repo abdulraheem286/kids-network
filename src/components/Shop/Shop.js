@@ -19,6 +19,11 @@ import _ from "lodash";
 import DictaphoneShop from "../../components/VoiceToText/DictaphoneShop";
 import DictaphoneStore from "../../components/VoiceToText/DictaphoneStore";
 import mic from "../../Assets/mic.png";
+import banner from "../../Assets/BANNER1.png";
+import banner2 from "../../Assets/BANNER2.png";
+import avatar from "../../Assets/avatar.png";
+import noproduct from "../../Assets/noproduct.png";
+import nostore from "../../Assets/nostore.png";
 
 const Shop = () => {
   const token = useToken();
@@ -136,7 +141,10 @@ const Shop = () => {
               <div className="d-flex justify-center categorybox">
                 <List
                   header={"Categories"}
-                  style={{ fontSize: "14px", fontWeight: "bold" }}
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                  }}
                   size="small"
                   dataSource={productsCategory}
                   renderItem={(item) => (
@@ -148,33 +156,33 @@ const Shop = () => {
                         onClick={() => setselectedCategory(item)}
                         className="productItems"
                       >
-                        {item}
+                        {">"} {item}
                       </p>
                     </List.Item>
                   )}
                 />
-                <div className="justify-content-center">
-                  <h5 className="filters">Filters</h5>
-                  <hr></hr>
-                  <h5
-                    className="prod-types"
-                    onClick={() => setCategorizeProdType("")}
-                  >
-                    All
-                  </h5>
-                  <h5
-                    className="prod-types"
-                    onClick={() => setCategorizeProdType("Old")}
-                  >
-                    Old
-                  </h5>
-                  <h5
-                    className="prod-types"
-                    onClick={() => setCategorizeProdType("New")}
-                  >
-                    New
-                  </h5>
-                </div>
+              </div>
+              <div className="justify-content-center categorybox mt-4">
+                <h5 className="filters">Filters</h5>
+                <hr></hr>
+                <h5
+                  className="prod-types mt-2"
+                  onClick={() => setCategorizeProdType("")}
+                >
+                  {">"} All
+                </h5>
+                <h5
+                  className="prod-types mt-3"
+                  onClick={() => setCategorizeProdType("Old")}
+                >
+                  {">"} Old
+                </h5>
+                <h5
+                  className="prod-types mt-3"
+                  onClick={() => setCategorizeProdType("New")}
+                >
+                  {">"} New
+                </h5>
               </div>
             </Col>
 
@@ -222,36 +230,43 @@ const Shop = () => {
               )}
             </div>
           </div>
-          <div
-            className="mt-4 w-100 h-100"
-            justify="space-between"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              gap: "20px",
-            }}
-          >
-            {products?.map((product) =>
-              !categorizeProdType ? (
-                selectedCategory === "All" ? (
+
+          {products.length <= 0 ? (
+            <div>
+              <img className="noPro" style={{ width: "70%" }} src={noproduct} />
+            </div>
+          ) : (
+            <div
+              className="mt-4 w-100 h-100"
+              justify="space-between"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(4, 1fr)",
+                gap: "20px",
+              }}
+            >
+              {products?.map((product) =>
+                !categorizeProdType ? (
+                  selectedCategory === "All" ? (
+                    <ProductCard key={product.id} product={product} />
+                  ) : selectedCategory === product.category ? (
+                    <ProductCard key={product.id} product={product} />
+                  ) : null
+                ) : selectedCategory === "All" &&
+                  product.type === categorizeProdType ? (
                   <ProductCard key={product.id} product={product} />
-                ) : selectedCategory === product.category ? (
+                ) : selectedCategory === product.category &&
+                  product.type === categorizeProdType ? (
                   <ProductCard key={product.id} product={product} />
                 ) : null
-              ) : selectedCategory === "All" &&
-                product.type === categorizeProdType ? (
-                <ProductCard key={product.id} product={product} />
-              ) : selectedCategory === product.category &&
-                product.type === categorizeProdType ? (
-                <ProductCard key={product.id} product={product} />
-              ) : null
-            )}
-          </div>
+              )}
+            </div>
+          )}
 
           <section>
             <div className="d-flex justify-content-between">
               <h5 className="mt-5">
-                <strong>Available Stores</strong>
+                <strong>All Stores</strong>
               </h5>
               <div className="d-flex mt-4 align-items-center">
                 <input
@@ -287,39 +302,43 @@ const Shop = () => {
                 )}
               </div>
             </div>
-
-            <div
-              className="mt-4 w-100 h-100"
-              justify="space-between"
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
-                gap: "20px",
-              }}
-            >
-              {stores?.map((store) => (
-                <Card
-                  style={{
-                    width: "100%",
-                    minHeight: "180px",
-                    borderRadius: "5px",
-                  }}
-                  onClick={() =>
-                    navigate(`/store/${store.id}`, {
-                      state: store,
-                    })
-                  }
-                  className="storeCard my-2"
-                  key={store.id}
-                  title={store.store}
-                >
-                  <p>
-                    Seller Name: {store.fName} {store.lName}
-                  </p>
-                  <p>Seller Contact: {store.email}</p>
-                </Card>
-              ))}
-            </div>
+            {stores.length <= 0 ? (
+              <div>
+                <img className="noPro" style={{ width: "40%" }} src={nostore} />
+              </div>
+            ) : (
+              <div
+                className="mt-4 w-100 h-100"
+                justify="space-between"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(4, 1fr)",
+                  gap: "20px",
+                }}
+              >
+                {stores?.map((store) => (
+                  <Card
+                    onClick={() =>
+                      navigate(`/store/${store.id}`, {
+                        state: store,
+                      })
+                    }
+                    className="storeCard my-2"
+                    key={store.id}
+                  >
+                    <div className="storeInfo">
+                      <p className="storeName">{store.store}</p>
+                      <hr></hr>
+                      <img className="avaImg" src={avatar} />
+                      <p className="sellerName">
+                        {store.fName} {store.lName}
+                      </p>
+                      <p className="sellerEmail">{store.email}</p>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            )}
           </section>
         </Container>
       ) : (
@@ -344,20 +363,12 @@ const CarouselPage = () => {
         <MDBCarouselInner>
           <MDBCarouselItem itemId="1">
             <MDBView>
-              <img
-                className="d-block w-100"
-                src="https://icms-image.slatic.net/images/ims-web/f3a04e14-3e75-49c3-97b5-9c92d97a9323.jpg"
-                alt="Second slide"
-              />
+              <img className="d-block w-100" src={banner2} alt="Second slide" />
             </MDBView>
           </MDBCarouselItem>
           <MDBCarouselItem itemId="2">
             <MDBView>
-              <img
-                className="d-block w-100"
-                src="https://icms-image.slatic.net/images/ims-web/e6bcb8af-df90-4633-b71d-32c2d2831412.jpg"
-                alt="Third slide"
-              />
+              <img className="d-block w-100" src={banner} alt="Third slide" />
             </MDBView>
           </MDBCarouselItem>
         </MDBCarouselInner>

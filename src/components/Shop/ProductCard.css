@@ -54,8 +54,6 @@
 .pTitle {
   justify-content: center;
   align-items: center;
-  justify-items: center;
-  align-content: center;
   display: flex;
   color: black;
   font-size: 14px;
