@@ -3,7 +3,8 @@ import { useToken } from "../../hooks/useToken";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import firebase from "firebase";
-import { Button } from "antd";
+import { Input, Button } from "antd";
+
 const AnswerCard = ({ questionId, post }) => {
   const token = useToken();
   const [edit, setedit] = useState(false);
@@ -46,10 +47,11 @@ const AnswerCard = ({ questionId, post }) => {
   };
 
   return (
-    <div className="my-2" style={{ borderRadius: "15px" }}>
+    <div className="ml-5" style={{ borderRadius: "15px" }}>
       <section
-        className="bg-light h-100 p-2"
+        className="p-2"
         style={{
+          borderLeft: "1px Solid rgba(0,0,0,0.2)",
           flex: "1 1 0%",
           fontSize: "12px",
         }}
@@ -67,8 +69,9 @@ const AnswerCard = ({ questionId, post }) => {
               >
                 Expert
               </span>
-            )}{" "}
-            Posted by {post?.postedBy} 12 days ago
+            )}
+            Posted by {post?.postedBy} on
+            {post?.timestamp?.toDate()?.toLocaleDateString()}
           </p>
           {(token?.isAdmin || token.id === post?.userId) && (
             <div className="mx-5">
@@ -92,20 +95,25 @@ const AnswerCard = ({ questionId, post }) => {
             className="bg-success rounded-pill fw-bold p-1 text-light"
             style={{ marginRight: "10px", fontSize: "12px" }}
           >
-            #Open Thread
+            #Reply
           </span>
           {edit ? (
-            <form onSubmit={editPost} className="d-flex my-2">
-              <input
+            <form
+              onSubmit={editPost}
+              className="d-flex align-items-center my-2"
+            >
+              <Input
                 value={subject}
                 style={{
-                  border: "none",
-                  borderBottom: "1px solid black",
-                  borderRadius: "0px",
+                  width: "100%",
+                  minHeight: "40px",
+                  borderRadius: "100px",
                 }}
                 onChange={(e) => setsubject(e.target.value)}
               />
-              <Button htmlType="submit">Submit</Button>
+              <Button className="btn btn-dark p-0 px-2" htmlType="submit">
+                Submit
+              </Button>
             </form>
           ) : (
             post?.subject

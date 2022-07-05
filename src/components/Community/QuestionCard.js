@@ -11,13 +11,14 @@ import firebase from "firebase";
 import AnswerCard from "./AnswerCard";
 import PostStatus from "./PostStatus";
 import { useToken } from "../../hooks/useToken";
-import { Button } from "antd";
+import { Input, Button } from "antd";
 import { useRef } from "react";
-import { faCameraAlt } from "@fortawesome/free-solid-svg-icons";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
+
 const QuestionCard = ({ post }) => {
   const token = useToken();
   const [answers, setanswers] = useState([]);
-  const [edit, setedit] = useState(false);
+  const [edit, setEdit] = useState(false);
   const [state, setState] = useState({
     subject: "",
     image: "",
@@ -69,6 +70,7 @@ const QuestionCard = ({ post }) => {
       console.log(error);
     }
   };
+
   const editPost = async (e) => {
     e.preventDefault();
     try {
@@ -85,7 +87,7 @@ const QuestionCard = ({ post }) => {
         subject: "",
         image: "",
       });
-      setedit(false);
+      setEdit(false);
     } catch (error) {
       console.log(error);
     }
@@ -127,18 +129,39 @@ const QuestionCard = ({ post }) => {
   };
   return (
     <div
-      className="d-flex my-2 "
+      className="d-flex my-3 "
       style={{
         borderRadius: "15px",
         filter:
           "drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1))",
       }}
     >
+      <div
+        className="d-flex align-items-center mt-1 mr-2"
+        style={{ flexDirection: "column", marginLeft: "-26px" }}
+      >
+        <FontAwesomeIcon icon={faThumbsUp} onClick={setLike} className="icon" />
+        {allLikes - allDislikes >= 0 ? (
+          <p>{allLikes - allDislikes}</p>
+        ) : (
+          <p style={{ color: "red" }}>{allLikes - allDislikes}</p>
+        )}
+
+        <FontAwesomeIcon
+          icon={faThumbsDown}
+          onClick={setDisLike}
+          className="icon"
+          style={{ marginTop: "-12px" }}
+        />
+      </div>
+
       <section
-        className="bg-light h-100 p-2"
+        className=" h-100 p-4"
         style={{
           flex: "1 1 0%",
           fontSize: "12px",
+          background: "white",
+          borderRadius: "6px",
         }}
       >
         <div className="d-flex justify-content-between">
@@ -155,9 +178,11 @@ const QuestionCard = ({ post }) => {
                 Expert
               </span>
             )}{" "}
-            Posted by {post?.postedBy} on{" "}
+            Posted by
+            <strong>{post?.postedBy}</strong> on
             {post?.timestamp?.toDate()?.toLocaleDateString()}
           </p>
+
           {(token?.isAdmin || token.id === post?.userId) && (
             <div className="mx-5">
               <FontAwesomeIcon
@@ -169,27 +194,25 @@ const QuestionCard = ({ post }) => {
               <FontAwesomeIcon
                 className="mx-2"
                 style={{ height: "14px" }}
-                onClick={() => setedit(!edit)}
+                onClick={() => setEdit(!edit)}
                 icon={faPenToSquare}
               />
             </div>
           )}
         </div>
+
         <h6>
-          <span
-            className="bg-danger rounded-pill fw-bold p-1 text-light"
-            style={{ marginRight: "10px", fontSize: "14px" }}
-          >
-            #Thread
-          </span>
           {edit ? (
-            <form onSubmit={editPost} className="d-flex my-2">
-              <input
+            <form
+              onSubmit={editPost}
+              className="d-flex align-items-center my-2"
+            >
+              <Input
                 value={state.subject}
                 style={{
-                  border: "none",
-                  borderBottom: "1px solid black",
-                  borderRadius: "0px",
+                  width: "100%",
+                  minHeight: "40px",
+                  borderRadius: "100px",
                 }}
                 onChange={(e) =>
                   setState({ ...state, subject: e.target.value })
@@ -197,10 +220,10 @@ const QuestionCard = ({ post }) => {
               />
               <div>
                 <FontAwesomeIcon
-                  className="ml-2"
-                  style={{ height: "20px" }}
+                  className="mx-2"
+                  style={{ height: "35px", color: "#113C49" }}
                   onClick={openFile}
-                  icon={faCameraAlt}
+                  icon={faImage}
                 />
                 <input
                   type={"file"}
@@ -228,15 +251,28 @@ const QuestionCard = ({ post }) => {
                 <img src={state.image} alt="post" className="w-25 h-25 m-2" />
               )}
 
-              <Button htmlType="submit">Submit</Button>
+              <Button className="btn btn-dark p-0 px-2" htmlType="submit">
+                Submit
+              </Button>
             </form>
           ) : (
-            <>
-              <p className="m-2">{post?.subject}</p>
-              {post?.image && (
-                <img src={post?.image} alt="post" className="w-50 h-50 m-2" />
-              )}
-            </>
+            <div>
+              <p className=" m-2" style={{ fontSize: "16px" }}>
+                {post?.subject}
+              </p>
+              <>
+                {post?.image && (
+                  <div style={{ maxWidth: "700px", maxHeight: "400px" }}>
+                    <img
+                      src={post?.image}
+                      alt="post"
+                      className="m-2"
+                      style={{ maxWidth: "100%", maxHeight: "100%" }}
+                    />
+                  </div>
+                )}
+              </>
+            </div>
           )}
         </h6>
         <div
@@ -245,39 +281,24 @@ const QuestionCard = ({ post }) => {
         >
           <div
             onClick={() => setpostAnswer(!postAnswer)}
-            className="d-flex flex-column item-box p-2"
+            className="item-box p-2"
             style={{
-              width: "fit-content",
+              display: "flex",
+              alignItems: "center",
               marginRight: "15px",
               borderRadius: "10px",
             }}
           >
-            <FontAwesomeIcon icon={faMessage} className="icon" />
-            <p> {post?.comments} Comments</p>
-          </div>
-          <div
-            className="d-flex flex-column  item-box p-2"
-            style={{ width: "fit-content", borderRadius: "10px" }}
-          >
-            <FontAwesomeIcon
-              icon={faThumbsUp}
-              onClick={setLike}
-              className="icon"
-            />
-            <p> {allLikes} Likes</p>
-          </div>
-          <div
-            className="d-flex flex-column  item-box p-2"
-            style={{ width: "fit-content", borderRadius: "10px" }}
-          >
-            <FontAwesomeIcon
-              icon={faThumbsDown}
-              onClick={setDisLike}
-              className="icon"
-            />
-            <p> {allDislikes} Dislikes</p>
+            <FontAwesomeIcon icon={faMessage} className="icon mr-1" />
+            <p className="p-0 m-0">
+              {" "}
+              <small className="btn-info px-2 rounded-pill py-1">
+                {post?.comments} Comments
+              </small>
+            </p>
           </div>
         </div>
+
         <div>
           {answers?.map((answer) => {
             return (

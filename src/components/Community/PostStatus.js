@@ -2,7 +2,10 @@ import React, { useRef, useState } from "react";
 import firebase from "firebase";
 import { useToken } from "../../hooks/useToken";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCameraAlt } from "@fortawesome/free-solid-svg-icons";
+import { faImage } from "@fortawesome/free-regular-svg-icons";
+import { Input } from "antd";
+import avatar from "../../Assets/avatar.png";
+
 const PostStatus = ({ type, activePostId }) => {
   const ref = useRef(null);
   const token = useToken();
@@ -62,47 +65,43 @@ const PostStatus = ({ type, activePostId }) => {
     ref.current.click();
   };
   return (
-    <form onSubmit={submitHandler} className="p-2 rounded bg-light">
+    <form onSubmit={submitHandler} className="addPost rounded">
       <div
-        className="d-flex p-4 justify-content-between border"
+        className=" d-flex mb-2 justify-content-between "
         style={{
-          alignItems: "end",
+          alignItems: "center",
         }}
       >
-        <div style={{ flex: "1 1 0" }}>
-          {type === "Question" && (
-            <label
-              className="bg-danger p-1 mb-2 rounded-pill"
-              style={{ color: "white" }}
-            >
-              #Thread
-            </label>
-          )}
-          <input
-            required
-            name="subject"
-            value={state.subject}
-            placeholder={
-              type === "Question"
-                ? "What's the status ..."
-                : "Post a comment ..."
-            }
-            onChange={changeHandler}
-            className="bg-light"
-            style={{
-              border: "none",
-              borderRadius: "0px",
-              borderBottom: "1px solid black",
-              outline: "none",
-            }}
-          />
-        </div>
+        <img
+          alt="avatar"
+          className="rounded-circle mr-3 mt-2 mb-2"
+          src={avatar}
+          style={{ width: "40px", height: "40px", color: "grey" }}
+        />
+
+        <Input
+          name="subject"
+          placeholder={
+            type === "Question"
+              ? "Type what you want to share ..."
+              : "Reply Now ..."
+          }
+          value={state.subject}
+          onChange={changeHandler}
+          style={{
+            width: "100%",
+            minHeight: "40px",
+            borderRadius: "100px",
+          }}
+          required
+        />
+
         <div>
           <FontAwesomeIcon
-            className="ml-2"
-            style={{ height: "20px" }}
+            className="ml-3"
+            style={{ height: "35px", color: "#113C49" }}
             onClick={openFile}
-            icon={faCameraAlt}
+            icon={faImage}
           />
           <input
             type={"file"}
@@ -127,12 +126,17 @@ const PostStatus = ({ type, activePostId }) => {
           />
         </div>
       </div>
+
       {state.image && (
         <img src={state.image} alt="post" className="w-25 h-25 m-2" />
       )}
 
-      <button className="btn btn-primary rounded p-1" type="submit">
-        {type === "Question" ? "Post a Thread" : "Post a Comment"}
+      <button
+        className="btn btn-info rounded p-2"
+        style={{ right: "0" }}
+        type="submit"
+      >
+        {type === "Question" ? "Submit Post" : "Reply"}
       </button>
     </form>
   );

@@ -26,6 +26,7 @@ export default function Login() {
       .signInWithEmailAndPassword(values.email, values.password)
       .then(async (userCredential) => {
         if (!userCredential.user.emailVerified) {
+          alert("verify email");
           throw new Error("Email is not verified");
         }
         return firebase
@@ -100,22 +101,6 @@ export default function Login() {
                   </small>
                 </div>
               </div>
-
-              {/* <div className="form-group">
-                <div className="custom-control custom-checkbox">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="customCheck1"
-                  />
-                  <label
-                    className="custom-control-label"
-                    htmlFor="customCheck1"
-                  >
-                    Remember me
-                  </label>
-                </div>
-              </div> */}
 
               <button type="submit" className="btn btn-dark btn-lg btn-block">
                 Sign in
