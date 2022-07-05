@@ -3,11 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router";
 import firebase from "firebase";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-regular-svg-icons";
-import { faStar as faStarSolid } from "@fortawesome/free-solid-svg-icons";
 import { useToken } from "../../hooks/useToken";
-import banner2 from "../../Assets/BANNER2.png";
 import banner3 from "../../Assets/banner3.jpg";
 import "./Product.css";
 
@@ -83,6 +79,7 @@ const Product = () => {
       console.log(error);
     }
   };
+
   return (
     <div>
       <div
@@ -198,15 +195,22 @@ const Product = () => {
 
               <h6 style={{ marginBottom: "20px" }}>{product.author_email}</h6>
             </div>
-            <hr />
-            <Button
-              type="primary"
-              onClick={() => setchatOpen(!chatOpen)}
-              className="chatBtn Rounded"
-              size="large"
-            >
-              Chat With Seller
-            </Button>
+
+            {token.email == product.author_email ? (
+              <div></div>
+            ) : (
+              <div>
+                <hr />
+                <Button
+                  type="primary"
+                  onClick={() => setchatOpen(!chatOpen)}
+                  className="chatBtn Rounded"
+                  size="large"
+                >
+                  Chat With Seller
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </Container>

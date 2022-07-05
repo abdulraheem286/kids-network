@@ -1,0 +1,18 @@
+.headTitle {
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+.noStore {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.centerAlign {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

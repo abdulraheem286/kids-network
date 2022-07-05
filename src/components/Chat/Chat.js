@@ -6,6 +6,8 @@ import Message from "./Message";
 import firebase from "firebase";
 import { useToken } from "../../hooks/useToken";
 import { faRefresh } from "@fortawesome/free-solid-svg-icons";
+import avatar from "../../Assets/avatar.png";
+
 const Chat = ({ author, author_email, product }) => {
   const token = useToken();
   const [message, setmessage] = useState({
@@ -69,39 +71,38 @@ const Chat = ({ author, author_email, product }) => {
   };
   return (
     <div
-      className="d-flex flex-column justify-content-between p-2 rounded border w-100 mt-3"
-      style={{ height: "550px", backgroundColor: "#1890ff" }}
+      className="d-flex flex-column justify-content-between border mt-3"
+      style={{ height: "550px", backgroundColor: "white" }}
     >
       <div
-        className="d-flex justify-content-between border-bottom p-1 pb-2 w-100"
-        style={{ height: "50px", color: "white" }}
+        className="d-flex justify-content-between border-bottom p-1"
+        style={{ height: "auto", color: "white" }}
       >
-        <div
-          className="d-flex
-                 justify-content-center align-items-center"
-        >
+        <div className="d-flex justify-content-center align-items-center">
           <img
-            className="rounded-circle  mr-4"
-            src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.Nhwvll4m1Jc3wjjmi2OGFgHaGZ%26pid%3DApi&f=1"
+            className="rounded-circle ml-2 mt-2 mb-2"
+            src={avatar}
             style={{ width: "50px", height: "50px" }}
           />
-          <h4 style={{ color: "white" }} className="mt-2">
+          <h5 style={{ color: "black" }} className=" ml-3 mt-2">
             {author}
-          </h4>
+          </h5>
           <FontAwesomeIcon
             className="mx-3"
             onClick={() => setchangeMessageState(!changeMessageState)}
             icon={faRefresh}
+            style={{
+              color: "black",
+            }}
           />
         </div>
-        <div className="d-flex align-items-center mx-5">{author_email}</div>
       </div>
-      <div style={{ height: "75%" }} className="border rounded m-2 mb-3">
+      <div className="border-bottom" style={{ height: "100%" }}>
         <Message messages={messages} messageState={changeMessageState} />
       </div>
-      <div className="d-flex align-items-center w-75 mx-auto">
+      <div className="d-flex w-100">
         <input
-          className="w-75 h-100 rounded-pill"
+          className="w-90 h-100 messageChat"
           value={message.text}
           onChange={(e) =>
             setmessage({
@@ -111,13 +112,15 @@ const Chat = ({ author, author_email, product }) => {
               author: token.email,
             })
           }
-          placeholder="Send a message"
+          placeholder="Write A Message..."
         />
-        <FontAwesomeIcon
-          className="mx-3 paperPlane"
-          onClick={sendMessage}
-          icon={faPaperPlane}
-        />
+        <div className="sendIcon p-0">
+          <FontAwesomeIcon
+            className="mx-3 paperPlane"
+            onClick={sendMessage}
+            icon={faPaperPlane}
+          />
+        </div>
       </div>
     </div>
   );

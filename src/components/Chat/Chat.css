@@ -1,10 +1,18 @@
-.paperPlane{
-    height: 20px;
-    width: 20px;
-    margin-top: -1%;
-    transition: transform 0.2s ease-in-out;
+.paperPlane {
+  height: 20px;
+  width: 20px;
+  margin-top: 10px;
+  transition: transform 0.2s ease-in-out;
+  color: white;
 }
-.paperPlane:hover{
-    transform: scale(1.05);
-    color: blue;
+
+.messageChat {
+  border-radius: 0px;
+  border: none;
+  padding: 5px;
+  padding-left: 15px;
+}
+
+.sendIcon {
+  background-color: #113c49;
 }

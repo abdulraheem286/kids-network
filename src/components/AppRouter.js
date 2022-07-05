@@ -13,7 +13,6 @@ import Admin from "./Admin/Admin";
 import { useToken } from "../hooks/useToken";
 import Shop from "./Shop/Shop";
 import Product from "./Shop/Product";
-import Order from "./Shop/Order";
 import SellerStore from "./Shop/SellerStore";
 
 export default function AppRouter() {
@@ -30,7 +29,6 @@ export default function AppRouter() {
       <Route exact path="/coursevideos/:id" element={<CoursesVideos />} />
       <Route exact path="/shop" element={<Shop />} />
       <Route exact path="/product/:id" element={<Product />} />
-      <Route exact path="/order" element={<Order />} />
       <Route exact path="/store/:id" element={<SellerStore />} />
       <Route exact path="/admin" element={<Admin />} />
       <Route exact path="/admin/*" element={<Admin />} />
