@@ -10,6 +10,7 @@ import { useToken } from "../hooks/useToken";
 import "./Courses.css";
 import _ from "lodash";
 import Dictaphone from "../components/VoiceToText/Dictaphone";
+import nocourse from "../Assets/noresult.png";
 
 const Courses = () => {
   const [voiceText, setVoiceText] = React.useState("");
@@ -157,23 +158,33 @@ const Courses = () => {
 
         {/* Code For E-Learning Cards Below. */}
 
-        {enrolledCourse.length > 0 && (
+        <h1>Your Courses</h1>
+        {}
+        {enrolledCourse?.length > 0 ? (
           <>
-            <h1>Your Courses</h1>
             <Row xs={1} md={columnsPerRow}>
               {getColumnsForRow(enrolledCourse)}
             </Row>
           </>
+        ) : (
+          <div>
+            <img className="noCourse" src={nocourse} />
+          </div>
         )}
-        {unEnrolledCourse.length > 0 && (
+
+        <h1 className="mt-5">Other Courses</h1>
+
+        {unEnrolledCourse?.length > 0 ? (
           <>
-            <h1 className="mt-5">Other Courses</h1>
             <Row xs={1} md={columnsPerRow}>
               {getColumnsForRow(unEnrolledCourse)}
             </Row>
           </>
+        ) : (
+          <div>
+            <img className="noCourse" src={nocourse} />
+          </div>
         )}
-        <div></div>
       </Container>
     </>
   );
