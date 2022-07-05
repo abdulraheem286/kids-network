@@ -4,7 +4,7 @@ import {
   TeamOutlined,
   FolderOutlined,
   ShoppingCartOutlined,
-  FormOutlined
+  FormOutlined,
 } from "@ant-design/icons";
 import { useLocation, Link } from "react-router-dom";
 import AdminCourses from "./AdminCourses";
@@ -32,7 +32,7 @@ export default function Admin() {
   useEffect(() => {
     if (!token) navigate("/sign-in", { replace: true });
     if (!token.isAdmin) {
-      navigate("/", { replace: true })
+      navigate("/", { replace: true });
     }
   }, [navigate, token]);
 

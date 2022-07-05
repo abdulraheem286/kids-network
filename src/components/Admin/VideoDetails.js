@@ -47,8 +47,8 @@ const VideoCard = ({ video, courseId }) => {
   const saveSettings = async (e) => {
     e.preventDefault();
     if (!state.description || !state.link || !state.title || !state.thumbnail) {
-      alert("Make sure to add all the values")
-      return
+      alert("Make sure to add all the values");
+      return;
     }
     try {
       await firebase
@@ -58,7 +58,7 @@ const VideoCard = ({ video, courseId }) => {
         .collection("coursevideos")
         .doc(state.id)
         .update(state);
-      setdisabledState(true)
+      setdisabledState(true);
     } catch (error) {
       console.log(error);
     }
@@ -166,8 +166,8 @@ const AddModal = ({ courseId }) => {
 
   const handleOk = async () => {
     if (!state.description || !state.link || !state.title || !state.thumbnail) {
-      alert("Make sure to add all the values")
-      return
+      alert("Make sure to add all the values");
+      return;
     }
     try {
       const videoId = state.link.split("=")[1];

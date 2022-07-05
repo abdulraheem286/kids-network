@@ -67,8 +67,8 @@ const CourseCard = () => {
   const addCourseCategory = (e) => {
     e.preventDefault();
     if (!category) {
-      alert("Make sure to add a category")
-      return
+      alert("Make sure to add a category");
+      return;
     }
     setcourseCategory([...courseCategory, category]);
     setcategory("");
@@ -100,7 +100,11 @@ const CourseCard = () => {
         </Button>
       </Tooltip>
       <Collapse accordion>
-        <Panel header="Courses" key="1" extra={<AddModal categories={courseCategory} />}>
+        <Panel
+          header="Courses"
+          key="1"
+          extra={<AddModal categories={courseCategory} />}
+        >
           {courses.map((course) => (
             <CourseDetails
               key={course.id}
@@ -140,18 +144,19 @@ const CourseCard = () => {
           <List
             bordered
             dataSource={courseCategory}
-            renderItem={(item, index) => (
-              item !== "All" &&
-              <List.Item className="w-50 p-2 d-flex justify-content-between">
-                <div>
-                  <Typography.Text mark>{index}</Typography.Text> {item}
-                </div>
-                <FontAwesomeIcon
-                  icon={faTrashCan}
-                  onClick={() => removeCategory(item)}
-                />
-              </List.Item>
-            )}
+            renderItem={(item, index) =>
+              item !== "All" && (
+                <List.Item className="w-50 p-2 d-flex justify-content-between">
+                  <div>
+                    <Typography.Text mark>{index}</Typography.Text> {item}
+                  </div>
+                  <FontAwesomeIcon
+                    icon={faTrashCan}
+                    onClick={() => removeCategory(item)}
+                  />
+                </List.Item>
+              )
+            }
           />
           <form className="d-flex">
             <input
@@ -188,9 +193,14 @@ const AddModal = ({ categories }) => {
   };
 
   const handleOk = async () => {
-    if (!state.coursecategory || !state.coursetitle || !state.coursedescription || !state.courseimage) {
-      alert("Make sure to add value in all fields")
-      return
+    if (
+      !state.coursecategory ||
+      !state.coursetitle ||
+      !state.coursedescription ||
+      !state.courseimage
+    ) {
+      alert("Make sure to add value in all fields");
+      return;
     }
     try {
       const course = await firebase
@@ -253,13 +263,19 @@ const AddModal = ({ categories }) => {
           </div>
           <div className="w-100 mb-2 d-flex justify-content-between">
             <label className="w-50">Course Category</label>
-            <Select className="w-50" value={state.coursecategory} onChange={e => setstate({ ...state, coursecategory: e })}>
-              {categories?.map((category, index) => (
-                category !== "All" && <Select.Option key={index} value={category}>
-                  {category}
-                </Select.Option>
-
-              ))}
+            <Select
+              className="w-50"
+              value={state.coursecategory}
+              onChange={(e) => setstate({ ...state, coursecategory: e })}
+            >
+              {categories?.map(
+                (category, index) =>
+                  category !== "All" && (
+                    <Select.Option key={index} value={category}>
+                      {category}
+                    </Select.Option>
+                  )
+              )}
             </Select>
           </div>
           <div className="w-100 d-flex justify-content-between">

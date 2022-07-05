@@ -1,11 +1,9 @@
-import React from 'react'
+import React from "react";
 
 const ChatCard = () => {
-    return (
-        <div className='border' style={{ width: "350px", height: "500px" }}>
+  return (
+    <div className="border" style={{ width: "350px", height: "500px" }}></div>
+  );
+};
 
-        </div>
-    )
-}
-
-export default ChatCard
+export default ChatCard;

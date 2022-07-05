@@ -23,16 +23,21 @@ const CourseDetails = ({ course, categories }) => {
 
   const saveSettings = async (e) => {
     e.preventDefault();
-    if (!state.coursecategory || !state.coursetitle || !state.coursedescription || !state.courseimage) {
-      alert("Make sure to add value in all fields")
-      return
+    if (
+      !state.coursecategory ||
+      !state.coursetitle ||
+      !state.coursedescription ||
+      !state.courseimage
+    ) {
+      alert("Make sure to add value in all fields");
+      return;
     }
     await firebase
       .firestore()
       .collection("courses")
       .doc(state.id)
       .update(state);
-    setdisableState(true)
+    setdisableState(true);
   };
   const updateEnrolledUsers = (user) => {
     setstate({
@@ -89,12 +94,14 @@ const CourseDetails = ({ course, categories }) => {
           className="w-50 my-2"
           onChange={(e) => setstate({ ...state, coursecategory: e })}
         >
-          {categories.map((item, index) => (
-            item !== "All" &&
-            <Option key={index} value={item}>
-              {item}
-            </Option>
-          ))}
+          {categories.map(
+            (item, index) =>
+              item !== "All" && (
+                <Option key={index} value={item}>
+                  {item}
+                </Option>
+              )
+          )}
         </Select>
       </div>
       <div className="w-100 d-flex justify-content-between">

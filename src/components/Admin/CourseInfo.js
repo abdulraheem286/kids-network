@@ -23,10 +23,18 @@ const CourseInfo = ({ cousreId, courseTitle, courseInfo }) => {
   };
   const updateDoc = async (e) => {
     e.preventDefault();
-    if (!state.author || !state.detailedDescription || !state.language || !state.chapters.length
-      || !state.level || !state.lectures || !state.language || !state.price) {
+    if (
+      !state.author ||
+      !state.detailedDescription ||
+      !state.language ||
+      !state.chapters.length ||
+      !state.level ||
+      !state.lectures ||
+      !state.language ||
+      !state.price
+    ) {
       alert("Make sure to add all values");
-      return
+      return;
     }
     try {
       await firebase
