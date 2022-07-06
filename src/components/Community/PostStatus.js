@@ -12,7 +12,7 @@ const PostStatus = ({ type, activePostId }) => {
   const [state, setstate] = useState({
     subject: "",
     image: "",
-    category: "Post Category"
+    category: "Post Category",
   });
   const changeHandler = (e) => {
     setstate({ ...state, [e.target.name]: e.target.value });
@@ -20,12 +20,11 @@ const PostStatus = ({ type, activePostId }) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      if (state?.category === "Post Category" || state.category === "") {
-        alert("Please select a category");
-        return;
-
-      }
       if (type === "Question") {
+        if (state?.category === "Post Category" || state.category === "") {
+          alert("Please select a category");
+          return;
+        }
         await firebase
           .firestore()
           .collection("questions")
@@ -62,8 +61,7 @@ const PostStatus = ({ type, activePostId }) => {
       setstate({
         subject: "",
         image: "",
-        category: "Post Category"
-
+        category: "Post Category",
       });
     } catch (error) {
       console.log(error);
@@ -103,13 +101,20 @@ const PostStatus = ({ type, activePostId }) => {
           }}
           required
         />
-        {type === "Question" && <Select value={state.category} className="mx-1 rounded" onChange={(e) => setstate({ ...state, category: e })}>
-          <Select.Option value="Question">Question</Select.Option>
-          <Select.Option value="General Discussion">General Discussion</Select.Option>
-          <Select.Option value="Suggestion">Suggestion</Select.Option>
-          <Select.Option value="Advice">Advice</Select.Option>
-
-        </Select>}
+        {type === "Question" && (
+          <Select
+            value={state.category}
+            className="mx-1 rounded"
+            onChange={(e) => setstate({ ...state, category: e })}
+          >
+            <Select.Option value="Question">Question</Select.Option>
+            <Select.Option value="General Discussion">
+              General Discussion
+            </Select.Option>
+            <Select.Option value="Suggestion">Suggestion</Select.Option>
+            <Select.Option value="Advice">Advice</Select.Option>
+          </Select>
+        )}
         <div>
           <FontAwesomeIcon
             className="ml-3"
