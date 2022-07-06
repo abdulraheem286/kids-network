@@ -19,8 +19,8 @@ import _ from "lodash";
 import DictaphoneShop from "../../components/VoiceToText/DictaphoneShop";
 import DictaphoneStore from "../../components/VoiceToText/DictaphoneStore";
 import mic from "../../Assets/mic.png";
-import banner from "../../Assets/BANNER1.png";
-import banner2 from "../../Assets/BANNER2.png";
+import banner from "../../Assets/shopBanner.png";
+import banner2 from "../../Assets/shopBanner2.png";
 import avatar from "../../Assets/avatar.png";
 import noproduct from "../../Assets/noproduct.png";
 import nostore from "../../Assets/nostore.png";
@@ -363,12 +363,22 @@ const CarouselPage = () => {
         <MDBCarouselInner>
           <MDBCarouselItem itemId="1">
             <MDBView>
-              <img className="d-block w-100" src={banner2} alt="Second slide" />
+              <img
+                className="d-block w-100"
+                style={{ height: "465px" }}
+                src={banner}
+                alt="Second slide"
+              />
             </MDBView>
           </MDBCarouselItem>
           <MDBCarouselItem itemId="2">
             <MDBView>
-              <img className="d-block w-100" src={banner} alt="Third slide" />
+              <img
+                className="d-block w-100"
+                style={{ height: "465px" }}
+                src={banner2}
+                alt="Third slide"
+              />
             </MDBView>
           </MDBCarouselItem>
         </MDBCarouselInner>

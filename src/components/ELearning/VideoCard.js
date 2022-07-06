@@ -34,8 +34,6 @@ const VideoCard = ({ thumbnail, videoLink, title, author }) => {
           style={{
             fontWeight: "lighter",
             fontSize: "14px",
-            // height: "18px",
-            // overflow: "hidden",
           }}
         >
           {author}

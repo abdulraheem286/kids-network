@@ -96,9 +96,9 @@ export default function App() {
                           backgroundColor: "transparent",
                         }}
                       >
-                        <i class="fa fa-caret-down"></i>
+                        <i className="fa fa-caret-down"></i>
                       </button>
-                      <div class="subnav-content">
+                      <div className="subnav-content">
                         <a href="#" onClick={logout}>
                           Logout
                         </a>
