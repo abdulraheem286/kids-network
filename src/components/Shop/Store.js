@@ -8,6 +8,8 @@ import { ReloadOutlined, MessageOutlined } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import ProdModal from "./ProdModal";
+import "./ProductCard.css";
+
 const Store = () => {
   const token = useToken();
   const [products, setproducts] = useState([]);
@@ -46,9 +48,7 @@ const Store = () => {
       .then((res) => {
         res.docs.length > 0
           ? setproducts(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })))
-          : setproductsMessage(
-              "There's no products to show. Add one to create your store"
-            );
+          : setproductsMessage("No products to show. create your store first");
       });
     setrefresh(false);
   }, [refresh]);
@@ -73,6 +73,7 @@ const Store = () => {
         store: storeName,
       });
       setvisible(true);
+      setrefresh(!refresh);
     } catch (error) {
       console.log(error);
     }
@@ -102,7 +103,7 @@ const Store = () => {
     product: null,
   });
   return (
-    <div className=" px-4 h-100">
+    <div className="container px-4 h-100">
       <div className="d-flex">
         <Button
           icon={<ReloadOutlined />}
@@ -116,6 +117,7 @@ const Store = () => {
       {products.length > 0 ? (
         <div className="">
           <AddProduct categories={categories} />
+
           <h3 className="my-3">Welcome to {token?.store}</h3>
           <ProdModal
             visible={modalVisible.visible}
@@ -123,28 +125,54 @@ const Store = () => {
             categories={categories}
             setmodalVisible={setmodalVisible}
           />
-          <Row>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: "20px",
+              marginBottom: "60px",
+            }}
+          >
             {products.map((product) => (
-              <Col key={product.id}>
-                <Card
-                  title={product.title}
-                  style={{ cursor: "pointer" }}
-                  onClick={() => setmodalVisible({ visible: true, product })}
+              <Card
+                key={product.id}
+                onClick={() => setmodalVisible({ visible: true, product })}
+                size="small"
+                bordered={false}
+                className="bootstrap_card my-2 "
+                style={{
+                  width: "100%",
+                  minHeight: "340px",
+                  borderRadius: "5px",
+                }}
+              >
+                <div
+                  style={{
+                    position: "relative",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
                 >
                   <img
-                    style={{ height: "200px", width: "200px" }}
-                    src={product.image}
+                    src={product?.image}
+                    style={{ height: "200px", objectFit: "cover" }}
                   />
-                  <div className="d-flex flex-column mt-2">
-                    <p>Category: {product.category}</p>
-                    <p>Price: Rs.{product.price}</p>
-                    <p>Quantity: {product.quantity}</p>
-                    <p>Brand: {product.brand}</p>
-                  </div>
-                </Card>
-              </Col>
+                  {product?.type == "Old" && <p className="pFilter">Old</p>}
+                </div>
+                <div className="mt-4">
+                  <p className="pCategory">{product?.category}</p>
+                  <h6 className="pTitle">
+                    <strong>{product?.title}</strong>
+                  </h6>
+                  <h5 className="pPrice">
+                    <strong>Rs. {product?.price}</strong>
+                  </h5>
+                </div>
+              </Card>
             ))}
-          </Row>
+          </div>
+
           <Row className="my-3">
             <Col
               xs={{
@@ -257,7 +285,7 @@ const Store = () => {
                       placeholder="Send a message"
                     />
                     <FontAwesomeIcon
-                      className="mx-3 paperPlane"
+                      className="mx-3 paperPlane bg-dark"
                       onClick={sendMessage}
                       icon={faPaperPlane}
                     />

@@ -23,7 +23,7 @@ export default function Login() {
       .signInWithEmailAndPassword(values.email, values.password)
       .then(async (userCredential) => {
         if (!userCredential.user.emailVerified) {
-          alert("verify email");
+          alert("Please Verify Your Email First");
           throw new Error("Email is not verified");
         }
         return firebase

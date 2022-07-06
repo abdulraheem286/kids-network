@@ -6,21 +6,23 @@ import { ReloadOutlined } from "@ant-design/icons";
 const { Panel } = Collapse;
 const ExpertForms = () => {
   const [approvedForms, setapprovedForms] = useState([]);
-  const [pendingForms, setpendingForms] = useState([])
-  const [currentForm, setcurrentForm] = useState("approved")
-  const [refresh, setrefresh] = useState(false)
+  const [pendingForms, setpendingForms] = useState([]);
+  const [currentForm, setcurrentForm] = useState("approved");
+  const [refresh, setrefresh] = useState(false);
   useEffect(() => {
     async function getData() {
       try {
         let res = await firebase
           .firestore()
-          .collection("expertsForms").where("approved", "==", true)
+          .collection("expertsForms")
+          .where("approved", "==", true)
           .get();
         let forms = res.docs?.map((doc) => ({ id: doc.id, ...doc.data() }));
         setapprovedForms(forms);
         res = await firebase
           .firestore()
-          .collection("expertsForms").where("approved", "==", "pending")
+          .collection("expertsForms")
+          .where("approved", "==", "pending")
           .get();
         forms = res.docs?.map((doc) => ({ id: doc.id, ...doc.data() }));
         setpendingForms(forms);
@@ -43,26 +45,28 @@ const ExpertForms = () => {
         </Button>
       </Tooltip>
       <div className="d-flex justify-content-center">
-        <h4 className="mx-3" onClick={() => setcurrentForm("approved")}>Approved Forms</h4>
+        <h4 className="mx-3" onClick={() => setcurrentForm("approved")}>
+          Approved Forms
+        </h4>
         <h4 onClick={() => setcurrentForm("pending")}>Pending Forms</h4>
       </div>
-      {
-        currentForm === "approved" ? <Collapse accordion>
+      {currentForm === "approved" ? (
+        <Collapse accordion>
           {approvedForms?.map((form, index) => (
             <Panel key={form.id} header={form.name}>
               <ExpertForm form={form} />
             </Panel>
           ))}
-        </Collapse> : <Collapse accordion>
+        </Collapse>
+      ) : (
+        <Collapse accordion>
           {pendingForms?.map((form, index) => (
             <Panel key={form.id} header={form.name}>
               <ExpertForm form={form} />
             </Panel>
           ))}
         </Collapse>
-
-      }
-
+      )}
     </>
   );
 };
@@ -138,7 +142,7 @@ const ExpertForm = ({ form }) => {
           value={userForm.address}
         />
       </div>
-      <div className="d-flex w-100 justify-content-between px-2">
+      {/* <div className="d-flex w-100 justify-content-between px-2">
         <label>Phone</label>
         <Input
           disabled
@@ -148,7 +152,7 @@ const ExpertForm = ({ form }) => {
           type={"text"}
           value={userForm.phone}
         />
-      </div>
+      </div> */}
       <div className="d-flex w-100 justify-content-between px-2">
         <label>Education</label>
         <Input

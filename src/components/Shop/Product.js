@@ -210,13 +210,13 @@ const Product = () => {
 
                 <Button
                   type="primary"
-                  onClick={
-                    () => console.log(product)
-                    // window.open(
-                    //   "https://api.whatsapp.com/send?phone=" + product.phone
-                    // )
+                  onClick={() =>
+                    window.open(
+                      "https://api.whatsapp.com/send?phone=" +
+                        product.author_phone
+                    )
                   }
-                  className="btn btn-success Rounded mt-2"
+                  className="chatBtn2 btn-success Rounded mt-3"
                   size="large"
                 >
                   Contact on Whatsapp
