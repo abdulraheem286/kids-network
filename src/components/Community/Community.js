@@ -32,7 +32,7 @@ const Community = () => {
       try {
         firebase
           .firestore()
-          .collection("questions")
+          .collection("questions").orderBy("timestamp", "desc")
           .onSnapshot((snapshot) => {
             const questions = snapshot.docs?.map((doc) => ({
               id: doc.id,

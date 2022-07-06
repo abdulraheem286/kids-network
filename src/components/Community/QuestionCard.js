@@ -27,6 +27,8 @@ const QuestionCard = ({ post }) => {
   const [allLikes, setallLikes] = useState(0);
   const [allDislikes, setallDislikes] = useState(0);
   const ref = useRef(null);
+  const [likeColor, setlikeColor] = useState("")
+
   useEffect(() => {
     firebase
       .firestore()
@@ -53,10 +55,17 @@ const QuestionCard = ({ post }) => {
         let allLike = 0;
         let allDisLike = 0;
         for (let i = 0; i < likes?.length; i++) {
+
           if (likes[i]?.like === true) {
             allLike += 1;
+            if (likes[i].id == token.id) {
+              setlikeColor("blue")
+            }
           } else {
             allDisLike += 1;
+            if (likes[i].id == token.id) {
+              setlikeColor("red")
+            }
           }
         }
         setallLikes(allLike);
@@ -140,7 +149,7 @@ const QuestionCard = ({ post }) => {
         className="d-flex align-items-center mt-1 mr-2"
         style={{ flexDirection: "column", marginLeft: "-26px" }}
       >
-        <FontAwesomeIcon icon={faThumbsUp} onClick={setLike} className="icon" />
+        <FontAwesomeIcon icon={faThumbsUp} style={{ color: likeColor === "blue" ? "blue" : "" }} onClick={setLike} className="icon" />
         {allLikes - allDislikes >= 0 ? (
           <p>{allLikes - allDislikes}</p>
         ) : (
@@ -151,7 +160,7 @@ const QuestionCard = ({ post }) => {
           icon={faThumbsDown}
           onClick={setDisLike}
           className="icon"
-          style={{ marginTop: "-12px" }}
+          style={{ marginTop: "-12px", color: likeColor === "red" ? "red" : "" }}
         />
       </div>
 
