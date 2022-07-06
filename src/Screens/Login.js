@@ -9,10 +9,7 @@ import { MDBContainer, MDBAlert } from "mdbreact";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required("*Email is Required").email().label("Email"),
-  password: Yup.string()
-    .required("*Password is Required")
-    .min(6, "Password must be greater than 6 characters")
-    .label("Password"),
+  password: Yup.string().required("*Password is Required").label("Password"),
 });
 
 export default function Login() {

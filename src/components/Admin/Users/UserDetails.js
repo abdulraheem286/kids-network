@@ -48,6 +48,10 @@ const UserDetails = ({ user }) => {
         <p>{user.lName}</p>
       </div>
       <div className="d-flex w-100 justify-content-between">
+        <label>Phone:</label>
+        <p>{user.phone}</p>
+      </div>
+      <div className="d-flex w-100 justify-content-between">
         <label>Email:</label>
         <p>{user.email}</p>
       </div>

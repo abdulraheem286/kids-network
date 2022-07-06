@@ -7,11 +7,27 @@ import { useNavigate } from "react-router";
 import { MDBContainer, MDBAlert } from "mdbreact";
 import AuthContext from "../components/AuthContext";
 
+const phoneRegExp =
+  /^((\0)|(92))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/;
+
 const validationSchema = Yup.object().shape({
-  fName: Yup.string().required("*First Name Required").label("First Name"),
-  lName: Yup.string().required("*Last Name Required").label("Last Name"),
+  fName: Yup.string()
+    .required("*First Name Required")
+    .matches(/^[A-Za-z ]*$/, "Please enter valid name")
+    .max(30)
+    .label("First Name"),
+
+  lName: Yup.string()
+    .required("*Last Name Required")
+    .matches(/^[A-Za-z]*$/, "Please enter valid name")
+    .max(30)
+    .label("Last Name"),
+
   email: Yup.string().required("*Email is Required").email().label("Email"),
-  // phone: Yup.string().required("*Phone is Required").phone().label("Phone"),
+
+  phone: Yup.string()
+    .required("*Phone is Required")
+    .matches(phoneRegExp, "Phone number is not valid"),
   password: Yup.string()
     .required("*Password is Required")
     .min(6, "Password must be greater than 6 characters")
@@ -35,7 +51,7 @@ export default function SignUp() {
         .createUserWithEmailAndPassword(values.email, values.password)
         .then((res) => {
           res.user.sendEmailVerification();
-          alert("Email verification send to your email");
+          alert("Verification Link Send To Your Email");
           return res;
         })
         .then((res) => {
@@ -111,7 +127,7 @@ export default function SignUp() {
                   <Field
                     type="phone"
                     className="form-control"
-                    placeholder="Enter Phone"
+                    placeholder="Enter Phone (92XXXXXXXXXX)"
                     name="phone"
                   />
                   <div className="text-danger">
