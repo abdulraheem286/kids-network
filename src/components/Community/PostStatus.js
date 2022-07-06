@@ -20,6 +20,11 @@ const PostStatus = ({ type, activePostId }) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
+      if (state?.category === "Post Category" || state.category === "") {
+        alert("Please select a category");
+        return;
+
+      }
       if (type === "Question") {
         await firebase
           .firestore()

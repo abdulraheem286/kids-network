@@ -182,6 +182,8 @@ const QuestionCard = ({ post }) => {
       >
         <div className="d-flex justify-content-between">
           <p>
+            <span style={{ fontWeight: "bold" }}>#{post?.category}</span>{" "}
+            Posted by {" "}
             {((token.id === post?.userId && token?.expert) || post?.expert) && (
               <span
                 style={{
@@ -194,7 +196,6 @@ const QuestionCard = ({ post }) => {
                 Expert
               </span>
             )}{" "}
-            Posted by
             <strong>{post?.postedBy}</strong> on
             {post?.timestamp?.toDate()?.toLocaleDateString()}
           </p>
@@ -276,6 +277,7 @@ const QuestionCard = ({ post }) => {
               <p className=" m-2" style={{ fontSize: "16px" }}>
                 {post?.subject}
               </p>
+
               <>
                 {post?.image && (
                   <div style={{ maxWidth: "700px", maxHeight: "100%" }}>
