@@ -9,6 +9,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import ProdModal from "./ProdModal";
 import "./ProductCard.css";
+import "./Store.css";
+import avatar from "../../Assets/avatar.png";
+import cart from "../../Assets/cart.png";
 
 const Store = () => {
   const token = useToken();
@@ -179,66 +182,85 @@ const Store = () => {
                 span: 24,
               }}
             >
-              <div className="border d-flex p-2" style={{ height: "467px" }}>
+              <div className="border d-flex" style={{ height: "467px" }}>
                 <div
-                  className="d-flex flex-column h-100 w-25"
+                  className="d-flex flex-column h-100 w-25 p-2 pt-4 pb-4"
                   style={{
-                    backgroundColor: "whitesmoke",
-                    overflowY: "scroll",
+                    backgroundColor: "#113c49",
+                    overflowY: "auto",
                   }}
                 >
                   {products?.map((product, index) => (
-                    <p
-                      className={`p-1 border text-center`}
-                      key={index}
-                      style={{
-                        cursor: "pointer",
-
-                        backgroundColor:
-                          product.id == activeProduct.id ? "#1890ff" : "white",
-                        color:
-                          product.id == activeProduct.id ? "white" : "#282828",
-                      }}
-                      onClick={() => setactiveProduct(product)}
-                    >
-                      {product.title
-                        .split("@")[0]
-                        .replace(/^\w/, (c) => c.toUpperCase())}
-                    </p>
+                    <>
+                      <p
+                        className={`p-2 border text-left rounded-pill`}
+                        key={index}
+                        style={{
+                          cursor: "pointer",
+                          fontSize: "13px",
+                          backgroundColor:
+                            product.id == activeProduct.id
+                              ? "#1890ff"
+                              : "white",
+                          color:
+                            product.id == activeProduct.id
+                              ? "white"
+                              : "#282828",
+                        }}
+                        onClick={() => setactiveProduct(product)}
+                      >
+                        <img
+                          style={{ width: "20px", marginRight: "10px" }}
+                          src={cart}
+                        />
+                        {product.title
+                          .split("@")[0]
+                          .replace(/^\w/, (c) => c.toUpperCase())}
+                      </p>
+                    </>
                   ))}
                 </div>
                 <div
-                  className="d-flex flex-column h-100 w-25"
+                  className="d-flex flex-column h-100 w-25 p-2 pt-4 pb-4"
                   style={{
                     backgroundColor: "whitesmoke",
-                    overflowY: "scroll",
+                    overflowY: "auto",
                   }}
                 >
                   {chats?.map((chat, index) => (
-                    <p
-                      className={`p-1 border text-center`}
-                      key={index}
-                      style={{
-                        cursor: "pointer",
-
-                        backgroundColor:
-                          chat.id == activeChat.id ? "#1890ff" : "white",
-                        color: chat.id == activeChat.id ? "white" : "#282828",
-                      }}
-                      onClick={() => setactiveChat(chat)}
-                    >
-                      {chat.id
-                        .split("@")[0]
-                        .replace(/^\w/, (c) => c.toUpperCase())}
-                    </p>
+                    <>
+                      <p
+                        className={`p-2 border text-left rounded-pill`}
+                        key={index}
+                        style={{
+                          cursor: "pointer",
+                          fontSize: "13px",
+                          backgroundColor:
+                            chat.id == activeChat.id ? "#1890ff" : "white",
+                          color: chat.id == activeChat.id ? "white" : "#282828",
+                        }}
+                        onClick={() => setactiveChat(chat)}
+                      >
+                        <img
+                          style={{ width: "20px", marginRight: "10px" }}
+                          src={avatar}
+                        />
+                        {chat.id
+                          .split("@")[0]
+                          .replace(/^\w/, (c) => c.toUpperCase())}
+                      </p>
+                    </>
                   ))}
                 </div>
-                <div className="h-100 w-50 border d-flex justify-content-between flex-column">
-                  <div className="w-100 border text-center p-1">
+                <div className="h-100 w-50 d-flex justify-content-between flex-column">
+                  <div className="w-100 text-left border-bottom p-2 pl-4">
                     {activeChat?.id?.split("@")[0].toUpperCase()}
                   </div>
 
-                  <div style={{ overflowY: "scroll" }}>
+                  <div
+                    className="bottom-border"
+                    style={{ backgroundColor: "white", overflowY: "auto" }}
+                  >
                     {activeChat?.chat?.map((message, index) => (
                       <div
                         className={`w-100
@@ -250,7 +272,7 @@ const Store = () => {
                         key={index}
                       >
                         <div
-                          className={`rounded m-2 w-25 border`}
+                          className={`rounded m-2 w-50 border`}
                           style={{ fontSize: "10px" }}
                         >
                           <p
@@ -258,21 +280,21 @@ const Store = () => {
                               backgroundColor: "#282828",
                               color: "whitesmoke",
                             }}
-                            className="border-bottom p-1"
+                            className="border-bottom p-2"
                           >
                             {message?.author.split("@")[0]}
                           </p>
-                          <p className="p-1 m-0 p-0">{message?.text}</p>
-                          <p className="m-0 p-1 float-right">
+                          <p className="p-2 m-0">{message?.text}</p>
+                          <p className="m-0 p-2 float-right">
                             {new Date(message?.timestamp).toLocaleTimeString()}
                           </p>
                         </div>
                       </div>
                     ))}
                   </div>
-                  <div className="d-flex align-items-center w-75 mx-auto">
+                  <div className="d-flex align-items-center border-top">
                     <input
-                      className="w-75 h-100 rounded-pill"
+                      className="w-90 messageChat pb-2"
                       value={message.text}
                       onChange={(e) =>
                         setmessage({
@@ -282,13 +304,16 @@ const Store = () => {
                           author: token.email,
                         })
                       }
-                      placeholder="Send a message"
+                      placeholder="Write Your Message..."
                     />
-                    <FontAwesomeIcon
-                      className="mx-3 paperPlane bg-dark"
-                      onClick={sendMessage}
-                      icon={faPaperPlane}
-                    />
+                    <div className="sendIcon">
+                      <FontAwesomeIcon
+                        className="pl-3 pr-3 pb-2 paperPlane"
+                        style={{ backgroundColor: "#113c49" }}
+                        onClick={sendMessage}
+                        icon={faPaperPlane}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
