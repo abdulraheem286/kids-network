@@ -22,8 +22,17 @@ const ProductCard = ({ product }) => {
           borderRadius: "5px",
         }}
       >
-        <div style={{ position: "relative" }}>
-          <img className="w-100 h-75" src={product?.image} />
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <img
+            src={product?.image}
+            style={{ height: "100%", maxHeight: "250px", objectFit: "cover" }}
+          />
           {product?.type == "Old" && <p className="pFilter">Old</p>}
         </div>
         <div className="mt-4">

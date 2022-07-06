@@ -19,13 +19,27 @@ const ProductCardLandingPage = ({ product }) => {
         style={{
           width: "188px",
           height: "auto",
-          minHeight: "320px",
+          minHeight: "300px",
           border: "1px solid #dee2e6",
           borderRadius: "5px",
         }}
       >
-        <div style={{ position: "relative" }}>
-          <img className="w-100 h-75" src={product?.image} />
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <img
+            src={product?.image}
+            style={{
+              height: "100%",
+              maxHeight: "150px",
+              width: "100%",
+              objectFit: "cover",
+            }}
+          />
           {product?.type == "Old" && <p className="pFilter">Old</p>}
         </div>
         <div className="mt-4">
