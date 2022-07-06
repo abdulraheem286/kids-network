@@ -180,10 +180,11 @@ const QuestionCard = ({ post }) => {
           borderRadius: "6px",
         }}
       >
+        <p>
+          <strong>#{post?.category}</strong> Posted by
+        </p>
         <div className="d-flex justify-content-between">
           <p>
-            <span style={{ fontWeight: "bold" }}>#{post?.category}</span>{" "}
-            Posted by {" "}
             {((token.id === post?.userId && token?.expert) || post?.expert) && (
               <span
                 style={{
@@ -191,11 +192,12 @@ const QuestionCard = ({ post }) => {
                   color: "white",
                   borderRadius: "10px",
                   padding: "5px",
+                  marginRight: "10px",
                 }}
               >
                 Expert
               </span>
-            )}{" "}
+            )}
             <strong>{post?.postedBy}</strong> on
             {post?.timestamp?.toDate()?.toLocaleDateString()}
           </p>
