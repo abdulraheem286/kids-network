@@ -64,6 +64,7 @@ const Chat = ({ author, author_email, product }) => {
           chat: [...userMessages],
         });
       setchangeMessageState(!changeMessageState);
+
       setmessage({ ...message, text: "" });
     } catch (error) {
       console.log(error);

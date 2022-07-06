@@ -4,12 +4,9 @@ import firebase from "firebase";
 const Product = ({ product: mainProduct, categories }) => {
   const [product, setproduct] = useState({
     title: "",
-    quantity: 0,
     price: 0,
     description: "",
     image: "",
-    delivery: "",
-    service: "",
     brand: "",
     category: "",
     type: "",
