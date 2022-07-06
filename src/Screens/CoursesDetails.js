@@ -194,84 +194,97 @@ export default function CoursesDetails(props) {
                     ))}
                   </div>
                 </div>
+                <div style={{ width: "35%" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "auto",
+                      height: "fit-content",
+                      borderRadius: "10px",
+                      backgroundColor: "#f5f5f5",
+                      boxShadow: "0 25px 50px -12px rgb(0 0 0 / 0.25)",
+                    }}
+                  >
+                    <CourseDetailsCard courseDetails={courseData} />
+                    <div className="pl-4 pr-4">
+                      {enrolledUser && (
+                        <form className=" w-100 my-5">
+                          <h4>Leave a review: </h4>
 
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    width: "35%",
-                    height: "fit-content",
-                    borderRadius: "10px",
-                    backgroundColor: "#f5f5f5",
-                    alignItems: "center",
-                    padding: "20px",
-                    boxShadow: "0 25px 50px -12px rgb(0 0 0 / 0.25)",
-                  }}
-                  className=""
-                >
-                  {enrolledUser ? (
-                    <div>
-                      <button
-                        className="btn btn-danger btn-lg rounded-pill mr-2"
-                        onClick={() => UnEnrollUser()}
-                      >
-                        UnEnroll
-                      </button>
-                      <button
-                        className="btn btn-success btn-lg rounded-pill"
-                        onClick={() =>
-                          navigate(
-                            `/courseVideos/${params.data}?video=${mainVideo?.id}`,
-                            { state: "opened" }
-                          )
-                        }
-                      >
-                        See Videos
-                      </button>
+                          <MDBInput
+                            value={review}
+                            name={"review"}
+                            onChange={(e) => setreview(e.target.value)}
+                            type="textarea"
+                            background
+                          />
+                          <div className="mb-2" style={{ cursor: "pointer" }}>
+                            {new Array(5).fill(0).map((_, i) => {
+                              return i < rating ? (
+                                <i
+                                  key={i}
+                                  onClick={() => setrating(i + 1)}
+                                  className="fa fa-star text-warning"
+                                ></i>
+                              ) : (
+                                <i
+                                  key={i}
+                                  onClick={() => setrating(i + 1)}
+                                  className="fa fa-star text-secondary"
+                                ></i>
+                              );
+                            })}
+                          </div>
+
+                          <MDBBtn onClick={submitReview} color="dark">
+                            Submit
+                          </MDBBtn>
+                        </form>
+                      )}
                     </div>
-                  ) : (
-                    <button
-                      className="btn btn-success btn-lg rounded-pill mr-2"
-                      onClick={() => EnrollUser()}
-                    >
-                      Enroll Now
-                    </button>
-                  )}
-                  <CourseDetailsCard courseDetails={courseData} />
-                  {enrolledUser && (
-                    <form className=" w-100 my-5">
-                      <h4>Leave a review: </h4>
-
-                      <MDBInput
-                        value={review}
-                        name={"review"}
-                        onChange={(e) => setreview(e.target.value)}
-                        type="textarea"
-                        background
-                      />
-                      <div className="mb-2">
-                        {new Array(5).fill(0).map((_, i) => {
-                          return i < rating ? (
-                            <i
-                              key={i}
-                              onClick={() => setrating(i + 1)}
-                              className="fa fa-star text-warning"
-                            ></i>
-                          ) : (
-                            <i
-                              key={i}
-                              onClick={() => setrating(i + 1)}
-                              className="fa fa-star text-secondary"
-                            ></i>
-                          );
-                        })}
+                  </div>
+                  <div
+                    style={{
+                      textAlign: "center",
+                    }}
+                  >
+                    {enrolledUser ? (
+                      <div>
+                        <button
+                          className="btn btn-danger btn-lg mr-2 mt-4"
+                          style={{
+                            width: "40%",
+                          }}
+                          onClick={() => UnEnrollUser()}
+                        >
+                          UnEnroll
+                        </button>
+                        <button
+                          className="btn btn-success btn-lg mt-4"
+                          style={{
+                            width: "40%",
+                          }}
+                          onClick={() =>
+                            navigate(
+                              `/courseVideos/${params.data}?video=${mainVideo?.id}`,
+                              { state: "opened" }
+                            )
+                          }
+                        >
+                          See Videos
+                        </button>
                       </div>
-
-                      <MDBBtn onClick={submitReview} color="dark">
-                        Submit
-                      </MDBBtn>
-                    </form>
-                  )}
+                    ) : (
+                      <button
+                        className="btn btn-success btn-lg mr-2 mt-4"
+                        style={{ width: "100%" }}
+                        onClick={() => EnrollUser()}
+                      >
+                        Enroll Now
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

@@ -5,6 +5,8 @@ import { useNavigate, Link } from "react-router-dom";
 import AppRouter from "./components/AppRouter";
 import AuthContext from "./components/AuthContext";
 import Footer from "./components/Footer";
+import avatar from "./Assets/avatar2.png";
+import { useToken } from "./hooks/useToken";
 
 export default function App() {
   const [userDetails, setUserDetails] = useState(
@@ -60,7 +62,7 @@ export default function App() {
             </ul>
           </div>
           <div className="collapse navbar-collapse">
-            <ul className="navbar-nav ml-auto">
+            <ul className="navbar-nav ml-auto" style={{ marginRight: "25px" }}>
               {!userDetails?.email ? (
                 <>
                   <li className="nav-item">
@@ -75,14 +77,34 @@ export default function App() {
                   </li>
                 </>
               ) : (
-                <li className="nav-item">
-                  <button
-                    className="nav-link"
-                    style={{ border: "none", backgroundColor: "transparent" }}
-                    onClick={logout}
-                  >
-                    Logout
-                  </button>
+                <li className="d-flex nav-item align-items-center">
+                  <div className=" d-flex align-items-center">
+                    <img
+                      style={{ width: "25px", height: "25px" }}
+                      src={avatar}
+                    />
+                    <p className="m-2">
+                      <strong>
+                        {userDetails.fName} {userDetails.lName}
+                      </strong>
+                    </p>
+                    <div className="subnav">
+                      <button
+                        className="subnavbtn"
+                        style={{
+                          border: "none",
+                          backgroundColor: "transparent",
+                        }}
+                      >
+                        <i class="fa fa-caret-down"></i>
+                      </button>
+                      <div class="subnav-content">
+                        <a href="#" onClick={logout}>
+                          Logout
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 </li>
               )}
             </ul>

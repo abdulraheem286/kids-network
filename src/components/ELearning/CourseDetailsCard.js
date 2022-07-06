@@ -10,8 +10,8 @@ import React from "react";
 
 const CourseDetailsCard = ({ courseDetails }) => {
   return (
-    <div className=" w-100 mt-4">
-      <table className="my-2 w-100">
+    <div className=" w-100 pl-4 pr-4">
+      <table className="my-4 w-100">
         <Row icon={faSliders} text={courseDetails?.level} category="Level" />
         <Row
           icon={faTv}
