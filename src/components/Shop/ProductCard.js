@@ -18,7 +18,7 @@ const ProductCard = ({ product }) => {
         className="bootstrap_card my-2"
         style={{
           width: "100%",
-          minHeight: "330px",
+          minHeight: "380px",
           borderRadius: "5px",
         }}
       >

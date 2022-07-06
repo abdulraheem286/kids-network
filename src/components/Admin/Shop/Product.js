@@ -88,10 +88,10 @@ const Product = ({ product: mainProduct, categories }) => {
   return (
     <div className="d-flex flex-column">
       <div className="d-flex px-2 mb-2">
-        <Button type="primary" onClick={() => setdisabledState(false)}>
+        {/* <Button type="primary" onClick={() => setdisabledState(false)}>
           Edit
-        </Button>
-        <Button className="mx-4" onClick={deleteProduct} danger>
+        </Button> */}
+        <Button onClick={deleteProduct} danger>
           Delete
         </Button>
       </div>
@@ -176,7 +176,7 @@ const Product = ({ product: mainProduct, categories }) => {
             onChange={changeHandler}
           />
         </div>
-        <div className="d-flex w-100 justify-content-between px-2">
+        {/* <div className="d-flex w-100 justify-content-between px-2">
           <label>Product Quantity</label>
           <Input
             disabled={disabledState}
@@ -188,7 +188,7 @@ const Product = ({ product: mainProduct, categories }) => {
             value={product.quantity}
             onChange={changeHandler}
           />
-        </div>
+        </div> */}
         <div className="d-flex w-100 justify-content-between px-2">
           <label>Product Image Link</label>
           <Input
@@ -202,7 +202,7 @@ const Product = ({ product: mainProduct, categories }) => {
             onChange={changeHandler}
           />
         </div>
-        <div className="d-flex w-100 justify-content-between px-2">
+        {/* <div className="d-flex w-100 justify-content-between px-2">
           <label>Product Delivery</label>
           <Input
             disabled={disabledState}
@@ -213,8 +213,8 @@ const Product = ({ product: mainProduct, categories }) => {
             value={product.delivery}
             onChange={changeHandler}
           />
-        </div>
-        <div className="d-flex w-100 justify-content-between px-2">
+        </div> */}
+        {/* <div className="d-flex w-100 justify-content-between px-2">
           <label>Product Service</label>
           <Input
             disabled={disabledState}
@@ -225,7 +225,7 @@ const Product = ({ product: mainProduct, categories }) => {
             value={product.service}
             onChange={changeHandler}
           />
-        </div>
+        </div> */}
         <div>
           <Button type="primary" htmlType="submit">
             Save

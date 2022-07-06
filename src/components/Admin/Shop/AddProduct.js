@@ -9,12 +9,9 @@ const AddProduct = ({ categories }) => {
   const [alertMessage, setalertMessage] = useState("");
   const [product, setproduct] = useState({
     title: "",
-    quantity: 0,
     price: 0,
     description: "",
     image: "",
-    delivery: "",
-    service: "",
     type: "",
     brand: "",
     category: "",
@@ -38,12 +35,9 @@ const AddProduct = ({ categories }) => {
   const handleCancel = () => {
     setproduct({
       title: "",
-      quantity: 0,
       price: 0,
       description: "",
       image: "",
-      delivery: "",
-      service: "",
       brand: "",
       category: "",
       type: "",
@@ -66,11 +60,8 @@ const AddProduct = ({ categories }) => {
       !finalProduct.brand ||
       !finalProduct.description ||
       !finalProduct.image ||
-      !finalProduct.delivery ||
       !finalProduct.price ||
-      !finalProduct.quantity ||
       !finalProduct.title ||
-      !finalProduct.service ||
       !finalProduct.type
     ) {
       alert("Make sure to add all the values");
@@ -91,12 +82,9 @@ const AddProduct = ({ categories }) => {
       setalertMessage("sent");
       setproduct({
         title: "",
-        quantity: 0,
         price: 0,
         description: "",
         image: "",
-        delivery: "",
-        service: "",
         brand: "",
         category: "",
         type: "",
@@ -202,7 +190,7 @@ const AddProduct = ({ categories }) => {
               onChange={changeHandler}
             />
           </div>
-          <div className="d-flex w-100 justify-content-between px-2">
+          {/* <div className="d-flex w-100 justify-content-between px-2">
             <label>Product Quantity</label>
             <Input
               placeholder="0"
@@ -213,7 +201,7 @@ const AddProduct = ({ categories }) => {
               value={product.quantity}
               onChange={changeHandler}
             />
-          </div>
+          </div> */}
           <div className="d-flex w-100 justify-content-between px-2">
             <label>Product Image Link</label>
             <Input
@@ -226,7 +214,7 @@ const AddProduct = ({ categories }) => {
               onChange={changeHandler}
             />
           </div>
-          <div className="d-flex w-100 justify-content-between px-2">
+          {/* <div className="d-flex w-100 justify-content-between px-2">
             <label>Product Delivery</label>
             <Input
               placeholder="Address"
@@ -247,7 +235,7 @@ const AddProduct = ({ categories }) => {
               value={product.service}
               onChange={changeHandler}
             />
-          </div>
+          </div> */}
           <Button type="primary" htmlType="submit">
             Save a Product
           </Button>

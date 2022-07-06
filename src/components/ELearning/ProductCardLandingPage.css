@@ -1,9 +1,62 @@
-.bootstrap__card {
-    transition: all 0.2s ease-in-out;
+.bootstrapcard {
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
 
-.bootstrap__card:hover {
-    transform: scale(1.02);
-    border: 1px solid black !important;
-    cursor: pointer;
+.bootstrapcard:hover {
+  transform: scale(1.02);
+  cursor: pointer;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.pFilter {
+  background-color: #113c49;
+  color: white;
+  border-radius: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: 600;
+  font-size: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.pPrice {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: red;
+}
+
+.pRs {
+  background-color: #65daff;
+  color: #113c49;
+  border-radius: 5px;
+  padding: 2px;
+  font-weight: 600;
+  font-size: 12px;
+  margin-right: 6px;
+}
+
+.pCategory {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: gray;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.pTitle {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: black;
+  font-size: 14px;
+  text-transform: uppercase;
+  text-align: center;
 }

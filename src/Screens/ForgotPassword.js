@@ -9,7 +9,7 @@ const validationSchema = Yup.object().shape({
 export default function ForgotPassword() {
   const handleSubmit = async (values) => {
     firebase.auth().sendPasswordResetEmail(values.email);
-    alert("Password reset link has been sent to your email");
+    alert("Reset Email Sent To Your Email Address");
   };
   return (
     <>
