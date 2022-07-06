@@ -17,7 +17,6 @@ const Community = () => {
   const [loading, setloading] = useState(false);
   const [expertForm, setexpertForm] = useState({
     address: "",
-    phone: "",
     education: "",
     occupation: "",
     specialization: "",
@@ -32,7 +31,8 @@ const Community = () => {
       try {
         firebase
           .firestore()
-          .collection("questions").orderBy("timestamp", "desc")
+          .collection("questions")
+          .orderBy("timestamp", "desc")
           .onSnapshot((snapshot) => {
             const questions = snapshot.docs?.map((doc) => ({
               id: doc.id,
@@ -50,7 +50,6 @@ const Community = () => {
     try {
       if (
         !expertForm.address ||
-        !expertForm.phone ||
         !expertForm.education ||
         !expertForm.occupation ||
         !expertForm.specialization ||
@@ -99,6 +98,7 @@ const Community = () => {
         bcl3=""
         bcpt4=""
       />
+
       <div className="container my-5" style={{ maxWidth: "800px" }}>
         <div className=" " xs={9}>
           <Modal
@@ -122,7 +122,7 @@ const Community = () => {
                   onChange={changeHandler}
                 />
               </div>
-              <div className="d-flex w-100 justify-content-between px-2">
+              {/* <div className="d-flex w-100 justify-content-between px-2">
                 <label>Phone</label>
                 <Input
                   className="my-1 w-50"
@@ -132,7 +132,7 @@ const Community = () => {
                   value={expertForm.phone}
                   onChange={changeHandler}
                 />
-              </div>
+              </div> */}
               <div className="d-flex w-100 justify-content-between px-2">
                 <label>Education</label>
                 <Input
