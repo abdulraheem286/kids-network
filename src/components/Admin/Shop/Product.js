@@ -88,9 +88,9 @@ const Product = ({ product: mainProduct, categories }) => {
   return (
     <div className="d-flex flex-column">
       <div className="d-flex px-2 mb-2">
-        {/* <Button type="primary" onClick={() => setdisabledState(false)}>
+        <Button type="primary" onClick={() => setdisabledState(false)}>
           Edit
-        </Button> */}
+        </Button>
         <Button onClick={deleteProduct} danger>
           Delete
         </Button>
