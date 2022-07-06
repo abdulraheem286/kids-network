@@ -3,7 +3,7 @@ import firebase from "firebase";
 import { useToken } from "../../hooks/useToken";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-regular-svg-icons";
-import { Input } from "antd";
+import { Input, Select } from "antd";
 import avatar from "../../Assets/avatar.png";
 
 const PostStatus = ({ type, activePostId }) => {
@@ -12,6 +12,7 @@ const PostStatus = ({ type, activePostId }) => {
   const [state, setstate] = useState({
     subject: "",
     image: "",
+    category: "Post Category"
   });
   const changeHandler = (e) => {
     setstate({ ...state, [e.target.name]: e.target.value });
@@ -95,7 +96,13 @@ const PostStatus = ({ type, activePostId }) => {
           }}
           required
         />
+        {type === "Question" && <Select value={state.category} className="mx-1 rounded" onChange={(e) => setstate({ ...state, category: e })}>
+          <Select.Option value="Question">Question</Select.Option>
+          <Select.Option value="General Discussion">General Discussion</Select.Option>
+          <Select.Option value="Suggestion">Suggestion</Select.Option>
+          <Select.Option value="Advice">Advice</Select.Option>
 
+        </Select>}
         <div>
           <FontAwesomeIcon
             className="ml-3"

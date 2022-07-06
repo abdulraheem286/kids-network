@@ -8,6 +8,8 @@ import QuestionCard from "./QuestionCard";
 import PostStatus from "./PostStatus";
 import firebase from "firebase";
 import { Button, Modal, Input } from "antd";
+import { MDBBtn } from "mdbreact";
+import _ from "lodash";
 
 const Community = () => {
   const token = useToken();
@@ -15,6 +17,7 @@ const Community = () => {
   const [questions, setquestions] = useState([]);
   const [openModal, setopenModal] = useState(false);
   const [loading, setloading] = useState(false);
+  const [questionsSearch, setquestionsSearch] = useState([])
   const [expertForm, setexpertForm] = useState({
     address: "",
     phone: "",
@@ -23,6 +26,9 @@ const Community = () => {
     specialization: "",
     reason: "",
   });
+  const [search, setsearch] = useState("")
+  const [filterItem, setfilterItem] = useState("All")
+  const filterCategory = ["All", "Question", "Advice", "Suggestion", "General Discussion"]
   useEffect(() => {
     if (!token) navigate("/sign-in", { replace: true });
   }, [navigate, token]);
@@ -39,6 +45,7 @@ const Community = () => {
               ...doc.data(),
             }));
             setquestions(questions);
+            setquestionsSearch(questions)
           });
       } catch (error) {
         console.log(error);
@@ -46,6 +53,27 @@ const Community = () => {
     }
     getData();
   }, []);
+
+  useEffect(() => {
+    setquestionsSearch(_.filter(questions, (doc) => {
+      const question = doc;
+      if (filterItem == "All") {
+        if (question?.subject?.toLowerCase()?.includes(search?.toLowerCase())) {
+
+          return question
+        }
+      }
+      else if (question?.category == filterItem) {
+        if (question?.subject?.toLowerCase()?.includes(search?.toLowerCase())) {
+
+          return question
+        }
+      }
+
+    }))
+
+  }, [search, filterItem])
+
   async function submitHandler(e) {
     try {
       if (
@@ -191,7 +219,46 @@ const Community = () => {
 
           <PostStatus type={"Question"} />
 
-          {questions?.map((question) => (
+          <div className="d-flex justify-content-between my-1">
+
+            <div className="d-flex">
+              {filterCategory.map((e, index) => (
+                <button
+                  key={index}
+                  className="filterItems px-4 py-1 mr-2 btn btn-dark"
+                  onClick={() => setfilterItem(e)}
+                >
+                  {e}
+                </button>
+              ))}
+
+            </div>
+            <div className="d-flex">
+              <input
+                className="form-control"
+                type="text"
+                placeholder="Search"
+                onChange={(e) => setsearch(e.target.value)}
+                aria-label="Search"
+                value={search}
+              />
+              <MDBBtn
+                gradient="aqua"
+                size="sm"
+                type="submit"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setsearch(e.target.value);
+                }}
+                className="mr-auto "
+              >
+                <img src={require("../../Assets/search-icon.png")} alt="search" />
+              </MDBBtn>
+            </div>
+
+          </div>
+
+          {questionsSearch?.map((question) => (
             <QuestionCard key={question?.id} post={question} />
           ))}
         </div>
