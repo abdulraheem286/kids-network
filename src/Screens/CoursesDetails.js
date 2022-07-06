@@ -22,6 +22,8 @@ export default function CoursesDetails(props) {
   const [sent, setsent] = useState(false);
   const [deleteComment, setdelete] = useState(false);
   const [mainVideo, setmainVideo] = useState();
+  const [currentUserReview, setcurrentUserReview] = useState(true)
+
   async function submitReview() {
     try {
       await firebase
@@ -61,7 +63,13 @@ export default function CoursesDetails(props) {
         .collection("reviews")
         .get()
         .then((res) => {
-          setreviews(res.docs.map((e) => ({ id: e.id, ...e.data() })));
+          setreviews(res.docs.map((e) => {
+            if (e.data().name == `${token.fName} ${token.lName}`) {
+              setcurrentUserReview(false)
+            }
+            return { id: e.id, ...e.data() }
+          })
+          )
         });
       firebase
         .firestore()
@@ -208,7 +216,7 @@ export default function CoursesDetails(props) {
                   >
                     <CourseDetailsCard courseDetails={courseData} />
                     <div className="pl-4 pr-4">
-                      {enrolledUser && (
+                      {enrolledUser && currentUserReview && (
                         <form className=" w-100 my-5">
                           <h4>Leave a review: </h4>
 

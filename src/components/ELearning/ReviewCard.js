@@ -36,7 +36,7 @@ const ReviewCard = ({
             )}
           </div>
           <div>
-            {new Array(5).fill(0).map((_, i) => {
+            {stars && new Array(5).fill(0).map((_, i) => {
               return i < stars ? (
                 <i key={i} className="fa fa-star text-warning"></i>
               ) : (

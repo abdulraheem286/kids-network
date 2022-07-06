@@ -38,11 +38,8 @@ const Product = ({ product: mainProduct, categories }) => {
       !product.brand ||
       !product.description ||
       !product.image ||
-      !product.delivery ||
       !product.price ||
-      !product.quantity ||
       !product.title ||
-      !product.service ||
       !product.type
     ) {
       alert("Make sure to add all the values");
@@ -88,9 +85,9 @@ const Product = ({ product: mainProduct, categories }) => {
   return (
     <div className="d-flex flex-column">
       <div className="d-flex px-2 mb-2">
-        {/* <Button type="primary" onClick={() => setdisabledState(false)}>
+        <Button type="primary" onClick={() => setdisabledState(false)}>
           Edit
-        </Button> */}
+        </Button>
         <Button onClick={deleteProduct} danger>
           Delete
         </Button>

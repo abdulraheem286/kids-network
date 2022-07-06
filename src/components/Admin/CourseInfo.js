@@ -144,52 +144,6 @@ const CourseInfo = ({ cousreId, courseTitle, courseInfo }) => {
             className="w-50"
           />
         </div>
-        <div>
-          <label>Chapters</label>
-          <ul>
-            {state?.chapters?.map((chapter, index) => (
-              <li
-                className="w-50 p-0 m-0 d-flex justify-content-between "
-                key={index}
-              >
-                {chapter}
-                <FontAwesomeIcon
-                  icon={faTrashCan}
-                  style={{ color: "red" }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setstate({
-                      ...state,
-                      chapters: state.chapters.filter(
-                        (item, index) => item !== chapter
-                      ),
-                    });
-                  }}
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <input
-            type="text"
-            value={chapter}
-            onChange={(e) => {
-              setchapter(e.target.value);
-            }}
-          />
-          <Button
-            type="primary"
-            className="my-2"
-            onClick={(e) => {
-              e.preventDefault();
-              setstate({ ...state, chapters: [...state.chapters, chapter] });
-              setchapter("");
-            }}
-          >
-            Add Chapters
-          </Button>
-        </div>
       </form>
     </div>
   );
