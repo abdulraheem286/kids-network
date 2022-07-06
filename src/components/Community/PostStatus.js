@@ -57,6 +57,8 @@ const PostStatus = ({ type, activePostId }) => {
       setstate({
         subject: "",
         image: "",
+        category: "Post Category"
+
       });
     } catch (error) {
       console.log(error);
