@@ -186,7 +186,6 @@ export default function CoursesDetails() {
                       videoId={video}
                       name={review.name}
                       comment={review.comment}
-                      stars={review.stars}
                       deleteComment={deleteComments}
                     />
                   ))
@@ -201,23 +200,7 @@ export default function CoursesDetails() {
                   onChange={(e) => setreview(e.target.value)}
                   type="textarea"
                 />
-                <div className="mb-2">
-                  {new Array(5).fill(0).map((_, i) => {
-                    return i < rating ? (
-                      <i
-                        key={i}
-                        onClick={() => setrating(i + 1)}
-                        className="fa fa-star text-warning"
-                      ></i>
-                    ) : (
-                      <i
-                        key={i}
-                        onClick={() => setrating(i + 1)}
-                        className="fa fa-star text-secondary"
-                      ></i>
-                    );
-                  })}
-                </div>
+
 
                 <MDBBtn className="mt-2" onClick={submitReview} color="dark">
                   Submit
