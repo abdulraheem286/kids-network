@@ -11,6 +11,7 @@ const validationSchema = Yup.object().shape({
   fName: Yup.string().required("*First Name Required").label("First Name"),
   lName: Yup.string().required("*Last Name Required").label("Last Name"),
   email: Yup.string().required("*Email is Required").email().label("Email"),
+  // phone: Yup.string().required("*Phone is Required").phone().label("Phone"),
   password: Yup.string()
     .required("*Password is Required")
     .min(6, "Password must be greater than 6 characters")
@@ -64,6 +65,7 @@ export default function SignUp() {
           fName: "",
           lName: "",
           email: "",
+          phone: "",
           password: "",
         }}
         validationSchema={validationSchema}
@@ -101,6 +103,20 @@ export default function SignUp() {
                   <div className="text-danger">
                     <small>
                       <ErrorMessage name="lName" />
+                    </small>
+                  </div>
+                </div>
+
+                <div className="mb-2">
+                  <Field
+                    type="phone"
+                    className="form-control"
+                    placeholder="Enter Phone"
+                    name="phone"
+                  />
+                  <div className="text-danger">
+                    <small>
+                      <ErrorMessage name="phone" />
                     </small>
                   </div>
                 </div>
