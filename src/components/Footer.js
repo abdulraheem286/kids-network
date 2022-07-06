@@ -60,8 +60,11 @@ const Footer = () => (
             </div> */}
 
             <div className="copyright">
-              © 2020 Copyright:
-              <a href="/"> KidsNetwork</a>
+              © 2022 Copyright:
+              <a href="/" style={{ fontSize: "16px" }}>
+                {" "}
+                KidsNetwork
+              </a>
             </div>
           </div>
         </div>

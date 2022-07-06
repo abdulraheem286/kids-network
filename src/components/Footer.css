@@ -68,5 +68,6 @@
 }
 
 .footer .copyright {
-    color: #999999;
+    color: #ccc; 
+    font-size: 12px;
 }
