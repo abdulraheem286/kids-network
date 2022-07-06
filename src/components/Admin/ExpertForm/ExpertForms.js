@@ -10,7 +10,6 @@ const ExpertForms = () => {
         const res = await firebase
           .firestore()
           .collection("expertsForms")
-          .where("approved", "==", false)
           .get();
         const forms = res.docs?.map((doc) => ({ id: doc.id, ...doc.data() }));
         setexpertForms(forms);
