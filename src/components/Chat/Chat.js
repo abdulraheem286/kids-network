@@ -117,7 +117,7 @@ const Chat = ({ author, author_email, product }) => {
         />
         <div className="sendIcon p-0">
           <FontAwesomeIcon
-            className="mx-3 paperPlane"
+            className="paperPlane"
             onClick={sendMessage}
             icon={faPaperPlane}
           />
