@@ -38,11 +38,8 @@ const Product = ({ product: mainProduct, categories }) => {
       !product.brand ||
       !product.description ||
       !product.image ||
-      !product.delivery ||
       !product.price ||
-      !product.quantity ||
       !product.title ||
-      !product.service ||
       !product.type
     ) {
       alert("Make sure to add all the values");
