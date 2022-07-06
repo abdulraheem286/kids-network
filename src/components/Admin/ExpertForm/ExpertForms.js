@@ -1,33 +1,69 @@
 import React, { useState, useEffect } from "react";
 import firebase from "firebase";
-import { Button, Collapse, Input, Select } from "antd";
+import { Button, Collapse, Input, Select, Tooltip } from "antd";
+import { ReloadOutlined } from "@ant-design/icons";
+
 const { Panel } = Collapse;
 const ExpertForms = () => {
-  const [expertForms, setexpertForms] = useState([]);
+  const [approvedForms, setapprovedForms] = useState([]);
+  const [pendingForms, setpendingForms] = useState([])
+  const [currentForm, setcurrentForm] = useState("approved")
+  const [refresh, setrefresh] = useState(false)
   useEffect(() => {
     async function getData() {
       try {
-        const res = await firebase
+        let res = await firebase
           .firestore()
-          .collection("expertsForms")
+          .collection("expertsForms").where("approved", "==", true)
           .get();
-        const forms = res.docs?.map((doc) => ({ id: doc.id, ...doc.data() }));
-        setexpertForms(forms);
+        let forms = res.docs?.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setapprovedForms(forms);
+        res = await firebase
+          .firestore()
+          .collection("expertsForms").where("approved", "==", "pending")
+          .get();
+        forms = res.docs?.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setpendingForms(forms);
       } catch (error) {
         console.log(error);
       }
     }
     getData();
-  }, []);
+  }, [refresh]);
 
   return (
-    <Collapse accordion>
-      {expertForms?.map((form, index) => (
-        <Panel key={form.id} header={form.name}>
-          <ExpertForm form={form} />
-        </Panel>
-      ))}
-    </Collapse>
+    <>
+      <Tooltip title="refresh">
+        <Button
+          type="primary"
+          onClick={() => setrefresh(!refresh)}
+          icon={<ReloadOutlined />}
+        >
+          Refresh
+        </Button>
+      </Tooltip>
+      <div className="d-flex justify-content-center">
+        <h4 className="mx-3" onClick={() => setcurrentForm("approved")}>Approved Forms</h4>
+        <h4 onClick={() => setcurrentForm("pending")}>Pending Forms</h4>
+      </div>
+      {
+        currentForm === "approved" ? <Collapse accordion>
+          {approvedForms?.map((form, index) => (
+            <Panel key={form.id} header={form.name}>
+              <ExpertForm form={form} />
+            </Panel>
+          ))}
+        </Collapse> : <Collapse accordion>
+          {pendingForms?.map((form, index) => (
+            <Panel key={form.id} header={form.name}>
+              <ExpertForm form={form} />
+            </Panel>
+          ))}
+        </Collapse>
+
+      }
+
+    </>
   );
 };
 

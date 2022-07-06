@@ -67,7 +67,7 @@ const Community = () => {
         .doc(token.id)
         .set({
           ...expertForm,
-          approved: false,
+          approved: "pending",
           name: `${token.fName} ${token.lName}`,
           uid: token.id,
           email: token.email,
