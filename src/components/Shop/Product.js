@@ -15,7 +15,6 @@ const Product = () => {
   const [product, setproduct] = useState({});
   const [itemsToBuy, setitemsToBuy] = useState(0);
   const [userId, setuserId] = useState(null);
-  const [addressDiv, setaddressDiv] = useState(false);
   const [saveAddress, setsaveAddress] = useState(true);
   const [address, setaddress] = useState({
     street: "",
@@ -98,12 +97,11 @@ const Product = () => {
           <div
             style={{
               width: "100%",
-              backgroundColor: "black",
               marginTop: "auto",
               marginBottom: "auto",
             }}
           >
-            <img style={{ width: "100%" }} src={product.image} />
+            <img style={{ maxWidth: "100%" }} src={product.image} />
           </div>
           <div className="p-3" style={{ width: "100%" }}>
             <h1 className="proTitle">
@@ -208,6 +206,20 @@ const Product = () => {
                   size="large"
                 >
                   Chat With Seller
+                </Button>
+
+                <Button
+                  type="primary"
+                  onClick={
+                    () => console.log(product)
+                    // window.open(
+                    //   "https://api.whatsapp.com/send?phone=" + product.phone
+                    // )
+                  }
+                  className="btn btn-success Rounded mt-2"
+                  size="large"
+                >
+                  Contact on Whatsapp
                 </Button>
               </div>
             )}

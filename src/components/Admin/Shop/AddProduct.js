@@ -54,6 +54,7 @@ const AddProduct = ({ categories }) => {
       ...product,
       author: `${token.fName} ${token.lName}`,
       author_email: token.email,
+      author_phone: token.phone,
     };
     if (
       !finalProduct.category ||

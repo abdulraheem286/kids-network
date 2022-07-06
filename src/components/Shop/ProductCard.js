@@ -15,7 +15,7 @@ const ProductCard = ({ product }) => {
         onClick={navigateToPage}
         size="small"
         bordered={false}
-        className="bootstrap_card my-2"
+        className="bootstrap_card my-2 "
         style={{
           width: "100%",
           minHeight: "380px",
@@ -31,7 +31,7 @@ const ProductCard = ({ product }) => {
         >
           <img
             src={product?.image}
-            style={{ height: "100%", maxHeight: "250px", objectFit: "cover" }}
+            style={{ height: "200px", objectFit: "cover" }}
           />
           {product?.type == "Old" && <p className="pFilter">Old</p>}
         </div>
