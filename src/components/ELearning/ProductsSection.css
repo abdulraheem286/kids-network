@@ -1,0 +1,31 @@
+.products_main {
+    padding-top: 60px;
+    padding-bottom: 40px;
+    background-color: #113C49;
+}
+
+.products_head {
+    font-size: 48px;
+    line-height: 64px;
+    text-align: center;
+    color: white;
+    font-family: Poppins;
+    font-weight: bold;
+}
+
+.products_desc {
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.products_button{
+    margin: auto;
+    background-color: rgb(101, 218, 255);
+    font-family: Poppins;
+    color: Black;
+    font-size: 16px;
+    border-radius: 100px 100px 100px 100px;
+    margin-top: 40px;
+}

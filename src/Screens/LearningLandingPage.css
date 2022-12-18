@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 .courses_btn{
-    transition: all 0.3s ease-in;
+    transition: all 2s ease-in-out;
+    border: none;
 
 }
 .courses_btn:hover{
 background-image: linear-gradient(to right, #167bff, #00bcd4);
-border: none;
 }

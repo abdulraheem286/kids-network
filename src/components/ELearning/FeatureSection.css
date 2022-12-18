@@ -1,0 +1,29 @@
+.main_feature_div{
+    background-color: white;
+    margin-top: 70px;
+    margin-bottom: 40px;
+}
+.feature__card{
+    border-radius:12px;
+    text-align: center;
+    padding: 25px;
+    justify-items: center;
+    align-content: center;
+    min-height: 100px;
+    align-items: center;
+    margin: 0 10px;
+}
+.feature__card>p{
+    color:#113C49;
+    margin-top: 20px;
+}
+
+.feature__card>h4{
+    color: #113C49;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.feature__card>img{
+    margin-bottom: 20px;
+}

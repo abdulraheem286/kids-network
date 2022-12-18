@@ -1,5 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import '~antd/dist/antd.css';
+
+
 * {
   box-sizing: border-box;
+  scroll-behavior: smooth;
+  font-family: 'Poppins', sans-serif
 }
 
 body {
@@ -66,4 +72,16 @@ html,
 
 .forgot-password a {
   color: #167bff;
+}
+.chapter-content{
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-y: scroll;
+}
+.chapter-content::-webkit-scrollbar{
+  display: none;
+}
+.ant-list-item{
+  padding: 0 !important;
+  border-bottom: 0 !important;
 }

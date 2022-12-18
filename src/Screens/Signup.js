@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import firebase from "firebase";
 import "firebase/firestore";
 import * as Yup from "yup";
+import { useNavigate } from "react-router";
+import { MDBContainer, MDBAlert } from "mdbreact";
+import AuthContext from "../components/AuthContext";
+
+const phoneRegExp =
+  /^((\0)|(92))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/;
 
 const validationSchema = Yup.object().shape({
-  fName: Yup.string().required("*First Name Required").label("First Name"),
-  lName: Yup.string().required("*Last Name Required").label("Last Name"),
+  fName: Yup.string()
+    .required("*First Name Required")
+    .matches(/^[A-Za-z ]*$/, "Please enter valid name")
+    .max(30)
+    .label("First Name"),
+
+  lName: Yup.string()
+    .required("*Last Name Required")
+    .matches(/^[A-Za-z]*$/, "Please enter valid name")
+    .max(30)
+    .label("Last Name"),
+
   email: Yup.string().required("*Email is Required").email().label("Email"),
+
+  phone: Yup.string()
+    .required("*Phone is Required")
+    .matches(phoneRegExp, "Phone number is not valid"),
   password: Yup.string()
     .required("*Password is Required")
     .min(6, "Password must be greater than 6 characters")
@@ -15,8 +35,10 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function SignUp() {
+  const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
+  const [signedIn, setsignedIn] = useState(null);
   const handleSubmit = async (values) => {
-    console.log(values, "values");
     const userCheck = await firebase
       .firestore()
       .collection("users")
@@ -28,18 +50,27 @@ export default function SignUp() {
         .auth()
         .createUserWithEmailAndPassword(values.email, values.password)
         .then((res) => {
-          firebase
+          res.user.sendEmailVerification();
+          alert("Verification Link Send To Your Email");
+          return res;
+        })
+        .then((res) => {
+          return firebase
             .firestore()
             .collection("users")
-            .add(values)
-            .then(() => {
-              console.log("done");
-            });
-          console.log(res, "response");
+            .doc(res.user.uid)
+            .set(values);
+        })
+        .then(() => {
+          setTimeout(() => {
+            navigate("/sign-in", { replace: true });
+          }, 1000);
         })
         .catch((err) => {
           console.log(err, "error");
         });
+    } else {
+      setsignedIn("notSignedIn");
     }
   };
 
@@ -50,6 +81,7 @@ export default function SignUp() {
           fName: "",
           lName: "",
           email: "",
+          phone: "",
           password: "",
         }}
         validationSchema={validationSchema}
@@ -61,7 +93,7 @@ export default function SignUp() {
           <div className="outer">
             <div className="inner">
               {" "}
-              <Form>
+              <Form style={{ marginBottom: "10px" }}>
                 <h3>Sign Up</h3>
                 <div className="mb-2">
                   <Field
@@ -87,6 +119,20 @@ export default function SignUp() {
                   <div className="text-danger">
                     <small>
                       <ErrorMessage name="lName" />
+                    </small>
+                  </div>
+                </div>
+
+                <div className="mb-2">
+                  <Field
+                    type="phone"
+                    className="form-control"
+                    placeholder="Enter Phone (92XXXXXXXXXX)"
+                    name="phone"
+                  />
+                  <div className="text-danger">
+                    <small>
+                      <ErrorMessage name="phone" />
                     </small>
                   </div>
                 </div>
@@ -125,15 +171,37 @@ export default function SignUp() {
                 >
                   Register
                 </button>
+                <p className="forgot-password text-right">
+                  Already registered <a href="sign-in">Login?</a>
+                </p>
               </Form>
+              {signedIn === "signedIn" && (
+                <AlertPage
+                  color="success"
+                  keyword="Congratulation"
+                  message="Succesfully Signed Up"
+                />
+              )}
+              {signedIn === "notSignedIn" && (
+                <AlertPage
+                  color="danger"
+                  keyword="Sorry"
+                  message="User already exists"
+                />
+              )}
             </div>
           </div>
         )}
       </Formik>
-
-      <p className="forgot-password text-right">
-        Already registered <a href="sign-in">Login?</a>
-      </p>
     </>
   );
 }
+const AlertPage = ({ color, keyword, message }) => {
+  return (
+    <MDBContainer>
+      <MDBAlert color={color}>
+        <strong>{keyword}!</strong> {message}.
+      </MDBAlert>
+    </MDBContainer>
+  );
+};

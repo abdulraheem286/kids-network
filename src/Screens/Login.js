@@ -1,52 +1,56 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import firebase from "firebase";
 import "firebase/firestore";
 import * as Yup from "yup";
 import AuthContext from "./../components/AuthContext";
 import { useNavigate } from "react-router";
+import { MDBContainer, MDBAlert } from "mdbreact";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required("*Email is Required").email().label("Email"),
-  password: Yup.string()
-    .required("*Password is Required")
-    .min(6, "Password must be greater than 6 characters")
-    .label("Password"),
+  password: Yup.string().required("*Password is Required").label("Password"),
 });
 
 export default function Login() {
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
+  const [loggedIn, setloggedIn] = useState(null);
+
   const handleSubmit = async (values) => {
-    console.log(values, "values");
     firebase
       .auth()
       .signInWithEmailAndPassword(values.email, values.password)
       .then(async (userCredential) => {
-        console.log(userCredential, "credentials");
-        firebase
+        if (!userCredential.user.emailVerified) {
+          alert("Please Verify Your Email First");
+          throw new Error("Email is not verified");
+        }
+        return firebase
           .firestore()
           .collection("users")
           .where("email", "==", values.email)
-          .get()
-          .then((res) => {
-            res.forEach((doc) => {
-              if (values.password === doc.data().password) {
-                localStorage.setItem("user", JSON.stringify(doc.data()));
-                authContext.setUserDetails(doc.data());
-                alert("Welcome");
-                navigate("/e-learning");
-              }
-            });
-          });
-
-        var user = userCredential.id;
-        console.log(user);
+          .get();
+      })
+      .then((res) => {
+        if (res.empty) {
+          throw new Error("User does not exists");
+        }
+        res.forEach((doc) => {
+          localStorage.setItem(
+            "user",
+            JSON.stringify({ id: doc.id, ...doc.data() })
+          );
+          authContext.setUserDetails(doc.data());
+          setloggedIn("loggedIn");
+          setTimeout(() => {
+            navigate("/", { replace: true });
+          }, 1000);
+        });
       })
       .catch((error) => {
-        var errorMessage = error.message;
-        console.log(errorMessage);
-        alert("Wrong Password/ User Don't Exist");
+        setloggedIn("notLoggedIn");
+        console.log(error);
       });
   };
 
@@ -64,7 +68,7 @@ export default function Login() {
       >
         <div className="outer">
           <div className="inner">
-            <Form>
+            <Form style={{ marginBottom: "10px" }}>
               <h3>Log in</h3>
 
               <div className="mb-2">
@@ -95,22 +99,6 @@ export default function Login() {
                 </div>
               </div>
 
-              <div className="form-group">
-                <div className="custom-control custom-checkbox">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="customCheck1"
-                  />
-                  <label
-                    className="custom-control-label"
-                    htmlFor="customCheck1"
-                  >
-                    Remember me
-                  </label>
-                </div>
-              </div>
-
               <button type="submit" className="btn btn-dark btn-lg btn-block">
                 Sign in
               </button>
@@ -118,9 +106,33 @@ export default function Login() {
                 Forgot <a href="forgot-pass">Password?</a>
               </p>
             </Form>
+
+            {loggedIn === "loggedIn" && (
+              <AlertPage
+                color="success"
+                keyword="Welcome"
+                message="Logged in successfully"
+              />
+            )}
+            {loggedIn === "notLoggedIn" && (
+              <AlertPage
+                color="danger"
+                keyword="Try Again"
+                message="Invalid Credentials"
+              />
+            )}
           </div>
         </div>
       </Formik>
     </>
   );
 }
+const AlertPage = ({ color, keyword, message }) => {
+  return (
+    <MDBContainer>
+      <MDBAlert color={color}>
+        <strong>{keyword}!</strong> {message}.
+      </MDBAlert>
+    </MDBContainer>
+  );
+};
